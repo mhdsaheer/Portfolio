@@ -139,7 +139,7 @@ canvas {
   z-index: 2;
   color: white;
   text-align: center;
-  padding-top: 8%;
+  padding-top: 9%;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -269,7 +269,7 @@ transform: translateY(-135px);
 }
 
 /* About Section*/
-.about-container { padding-top: 100px; padding-bottom: 100px; color: #fff; background-color: #000; }
+.about-container { padding-top: 50px; padding-bottom: 50px; color: #fff; background-color: #000; }
 .about-section { position: relative; }
 .sticky-heading { line-height: 1; z-index: 1; background: transparent; padding:  20px 16px; font-size: clamp(1.5rem, 2vw + 1.7rem, 5rem); font-weight: bold; text-align: center; text-transform: uppercase; }
 .about-image-container { position: relative;  z-index: 2; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -296,7 +296,7 @@ transform: translateY(-135px);
 .about-button button:hover svg { transform: translateY(-50%) rotate(90deg); }
 
 /* Services */
-.service-container { padding-top: 100px; padding-bottom: 100px; }
+.service-container { padding-top: 70px; padding-bottom: 70px; }
 .service-container h3 {  padding-left: 20px; }
 .slider-container { width: 90%; margin: 0 auto; position: relative; }
 :root {  --gradient: conic-gradient( from 180deg at 50% 50%,  #00ffff,  #8cbf2b  );
@@ -319,7 +319,7 @@ overflow: hidden; text-overflow: ellipsis; }
 .slick-dots li.slick-active button:before { color: white; opacity: 1; }
 
 /* Experience and education */
-.experience-container { padding-top: 100px; padding-bottom: 100px; background-color: #000; }
+.experience-container { padding-top: 70px; padding-bottom: 70px; background-color: #000; }
 .experience-container h3 { padding-left: 10px; text-align: center;}
 .timeline { position: relative; margin: auto; padding: 40px 0; }
 .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #888; transform: translateX(-50%); }
@@ -344,7 +344,7 @@ overflow: hidden; text-overflow: ellipsis; }
 .timeline-item.left .timeline-content:hover{transform: translateX(-20px);}
 .timeline-item.right .timeline-content:hover{transform: translateX(20px);}
 /* Skills */
-.skill-container { padding-top: 100px; padding-bottom: 100px; text-align: center; }
+.skill-container { padding-top: 70px; padding-bottom: 70px; text-align: center; }
 .skill-container h3 { width: max-content; color: #fff; margin:0 auto 40px; display: block;}
 .skill-container h6 { color: #fff; font-size: 20px; margin-top: 25px; font-weight: 600; }
 .skill-container h6 span { font-family: "Montserrat", sans-serif; }
@@ -352,12 +352,12 @@ overflow: hidden; text-overflow: ellipsis; }
 .skill-container .first-row { margin-bottom:60px; }
 .skill-icon { display: inline-block; position: relative; width: 100px; height: 100px; border-radius: 50%; transition: transform 0.3s; }
 .skill-icon img { transition: transform 0.3s; }
-.skill-icon:after { content: ''; position: absolute; top: 3px; left: 3px; width: 100%; height: 100%; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: 2px solid yellowgreen; box-sizing: border-box; z-index: -1; transform: scale(0); transition: transform 0.3s, opacity 0.3s; }
+.skill-icon:after { content: ''; position: absolute; top: 3.7px; left: 3.7px; width: 100%; height: 100%; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: 2px solid yellowgreen; box-sizing: border-box; z-index: -1; transform: scale(0); transition: transform 0.3s, opacity 0.3s; }
 .skill-icon:hover img { transform: scale(0.9); }
 .skill-icon:hover:after { transform: scale(1.2); opacity: 1; }
 
 /* Portfolio */
-.portfolio-container { padding-top: 100px; padding-bottom: 100px; background-color: #000; }
+.portfolio-container { padding-top: 70px; padding-bottom: 70px; background-color: #000; }
 .portfolio-box { position: relative; margin-bottom: 30px; border-radius: 10px; overflow: hidden; }
 .portfolio-box::after { content: ""; position: absolute; bottom: 0; left: 0; height: 200px; width: 100%; pointer-events: none; background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent); opacity: 0; transition: opacity 0.4s ease; z-index: 1; }
 .portfolio-box:hover::after { opacity: 1; }
@@ -370,7 +370,7 @@ overflow: hidden; text-overflow: ellipsis; }
 .portfolio-box:hover .portfolio-caption { opacity: 1; bottom: 30px; }
 
 /* Contact */
-.contact-container { padding-top: 100px; padding-bottom: 70px; color: #fff; }
+.contact-container { padding-top: 70px; padding-bottom: 70px; color: #fff; }
 .contact-heading h5 { font-size: 30px; font-weight: 900; margin-bottom: 0; background: linear-gradient(to right, #00ffff 0%, #8cbf2b 80%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .contact-data span { font-weight: 500; font-size: 19px; }
 .contact-details i { color: #fff; font-size: 30px; padding-top: 13px; }
