@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAHEER | PERSONAL PORTFOLIO</title>
+
+  <!-- Links -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css" />
+  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <!-- Css -->
+  <link rel="shortcut icon" href="Images/favicon.png" type="image/x-icon">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="container nav-container">
+      <div class="logo">
+        <a class="navbar-brand"><img src="Images/logo.png" alt=""></a>
+      </div>
+      <div id="mainListDiv" class="main_list">
+        <ul class="navlinks custom-menu">
+          <li><a href="#home" class="nav-arrow-anime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.1 25.8">
+                <g>
+                  <line fill="none" stroke="#FFFFFF" stroke-width="3" x1="0" y1="12.9" x2="34" y2="12.9" />
+                  <polyline fill="none" stroke="#FFFFFF" stroke-width="3" points="22.2,1.1 34,12.9 22.2,24.7" />
+                </g>
+              </svg><span>Home</span></a></li>
+          <li><a href="#about" class="nav-arrow-anime"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.1 25.8">
+                <g>
+                  <line fill="none" stroke="#FFFFFF" stroke-width="3" x1="0" y1="12.9" x2="34" y2="12.9" />
+                  <polyline fill="none" stroke="#FFFFFF" stroke-width="3" points="22.2,1.1 34,12.9 22.2,24.7" />
+                </g>
+              </svg><span>About</span></a></li>
+          <li><a href="#services" class="nav-arrow-anime"><svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 36.1 25.8">
+                <g>
+                  <line fill="none" stroke="#FFFFFF" stroke-width="3" x1="0" y1="12.9" x2="34" y2="12.9" />
+                  <polyline fill="none" stroke="#FFFFFF" stroke-width="3" points="22.2,1.1 34,12.9 22.2,24.7" />
+                </g>
+              </svg><span>Services</span></a></li>
+          <li><a href="#portfolio" class="nav-arrow-anime"><svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 36.1 25.8">
+                <g>
+                  <line fill="none" stroke="#FFFFFF" stroke-width="3" x1="0" y1="12.9" x2="34" y2="12.9" />
+                  <polyline fill="none" stroke="#FFFFFF" stroke-width="3" points="22.2,1.1 34,12.9 22.2,24.7" />
+                </g>
+              </svg><span>Portfolio</span></a></li>
+          <li><a href="#contact" class="nav-arrow-anime"><svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 36.1 25.8">
+                <g>
+                  <line fill="none" stroke="#FFFFFF" stroke-width="3" x1="0" y1="12.9" x2="34" y2="12.9" />
+                  <polyline fill="none" stroke="#FFFFFF" stroke-width="3" points="22.2,1.1 34,12.9 22.2,24.7" />
+                </g>
+              </svg><span>Contact</span></a></li>
+        </ul>
+      </div>
+      <span class="navTrigger"><i></i><i></i><i></i></span>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="container-fluid header-container" id="home">
+    <canvas id="stars-bg"></canvas>
+
+    <!-- Bottom gradient overlay -->
+    <div class="bottom-fade"></div>
+
+    <div class="content">
+      <div class="header-image-container">
+        <img src="Images/person.svg" style="width: 400px;" alt="">
+      </div>
+      <div class="content-data">
+
+        <h1>Hi, I'm Saheer, a
+          <!-- <span class="highlight">experiences</span> , not just websites. -->
+        </h1>
+        <div class="loader">
+          <div class="words">
+            <span class="word">Front-End Developer.</span>
+            <span class="word">Branding Designer.</span>
+            <span class="word">Ui & Ux Designer.</span>
+            <span class="word">Front-End Developer.</span>
+          </div>
+        </div>
+
+        <p>I’m a Front-End Developer based in Kerala, India and this is
+          a selection of my personal and professional work.</p>
+
+        <a href="#contact"><button class="home-button">
+            Get in touch
+            <div class="home-hoverEffect">
+              <div></div>
+            </div>
+          </button></a>
+        <!-- <div class="tools-title">Expertise in the following tools</div> -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- About -->
+  <div id="about" class="container-fluid about-container">
+    <div class="about-section">
+      <div class="row">
+        <div class="col-lg-5 about-image-container">
+          <img src="Images/PXL_20230123_153657831.PORTRAIT.jpg" alt="Designer" class="zoom-image" />
+        </div>
+        <div class="col-lg-7">
+          <div class="sticky-heading">Behind the Designs:<br>Muhammed Saheer</div>
+          <div class="about-content">
+            <p>
+              Hi, I’m <span> Muhammed Saheer</span> — a front-end developer and multimedia specialist from Kerala,
+              India. I
+              have a
+              background in multimedia and over the past year, I’ve been combining design and code to build clean,
+              responsive
+              interfaces. I enjoy creating user experiences that are both engaging and easy to use.
+            <p>Early on, I thought good design was just about how things looked. But working as a UI/UX designer taught
+              me
+              that design is really about people. It's not just decoration — it’s about solving real problems. Now, I
+              focus on
+              creating work that’s not only visually appealing but also meaningful and useful to the people who use it.
+            </p>
+            </p>
+          </div>
+          <div class="about-button">
+            <button>
+              <div class="text">
+                <span>Download</span>
+                <span>CV</span>
+              </div>
+              <div class="clone">
+                <span>Download</span>
+                <span>CV</span>
+              </div>
+              <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg" width="20px">
+                <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linejoin="round" stroke-linecap="round"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Services -->
+  <div id="services" class="container-fluid service-container">
+    <div class="slider-container">
+      <h3>Services</h3>
+      <div class="slider-section">
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="material-symbols-outlined">
+              data_object
+            </span>
+            <h4>Front-End Developer</h4>
+            <p class="review-text">Crafting engaging, and high-performance websites using the latest technologies.</p>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="material-symbols-outlined">
+              responsive_layout
+            </span>
+            <h4>Responsive Design</h4>
+            <p class="review-text">Delivering a smooth and consistent experience on every screen size and device.</p>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="material-symbols-outlined">
+              design_services
+            </span>
+            <h4>UI/UX</h4>
+            <p class="review-text">Designing clean, user-friendly interfaces that feel natural and look great.</p>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="material-symbols-outlined">
+              manufacturing
+            </span>
+            <h4>Web Maintenance</h4>
+            <p class="review-text">Keeping your site secure, updated, and bug-free with regular checkups and support.
+            </p>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="material-symbols-outlined">
+              view_kanban
+            </span>
+            <h4>Web Optimization</h4>
+            <p class="review-text">Enhancing website overall performance for a faster and smoother user
+              experience.</p>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="material-symbols-outlined">
+              palette
+            </span>
+            <h4>Graphic Design</h4>
+            <p class="review-text">Crafting visuals that reflect your brand and leave a lasting impression.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slick-prev"><i class="fa-solid fa-arrow-left"></i></div>
+      <div class="slick-next"><i class="fa-solid fa-arrow-right"></i></div>
+    </div>
+  </div>
+  <!-- Education and Experience -->
+  <div id="resume" class="container-fluid experience-container">
+    <div class="container">
+      <h3 class="hvr-underline-from-left">The Journey So Far</h3>
+      <div class="timeline">
+        <div class="timeline-item left">
+          <div class="timeline-dot"></div>
+          <div class="date-container">
+            <span class="date">2024 - Ongoing</span>
+          </div>
+          <div class="timeline-content">
+            <h5>UI/UX & BRANDING DESIGNER</h5>
+            <h6>THE CHANDRAZ</h6>
+            <p>Working as a Branding Designer and Front-End Developer to create user-friendly websites and impactful
+              brand identities.</p>
+          </div>
+        </div>
+        <div class="timeline-item right">
+          <div class="timeline-dot"></div>
+          <div class="date-container">
+            <span class="date">2023 - 2024</span>
+          </div>
+          <div class="timeline-content">
+            <h5>MERN STACK</h5>
+            <h6>BOOTCAMP</h6>
+            <p>I learned the basics of Full Stack development by building web applications using MongoDB, Express.js,
+              React, and Node.js.</p>
+          </div>
+        </div>
+        <div class="timeline-item left">
+          <div class="timeline-dot"></div>
+          <div class="date-container">
+            <span class="date">2019 - 2022</span>
+          </div>
+          <div class="timeline-content">
+            <h5>BACHELOR OF MULTIMEDIA</h5>
+            <h6>UNIVERSITY OF CALICUT</h6>
+            <p>An educational program focused on developing skills in various aspects of multimedia design and
+              production.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Skills -->
+  <div id="skills" class="container skill-container">
+    <h3>skills</h3>
+    <div class="row first-row row-cols-md-3 row-cols-sm-2">
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/html5.svg" alt="">
+        </div>
+        <h6>HTML <span>5</span></h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/css3.svg" alt="">
+        </div>
+        <h6>CSS <span>3</span></h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/js.svg" alt="">
+        </div>
+        <h6>JavaScript</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/mongodb.svg" alt="">
+        </div>
+        <h6>MongoDB</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/react.svg" alt="">
+        </div>
+        <h6>React Js</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/nodejs.svg" alt="">
+        </div>
+        <h6>Node Js</h6>
+      </div>
+    </div>
+    <div class="row  row-cols-md-3 row-cols-sm-2">
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/bootstrap.svg" alt="">
+        </div>
+        <h6>Bootstrap</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/figma.svg" alt="">
+        </div>
+        <h6>Figma</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/photoshop.svg" alt="">
+        </div>
+        <h6>Photoshop</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/illustrator.svg" alt="">
+        </div>
+        <h6>Illustrator</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/dreamweaver.svg" alt="">
+        </div>
+        <h6>Dreamweaver</h6>
+      </div>
+      <div class="col-lg-2">
+        <div class="skill-icon">
+          <img src="Images/canva.svg" alt="">
+        </div>
+        <h6>Canva</h6>
+      </div>
+    </div>
+  </div>
+  <!-- Portfolio -->
+  <div id="portfolio" class="container-fluid portfolio-container">
+    <div class="container">
+      <h3>portfolio</h3>
+      <div class="row row-cols-md-2 row-cols-sm-2 ">
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-kt-qa/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/koyenco.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6>Koyenco Group Companies</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-zd-ae/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/damaso.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6>Zahis Damaso Dubai</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-ep-ae/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/al-hoot.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6> Al Hoot Electrical Material Trading L.L.C</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-sk-in/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/salafiyya.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6> Jam iyyathussalafiyyeen Charitable Society</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-oa-in/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/oglas.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6>Oglas Advertisers Pvt.Ltd</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-pa-ae/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/pezzi.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6>Pezzi Automotive Spare Parts</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-sb-in/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/soorya-bhavanam.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6>Soorya Bhavanam</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-am-in/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/am-traders.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6> AM Traders</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 portfolio-box">
+          <a href="http://mywork.co.in/ch-sc-in/" target="_blank">
+            <div class="portfolio-img-container">
+              <img src="Images/stecon.jpg" alt="Koyenco Project">
+              <span class="portfolio-category">WEB DESIGN</span>
+              <div class="portfolio-caption">
+                <h6>Stecon PU Chappals</h6>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Contact -->
+  <div id="contact" class="container contact-container">
+    <div class="row">
+      <div class="col-lg-6 contact-details">
+        <div class="contact-heading">
+          <h5>Start Projects?</h5>
+        </div>
+        <div class="contact-data phone">
+          <i class="fa-solid fa-phone"></i>
+          <p><span>Contact :</span><br>+91 97473 43117</p>
+        </div>
+        <div class="contact-data mail">
+          <i class="fa-solid fa-paper-plane"></i>
+          <p><span>Email :</span><br>muhammedsaheerk6@gmail.com</p>
+        </div>
+        <div class="contact-data">
+          <i class="fa-solid fa-address-book"></i>
+          <p><span>Address :</span><br>Baithul Ayisha, <br>Puthoopadam, Ayikkarappadi P.O, Malappuram Dt, Kerala,
+            India, ZIP : 673637
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6 contact-form form">
+        <h6>Lets get in touch</h6>
+        <form action="form-sending.php" method="post" target="_self">
+          <div class="row name-and-mail">
+            <div class="col-lg-6 name">
+              <input type="text" name="Name" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="col-lg-6 email">
+              <input type="email" name="Email" id="email" placeholder="Email Address" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <input type="text" name="Subject" id="subject" placeholder="Subject" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <textarea name="Message" id="message" placeholder="How can I help you?" required></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-wrapper">
+                <input type="submit" id="button" value="SEND MESSAGE" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container footer">
+    <p>&#169; Copyright <strong style="color:  #00ffd0;">Muhammed Saheer</strong>. All Rights Reserved</p>
+    <div class="social-content">
+      <p>Check out:</p>
+      <div class="social-media">
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/muhammed-saheer-bbb6132ab/" target="_blank" class="linkdin"><i
+              class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://github.com/mhdsaheer" target="_blank" class="github"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.instagram.com/gun_slingr/" target="_blank" class="intagram"><i
+              class="fa-brands fa-instagram"></i></a>
+          <a href="https://wa.me/9747343117" target="_blank" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="progress-wrap">
+    <i class="uil uil-arrow-up"></i>
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
+  </div>
+
+  <!-- jQuery & Slick JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const skillIcons = document.querySelectorAll('.skill-icon');
+      skillIcons.forEach(icon => {
+        icon.addEventListener('mouseenter', function () {
+          this.style.transform = 'scale(0.9)';
+          this.querySelector('img').style.transform = 'scale(0.9)';
+        });
+        icon.addEventListener('mouseleave', function () {
+          this.style.transform = 'scale(1)';
+          this.querySelector('img').style.transform = 'scale(1)';
+        });
+      });
+    });
+
+    $(document).ready(function () {
+      const $slider = $('.slider-section').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        dots: true,
+        arrows: true,
+        prevArrow: $('.slick-prev'),
+        nextArrow: $('.slick-next'),
+        infinite: false, // Disable infinite to hide arrows at ends
+        adaptiveHeight: false,
+        responsive: [
+          {
+            breakpoint: 1200,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 576,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 326,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      });
+
+      // Hide arrows at the start and end
+      $slider.on('afterChange', function (event, slick, currentSlide) {
+        const totalSlides = slick.slideCount;
+        const slidesToShow = slick.options.slidesToShow;
+
+        // Hide prev arrow if at the start
+        if (currentSlide === 0) {
+          $('.slick-prev').addClass('slick-disabled');
+        } else {
+          $('.slick-prev').removeClass('slick-disabled');
+        }
+
+        // Hide next arrow if at the end
+        if (currentSlide >= totalSlides - slidesToShow) {
+          $('.slick-next').addClass('slick-disabled');
+        } else {
+          $('.slick-next').removeClass('slick-disabled');
+        }
+      });
+
+      // Trigger afterChange on init to set initial arrow state
+      $slider.trigger('afterChange');
+    });
+
+    // Add the flowing gradient border effect
+    const cards = document.querySelectorAll(".review-card");
+
+    cards.forEach((card) => {
+      card.addEventListener("mousemove", handleMouseMove);
+    });
+
+    function handleMouseMove(e) {
+      const rect = this.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left - rect.width / 2;
+      const mouseY = e.clientY - rect.top - rect.height / 2;
+
+      let angle = Math.atan2(mouseY, mouseX) * (180 / Math.PI);
+
+      angle = (angle + 360) % 360;
+
+      this.style.setProperty("--start", angle + 60);
+    }
+
+
+
+
+    $(window).scroll(function () {
+      if ($(document).scrollTop() > 50) {
+        $('.nav').addClass('affix');
+      } else {
+        $('.nav').removeClass('affix');
+      }
+    });
+
+    $('.navTrigger').click(function () {
+      $(this).toggleClass('active');
+      $("#mainListDiv").toggleClass("show_list");
+    });
+
+    // Close nav on link click (for mobile)
+    $('.navlinks li a').click(function () {
+      if ($(window).width() < 768) {
+        $('.navTrigger').removeClass('active');
+        $('#mainListDiv').removeClass('show_list');
+      }
+    });
+
+    const zoomImage = document.querySelector('.zoom-image');
+    const imageContainer = document.querySelector('.about-image-container');
+
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth < 768) {
+        // Reset to normal for mobile
+        zoomImage.style.transform = 'scale(1)';
+        return;
+      }
+
+      const rect = imageContainer.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const distanceFromCenter = Math.abs((rect.top + rect.height / 2) - (windowHeight / 2));
+      const maxDistance = windowHeight / 2 + rect.height / 2;
+
+      let visibilityRatio = 1 - distanceFromCenter / maxDistance;
+      visibilityRatio = Math.max(0, Math.min(1, visibilityRatio));
+
+      const scale = 1 + visibilityRatio * 0.2; // Zoom in on scroll down
+      zoomImage.style.transform = `scale(${scale})`;
+    });
+
+    const canvas = document.getElementById("stars-bg");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const lines = [];
+    const lineCount = 100;
+
+    for (let i = 0; i < lineCount; i++) {
+      lines.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        length: Math.random() * 50 + 10,
+        speed: Math.random() * 0.9 + 0.3,
+        opacity: Math.random() * 0.3 + 0.1
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let line of lines) {
+        ctx.beginPath();
+        ctx.moveTo(line.x, line.y);
+        ctx.lineTo(line.x + line.length, line.y);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${line.opacity})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        line.x += line.speed;
+
+        if (line.x > canvas.width) {
+          line.x = -line.length;
+          line.y = Math.random() * canvas.height;
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+
+    // back to top
+    (function ($) {
+      $(document).ready(function () {
+        var progressPath = document.querySelector('.progress-wrap path');
+        var pathLength = progressPath.getTotalLength();
+
+        progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+        progressPath.style.strokeDashoffset = pathLength;
+
+        var updateProgress = function () {
+          var scroll = $(window).scrollTop();
+          var height = $(document).height() - $(window).height();
+          var progress = pathLength - (scroll * pathLength / height);
+          progressPath.style.strokeDashoffset = progress;
+        };
+
+        updateProgress();
+        $(window).scroll(updateProgress);
+
+        // Show/hide button
+        var offset = 50;
+        var duration = 550;
+        $(window).on('scroll', function () {
+          if ($(this).scrollTop() > offset) {
+            $('.progress-wrap').addClass('active-progress');
+          } else {
+            $('.progress-wrap').removeClass('active-progress');
+          }
+        });
+
+        // Click scroll to top
+        $('.progress-wrap').on('click', function (event) {
+          event.preventDefault();
+          $('html, body').animate({ scrollTop: 0 }, duration);
+          return false;
+        });
+      });
+    })(jQuery);
+  </script>
+
+</body>
+
+</html>
+
+<!-- https://uiverse.io/Li-Deheng/bright-firefox-37 -->
+
+<!-- https://uiverse.io/ParasSalunke/selfish-dolphin-96 -->
