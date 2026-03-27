@@ -1,13 +1,6 @@
 <?php
-$envFile = __DIR__ . '/.env';
-$env = file_exists($envFile) ? parse_ini_file($envFile) : false;
-if (!is_array($env)) {
-    $env = [];
-}
-
-$my_email = isset($env['MY_EMAIL']) ? $env['MY_EMAIL'] : "muhammedsaheerk6@gmail.com";
-$continue = isset($env['CONTINUE_EMAIL']) ? $env['CONTINUE_EMAIL'] : "muhammedsaheerk6@gmail.com";
-$set = 0;
+$my_email = "muhammedsaheerk6@gmail.com";
+$continue = "muhammedsaheerk6@gmail.com";
 $errors = array();
 // Remove $_COOKIE elements from $_REQUEST.
 if(count($_COOKIE)){foreach(array_keys($_COOKIE) as $value){unset($_REQUEST[$value]);}}
@@ -22,8 +15,8 @@ foreach($element_value as $value){if($set){break;} recursive_array_check_header(
 }
 }
 recursive_array_check_header($_REQUEST);
-if($set){$errors[] = "You cannot send an email header";}
-$set = 0;
+if(!empty($set)){$errors[] = "You cannot send an email header";}
+unset($set);
 // Validate email field.
 if(isset($_REQUEST['email']) && !empty($_REQUEST['email']))
 {
@@ -44,8 +37,8 @@ foreach($element_value as $value){if($set){break;} recursive_array_check_blank($
 }
 }
 recursive_array_check_blank($_REQUEST);
-if(!$set){$errors[] = "You cannot send a blank form";}
-$set = 0;
+if(empty($set)){$errors[] = "You cannot send a blank form";}
+unset($set);
 // Display any errors and exit if errors exist.
 if(count($errors)){foreach($errors as $value){print "$value<br>";} exit;}
 if(!defined("PHP_EOL")){define("PHP_EOL", strtoupper(substr(PHP_OS,0,3) == "WIN") ? "\r\n" : "\n");}
@@ -55,7 +48,9 @@ $message = build_message($_REQUEST);
 $message = $message . PHP_EOL.PHP_EOL."-- ".PHP_EOL."";
 $message = stripslashes($message);
 $subject = "SAHEER | PORTFOLIO MAIL";
-$headers = "From: " . $_REQUEST['Name'];
+$headers = "From: " . $my_email . "\r\n";
+$headers .= "Reply-To: " . $_REQUEST['email'] . "\r\n";
+$headers .= "X-Mailer: PHP/" . phpversion();
 mail($my_email,$subject,$message,$headers);
 ?>
 <!DOCTYPE html>
@@ -203,20 +198,17 @@ text-align:center;
 }
 
 #Logo {
-  width: 40%;
-  height: 40%;
+  width: 100%;
+  height: 250px;
   position: absolute;
-  top: 65%;
-  right: 70;
-/*   bottom: 0; */
-  left: 0;
-  margin: auto;
-  display: block;
-  fill: #aa7f3d;
+  top: 300px;
+  left: 45%;
+  transform: translate(-50%, -50%);
   fill: url("#MyGradient");
   stroke: #EEBE7B;
   stroke-miterlimit: 5;
 }
+
 
 .Animate-Draw {
   fill-opacity: 0;
@@ -346,7 +338,9 @@ text-align:center;
 
 
 
-
+ @media (min-width: 0) and (max-width: 324px){
+    
+ }
 
 
 @keyframes DrawLine {

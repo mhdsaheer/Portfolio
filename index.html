@@ -5,6 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SAHEER | PERSONAL PORTFOLIO</title>
+  <meta name="description" content="Personal Portfolio of Muhammed Saheer, a Front-End Developer, Branding Designer, and UI/UX Designer based in Kerala, India. Works and projects showcase." />
+  <meta name="keywords" content="Saheer, Web Developer, Web Design, UI UX, Branding, Portfolio, Kerala" />
+  <meta name="author" content="Muhammed Saheer" />
 
   <!-- Links -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -30,42 +33,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
   <!-- Css -->
-  <link rel="shortcut icon" href="Images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
 
-  <div id="page-preloader">
-    <div class="page-loader">
-      <div class="pl-circle">
-        <div class="dot"></div>
-        <div class="outline"></div>
-      </div>
-      <div class="pl-circle">
-        <div class="dot"></div>
-        <div class="outline"></div>
-      </div>
-      <div class="pl-circle">
-        <div class="dot"></div>
-        <div class="outline"></div>
-      </div>
-      <div class="pl-circle">
-        <div class="dot"></div>
-        <div class="outline"></div>
-      </div>
-      <div class="pl-circle">
-        <div class="dot"></div>
-        <div class="outline"></div>
-      </div>
-    </div>
-  </div>
   <!-- Navbar -->
   <nav class="nav">
     <div class="container nav-container">
       <div class="logo">
-        <a class="navbar-brand"><img src="Images/logo.png" alt=""></a>
+        <a href="#home" class="navbar-brand"> <img src="images/logo.png" alt="Saheer Logo"></a>
       </div>
       <div id="mainListDiv" class="main_list">
         <ul class="navlinks custom-menu">
@@ -103,49 +85,42 @@
                 </g>
               </svg><span>Contact</span></a></li>
         </ul>
+        <span class="navTrigger"><i></i><i></i><i></i></span>
       </div>
-      <span class="navTrigger"><i></i><i></i><i></i></span>
     </div>
   </nav>
 
   <!-- Header -->
   <div class="container-fluid header-container" id="home">
     <canvas id="stars-bg"></canvas>
-
-    <!-- Bottom gradient overlay -->
     <div class="bottom-fade"></div>
-
     <div class="content">
-      <div class="header-image-container">
-        <img src="Images/person.svg" style="width: 400px;" alt="">
+      <div class="header-image-container" data-aos="zoom-in-down" data-aos-duration="1000">
+        <img src="images/person.svg" style="width: 400px;" alt="">
       </div>
-      <div class="content-data">
-
-        <h1>Hi, I'm Saheer, a
-          <!-- <span class="highlight">experiences</span> , not just websites. -->
-        </h1>
-        <div class="loader">
-          <div class="words">
-            <span class="word">Front-End Developer.</span>
-            <span class="word">Branding Designer.</span>
-            <span class="word">Ui & Ux Designer.</span>
-            <span class="word">Front-End Developer.</span>
-          </div>
-        </div>
-
-        <p>I’m a Front-End Developer based in Kerala, India and this is
-          a selection of my personal and professional works.</p>
-
-        <a href="#contact"><button class="home-button">
-            Get in touch
-            <div class="home-hoverEffect">
-              <div></div>
+      <div data-aos="zoom-in" data-aos-duration="1000">
+        <div class="content-data">
+          <h1>Hi, I'm Saheer, a
+          </h1>
+          <div class="loader">
+            <div class="words">
+              <span class="word">Front-End Developer.</span>
+              <span class="word">Branding Designer.</span>
+              <span class="word">Ui & Ux Designer.</span>
+              <span class="word">Front-End Developer.</span>
             </div>
-          </button></a>
-        <!-- <div class="tools-title">Expertise in the following tools</div> -->
+          </div>
+          <p>I’m a Front-End Developer based in Kerala, India and this is
+            a selection of my personal and professional works.</p>
+          <a href="#contact"><button class="home-button">
+              Get in touch
+              <div class="home-hoverEffect">
+                <div></div>
+              </div>
+            </button></a>
+        </div>
       </div>
     </div>
-
   </div>
 
   <!-- About -->
@@ -153,11 +128,12 @@
     <div class="about-section">
       <div class="row">
         <div class="col-lg-5 about-image-container">
-          <img src="Images/PXL_20230123_153657831.PORTRAIT.jpg" alt="Designer" class="zoom-image" />
+          <img src="images/personal-photo.jpg" alt="Designer" class="zoom-image" />
         </div>
         <div class="col-lg-7">
-          <div class="sticky-heading">Behind the Designs:<br>Muhammed Saheer</div>
-          <div class="about-content">
+          <div class="sticky-heading" data-aos="fade-left" data-aos-duration="700">Behind the Designs:<br>Muhammed
+            Saheer</div>
+          <div class="about-content" data-aos="fade-left" data-aos-duration="900">
             <p>
               Hi, I’m <span> Muhammed Saheer</span> — a front-end developer and multimedia specialist from Kerala,
               India. I
@@ -173,21 +149,23 @@
             </p>
             </p>
           </div>
-          <div class="about-button">
-            <button>
-              <div class="text">
-                <span>Download</span>
-                <span>CV</span>
-              </div>
-              <div class="clone">
-                <span>Download</span>
-                <span>CV</span>
-              </div>
-              <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg" width="20px">
-                <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linejoin="round" stroke-linecap="round"></path>
-              </svg>
-            </button>
+          <div class="about-button" data-aos="fade-left" data-aos-duration="1100">
+            <a href="Muhammed Saheer - Front-End Developer & Branding Designer Resume.pdf" target="_blank">
+              <button>
+                <div class="text">
+                  <span>Download</span>
+                  <span>CV</span>
+                </div>
+                <div class="clone">
+                  <span>Download</span>
+                  <span>CV</span>
+                </div>
+                <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg" width="20px">
+                  <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -196,14 +174,14 @@
   <!-- Services -->
   <div id="services" class="container-fluid service-container">
     <div class="slider-container">
-      <h3>Services</h3>
-      <div class="slider-section">
+      <h3 data-aos="zoom-out" data-aos-duration="1000">Services</h3>
+      <div class="slider-section" data-aos="zoom-in" data-aos-duration="1000">
         <div class="review-card">
           <div class="review-card-inner">
             <span class="material-symbols-outlined">
               data_object
             </span>
-            <h4>Front-End Developer</h4>
+            <h4>Front-End Dev</h4>
             <p class="review-text">Crafting engaging, and high-performance websites using the latest technologies.</p>
           </div>
         </div>
@@ -262,14 +240,25 @@
   <!-- Education and Experience -->
   <div id="resume" class="container-fluid experience-container">
     <div class="container">
-      <h3 class="hvr-underline-from-left">The Journey So Far</h3>
+      <h3 class="hvr-underline-from-left" data-aos="zoom-out" data-aos-duration="800">The Journey So&nbsp;Far</h3>
       <div class="timeline">
+        <div class="timeline-item right">
+          <div class="timeline-dot"></div>
+          <div class="date-container">
+            <span class="date">2025 - Ongoing</span>
+          </div>
+          <div class="timeline-content" data-aos="fade-left" data-aos-duration="900">
+            <h5>Front-End Developer </h5>
+            <h6> Febno Technologies</h6>
+            <p>Builds and delivers web apps with React.js and Strapi CMS, turning Figma designs into pixel-perfect, responsive pages. Creates reusable components, audits UI for consistency, and designs marketing visuals in Photoshop and Illustrator.</p>
+          </div>
+        </div>
         <div class="timeline-item left">
           <div class="timeline-dot"></div>
           <div class="date-container">
-            <span class="date">2024 - Ongoing</span>
+            <span class="date">2024 - 2025</span>
           </div>
-          <div class="timeline-content">
+          <div class="timeline-content" data-aos="fade-right" data-aos-duration="900">
             <h5>UI/UX & BRANDING DESIGNER</h5>
             <h6>THE CHANDRAZ</h6>
             <p>Working as a Branding Designer and Front-End Developer to create user-friendly websites and impactful
@@ -281,7 +270,7 @@
           <div class="date-container">
             <span class="date">2023 - 2024</span>
           </div>
-          <div class="timeline-content">
+          <div class="timeline-content" data-aos="fade-left" data-aos-duration="900">
             <h5>MERN STACK</h5>
             <h6>BOOTCAMP</h6>
             <p>I learned the basics of Full Stack development by building web applications using MongoDB, Express.js,
@@ -293,7 +282,7 @@
           <div class="date-container">
             <span class="date">2019 - 2022</span>
           </div>
-          <div class="timeline-content">
+          <div class="timeline-content" data-aos="fade-right" data-aos-duration="900">
             <h5>BACHELOR OF MULTIMEDIA</h5>
             <h6>UNIVERSITY OF CALICUT</h6>
             <p>An educational program focused on developing skills in various aspects of multimedia design and
@@ -305,214 +294,196 @@
   </div>
   <!-- Skills -->
   <div id="skills" class="container skill-container">
-    <h3>skills</h3>
-    <div class="row first-row row-cols-md-3 row-cols-sm-2">
-      <div class="col-lg-2">
+    <h3 data-aos="zoom-out" data-aos-duration="800">skills</h3>
+    <div class="row first-row row-cols-md-3 row-cols-sm-2 row-cols-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="900">
         <div class="skill-icon">
-          <img src="Images/html5.svg" alt="">
+          <img src="images/html5.svg" alt="">
         </div>
         <h6>HTML <span>5</span></h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="700">
         <div class="skill-icon">
-          <img src="Images/css3.svg" alt="">
+          <img src="images/css3.svg" alt="">
         </div>
         <h6>CSS <span>3</span></h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="500">
         <div class="skill-icon">
-          <img src="Images/js.svg" alt="">
+          <img src="images/js.svg" alt="">
         </div>
         <h6>JavaScript</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="500">
         <div class="skill-icon">
-          <img src="Images/mongodb.svg" alt="">
+          <img src="images/mongodb.svg" alt="">
         </div>
         <h6>MongoDB</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="700">
         <div class="skill-icon">
-          <img src="Images/react.svg" alt="">
+          <img src="images/react.svg" alt="">
         </div>
         <h6>React Js</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="900">
         <div class="skill-icon">
-          <img src="Images/nodejs.svg" alt="">
+          <img src="images/nodejs.svg" alt="">
         </div>
         <h6>Node Js</h6>
       </div>
     </div>
-    <div class="row  row-cols-md-3 row-cols-sm-2">
-      <div class="col-lg-2">
+    <div class="row  row-cols-md-3 row-cols-sm-2 row-cols-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="900">
         <div class="skill-icon">
-          <img src="Images/bootstrap.svg" alt="">
+          <img src="images/bootstrap.svg" alt="">
         </div>
         <h6>Bootstrap</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="700">
         <div class="skill-icon">
-          <img src="Images/figma.svg" alt="">
+          <img src="images/figma.svg" alt="">
         </div>
         <h6>Figma</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="500">
         <div class="skill-icon">
-          <img src="Images/photoshop.svg" alt="">
+          <img src="images/photoshop.svg" alt="">
         </div>
         <h6>Photoshop</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="500">
         <div class="skill-icon">
-          <img src="Images/illustrator.svg" alt="">
+          <img src="images/illustrator.svg" alt="">
         </div>
         <h6>Illustrator</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="700">
         <div class="skill-icon">
-          <img src="Images/dreamweaver.svg" alt="">
+          <img src="images/dreamweaver.svg" alt="">
         </div>
         <h6>Dreamweaver</h6>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-2" data-aos="zoom-in" data-aos-duration="900">
         <div class="skill-icon">
-          <img src="Images/canva.svg" alt="">
+          <img src="images/canva.svg" alt="">
         </div>
         <h6>Canva</h6>
       </div>
     </div>
   </div>
-  <!-- Portfolio -->
-  <div id="portfolio" class="container-fluid portfolio-container">
-    <div class="container">
-      <h3>portfolio</h3>
-      <div class="row row-cols-md-2 row-cols-sm-2 ">
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-kt-qa/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/koyenco.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6>Koyenco Group Companies</h6>
-              </div>
-            </div>
-          </a>
+  <!-- Portfolio 3D -->
+  <div id="portfolio" class="portfolio-3d-wrapper">
+    
+    <div class="portfolio-3d-sticky">
+      <h3 data-aos="zoom-out" data-aos-duration="800">portfolio</h3>
+      <div id="canvas-container"></div>
+      
+      <div id="ui-layer">
+        <div class="slide-content" id="slide-0">
+          <span class="catalogue-number">01 / WEB DESIGN</span>
+          <h1>Koyenco<br>Group</h1>
+          <div class="description">Corporate website redesign with seamless UX and modern branding conventions.</div>
+          <a href="http://mywork.co.in/ch-kt-qa/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-zd-ae/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/damaso.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6>Zahir Damaso Dubai</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-1">
+          <span class="catalogue-number">02 / WEB DESIGN</span>
+          <h1>Zahir<br>Damaso</h1>
+          <div class="description">Dubai-based enterprise platform crafted with custom interactive elements.</div>
+          <a href="http://mywork.co.in/ch-zd-ae/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-ep-ae/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/al-hoot.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6> Al Hoot Electrical Material Trading L.L.C</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-2">
+          <span class="catalogue-number">03 / WEB DESIGN</span>
+          <h1>Al Hoot<br>Electrical</h1>
+          <div class="description">E-commerce optimized trading platform for material distribution.</div>
+          <a href="http://mywork.co.in/ch-ep-ae/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-sk-in/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/salafiyya.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6> Jam iyyathussalafiyyeen Charitable Society</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-3">
+          <span class="catalogue-number">04 / WEB DESIGN</span>
+          <h1>Jam<br>iyyathussalafiyyeen</h1>
+          <div class="description">Charitable Society web presence emphasizing community engagement.</div>
+          <a href="http://mywork.co.in/ch-sk-in/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-oa-in/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/oglas.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6>Oglas Advertisers Pvt.Ltd</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-4">
+          <span class="catalogue-number">05 / WEB DESIGN</span>
+          <h1>Oglas<br>Advertisers</h1>
+          <div class="description">Vibrant agency portfolio to showcase high-impact advertising campaigns.</div>
+          <a href="http://mywork.co.in/ch-oa-in/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-pa-ae/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/pezzi.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6>Pezzi Automotive Spare Parts</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-5">
+          <span class="catalogue-number">06 / WEB DESIGN</span>
+          <h1>Pezzi<br>Automotive</h1>
+          <div class="description">Dynamic catalog and spare parts lookup tool for a streamlined experience.</div>
+          <a href="http://mywork.co.in/ch-pa-ae/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-sb-in/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/soorya-bhavanam.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6>Soorya Bhavanam</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-6">
+          <span class="catalogue-number">07 / WEB DESIGN</span>
+          <h1>Soorya<br>Bhavanam</h1>
+          <div class="description">Elegant and welcoming digital storefront for property and housing.</div>
+          <a href="http://mywork.co.in/ch-sb-in/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-am-in/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/am-traders.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6> AM Traders</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-7">
+          <span class="catalogue-number">08 / WEB DESIGN</span>
+          <h1>AM<br>Traders</h1>
+          <div class="description">B2B trading dashboard prioritizing performance and scalable architecture.</div>
+          <a href="http://mywork.co.in/ch-am-in/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <div class="col-lg-4 portfolio-box">
-          <a href="http://mywork.co.in/ch-sc-in/" target="_blank">
-            <div class="portfolio-img-container">
-              <img src="Images/stecon.jpg" alt="Koyenco Project">
-              <span class="portfolio-category">WEB DESIGN</span>
-              <div class="portfolio-caption">
-                <h6>Stecon PU Chappals</h6>
-              </div>
-            </div>
-          </a>
+
+        <div class="slide-content" id="slide-8">
+          <span class="catalogue-number">09 / WEB DESIGN</span>
+          <h1>Stecon<br>PU Chappals</h1>
+          <div class="description">Consumer-facing product showcase with engaging lifestyle imagery.</div>
+          <a href="http://mywork.co.in/ch-sc-in/" target="_blank" class="slide-link">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
+          <br>
+          
         </div>
       </div>
+      
+    
     </div>
   </div>
+
+  <!-- Branding Works Link -->
+  <div class="container-fluid branding-container" style="padding: 80px 0; text-align: center; background-color: #070707;">
+    <h3 data-aos="zoom-out" data-aos-duration="800" style="font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 30px;">Check out my branding works</h3>
+    <a href="https://www.mywork.co.in/saheer.pdf" target="_blank" class="button-portfolio">
+      <button class="home-button" data-aos="zoom-in" data-aos-duration="800">
+        Branding Works
+        <div class="home-hoverEffect"><div></div></div>
+      </button>
+    </a>
+  </div>
+
   <!-- Contact -->
   <div id="contact" class="container contact-container">
     <div class="row">
       <div class="col-lg-6 contact-details">
         <div class="contact-heading">
-          <h5>Start Projects?</h5>
+          <h5 data-aos="zoom-out-right" data-aos-duration="700">Start Projects?</h5>
         </div>
-        <div class="contact-data phone">
+        <div class="contact-data phone" data-aos="zoom-out-right" data-aos-duration="700">
           <i class="fa-solid fa-phone"></i>
-          <p><span>Contact :</span><br>+91 97473 43117</p>
+          <p><span>Contact :</span><br><a href="tel:+91 97473 43117">+91 97473 43117</a></p>
         </div>
-        <div class="contact-data mail">
+        <div class="contact-data mail" data-aos="zoom-out-right" data-aos-duration="800">
           <i class="fa-solid fa-paper-plane"></i>
-          <p><span>Email :</span><br>muhammedsaheerk6@gmail.com</p>
+          <p><span>Email :</span><br><a href="mailto:muhammedsaheerk6@gmail.com">muhammedsaheerk6@gmail.com</a></p>
         </div>
-        <div class="contact-data">
+        <div class="contact-data" data-aos="zoom-out-right" data-aos-duration="900">
           <i class="fa-solid fa-address-book"></i>
           <p><span>Address :</span><br>Baithul Ayisha, Puthoopadam, Ayikkarappadi P.O, Malappuram Dt, Kerala,
             India, ZIP : 673637
           </p>
         </div>
       </div>
-      <div class="col-lg-6 contact-form form">
+      <div class="col-lg-6 contact-form form" data-aos="zoom-out-left" data-aos-duration="800">
         <h6>Lets get in touch</h6>
         <form action="form-sending.php" method="post" target="_self">
           <div class="row name-and-mail">
@@ -520,7 +491,7 @@
               <input type="text" name="Name" id="name" placeholder="Your Name" required>
             </div>
             <div class="col-lg-6 email">
-              <input type="email" name="Email" id="email" placeholder="Email Address" required>
+              <input type="email" name="email" id="email" placeholder="Email Address" required>
             </div>
           </div>
           <div class="row">
@@ -544,6 +515,7 @@
       </div>
     </div>
   </div>
+  <!-- Copyright -->
   <div class="container footer">
     <p>&#169; Copyright <strong style="color:  #00ffd0;">Muhammed Saheer</strong>. All Rights Reserved</p>
     <div class="social-content">
@@ -553,13 +525,10 @@
           <a href="https://www.linkedin.com/in/muhammed-saheer-bbb6132ab/" target="_blank" class="linkdin"><i
               class="fa-brands fa-linkedin-in"></i></a>
           <a href="https://github.com/mhdsaheer" target="_blank" class="github"><i class="fa-brands fa-github"></i></a>
-          <a href="https://www.instagram.com/gun_slingr/" target="_blank" class="intagram"><i
-              class="fa-brands fa-instagram"></i></a>
           <a href="https://wa.me/9747343117" target="_blank" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
       </div>
     </div>
-
   </div>
   <div class="progress-wrap">
     <i class="uil uil-arrow-up"></i>
@@ -568,15 +537,220 @@
     </svg>
   </div>
 
-  <!-- jQuery & Slick JS -->
+  </div>
+
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1/bundled/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
   <script>
+    // Initialize Lenis smooth scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    // Handle Anchor Links with Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          lenis.scrollTo(target);
+        }
+      });
+    });
+
+    // --- 3D Portfolio Slider ---
+    const CONFIG = {
+        slideCount: 9,
+        spacingX: 45,
+        pWidth: 14,
+        pHeight: 18,
+        camZ: 30,
+        wallAngleY: -0.25,
+        lerpSpeed: 0.08
+    };
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x070707);
+    scene.fog = new THREE.Fog(0x070707, 10, 80); 
+
+    const divContainer = document.getElementById('canvas-container');
+    const width = divContainer.clientWidth;
+    const height = divContainer.clientHeight;
+    
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera.position.set(0, 0, CONFIG.camZ);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.zIndex = '0';
+    divContainer.appendChild(renderer.domElement);
+
+    const cssRenderer = new THREE.CSS3DRenderer();
+    cssRenderer.setSize(width, height);
+    cssRenderer.domElement.style.position = 'absolute';
+    cssRenderer.domElement.style.top = '0';
+    cssRenderer.domElement.style.pointerEvents = 'none';
+    cssRenderer.domElement.style.zIndex = '1';
+    divContainer.appendChild(cssRenderer.domElement);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambient);
+
+    const dirLight = new THREE.DirectionalLight(0x00ffd0, 0.4);
+    dirLight.position.set(10, 20, 10);
+    scene.add(dirLight);
+
+    const galleryGroup = new THREE.Group();
+    scene.add(galleryGroup);
+
+    const textureLoader = new THREE.TextureLoader();
+    const planeGeo = new THREE.PlaneGeometry(CONFIG.pWidth, CONFIG.pHeight);
+
+    const portfolioImages = [
+        'images/koyenco.png',
+        'images/damaso.jpg',
+        'images/al-hoot.jpg',
+        'images/salafiyya.jpg',
+        'images/oglas.jpg',
+        'images/pezzi.jpg',
+        'images/soorya-bhavanam.png',
+        'images/am-traders.jpg',
+        'images/stecon.jpg'
+    ];
+
+    const paintingGroups = [];
+
+    for(let i=0; i<CONFIG.slideCount; i++) {
+        const group = new THREE.Group();
+        group.position.set(i * CONFIG.spacingX, 0, 0);
+        
+        const imgEl = document.createElement('img');
+        imgEl.src = portfolioImages[i];
+        imgEl.style.width = '280px';
+        imgEl.style.height = '380px';
+        imgEl.style.objectFit = 'cover';
+        imgEl.style.borderRadius = '1px';
+        imgEl.style.boxShadow = '0 0 20px rgba(0, 255, 208, 0.1)';
+
+        const cssObj = new THREE.CSS3DObject(imgEl);
+        cssObj.scale.set(CONFIG.pWidth / 280, CONFIG.pHeight / 360, 1);
+        group.add(cssObj);
+        
+        // Solid dark background mesh to cast shadow and block trailing lines
+        const mat = new THREE.MeshBasicMaterial({ color: 0x070707 });
+        const mesh = new THREE.Mesh(planeGeo, mat);
+        
+        const edges = new THREE.EdgesGeometry(planeGeo);
+        const outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x444444 }));
+
+        const shadowGeo = new THREE.PlaneGeometry(CONFIG.pWidth, CONFIG.pHeight);
+        const shadowMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.8 });
+        const shadow = new THREE.Mesh(shadowGeo, shadowMat);
+        shadow.position.set(0.8, -0.8, -0.5); 
+
+        group.add(shadow);
+        group.add(mesh);
+        group.add(outline);
+        
+        galleryGroup.add(group);
+        paintingGroups.push(group);
+    }
+
+    galleryGroup.rotation.y = CONFIG.wallAngleY;
+    galleryGroup.position.x = 8; 
+
+    let currentScroll3D = 0;
+    let targetScroll3D = 0;
+    let mouse3D = { x: 0, y: 0 };
+
+    window.addEventListener('mousemove', (e) => {
+        mouse3D.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse3D.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    lenis.on('scroll', (e) => {
+        const wrapper = document.querySelector('.portfolio-3d-wrapper');
+        if (!wrapper) return;
+        
+        const rect = wrapper.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        const maxScrollDist = rect.height - viewportHeight;
+        let progress = -rect.top / maxScrollDist;
+        progress = Math.max(0, Math.min(1, progress));
+        
+        targetScroll3D = progress * ((CONFIG.slideCount - 1) * CONFIG.spacingX);
+    });
+
+    function updateUI3D(scrollX) {
+        let activeIndex = Math.round(scrollX / CONFIG.spacingX);            
+        activeIndex = Math.max(0, Math.min(CONFIG.slideCount - 1, activeIndex));
+        
+        for(let i=0; i<CONFIG.slideCount; i++) {
+            const el = document.getElementById(`slide-${i}`);
+            if(el) {
+                if(i === activeIndex) el.classList.add('active');
+                else el.classList.remove('active');
+            }
+        }
+    }
+
+    function raf(time) {
+      lenis.raf(time);
+
+      // 3D Math Lerp
+      currentScroll3D += (targetScroll3D - currentScroll3D) * CONFIG.lerpSpeed;
+      
+      const xMove = currentScroll3D * Math.cos(CONFIG.wallAngleY);
+      const zMove = currentScroll3D * Math.sin(CONFIG.wallAngleY);
+      
+      camera.position.x = xMove;
+      camera.position.z = CONFIG.camZ - zMove;
+      
+      camera.rotation.x = mouse3D.y * 0.05; 
+      camera.rotation.y = -mouse3D.x * 0.05;
+      
+      updateUI3D(currentScroll3D);
+      renderer.render(scene, camera);
+      cssRenderer.render(scene, camera);
+
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    window.addEventListener('resize', () => {
+        const w = divContainer.clientWidth;
+        const h = divContainer.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+        cssRenderer.setSize(w, h);
+    });
+
     AOS.init();
+    $('.slider-section').on('init', function () {
+      AOS.refresh();
+    });
+    document.addEventListener('aos:in', () => updateScrollProgress());
+    document.addEventListener('scroll', () => updateScrollProgress());
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -601,7 +775,7 @@
         arrows: true,
         prevArrow: $('.slick-prev'),
         nextArrow: $('.slick-next'),
-        infinite: false, // Disable infinite to hide arrows at ends
+        infinite: false,
         adaptiveHeight: false,
         responsive: [
           {
@@ -689,7 +863,7 @@
 
     // Close nav on link click (for mobile)
     $('.navlinks li a').click(function () {
-      if ($(window).width() < 768) {
+      if ($(window).width() < 769) {
         $('.navTrigger').removeClass('active');
         $('#mainListDiv').removeClass('show_list');
       }
@@ -699,7 +873,7 @@
     const imageContainer = document.querySelector('.about-image-container');
 
     window.addEventListener('scroll', () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 769) {
         // Reset to normal for mobile
         zoomImage.style.transform = 'scale(1)';
         return;
@@ -714,7 +888,7 @@
       let visibilityRatio = 1 - distanceFromCenter / maxDistance;
       visibilityRatio = Math.max(0, Math.min(1, visibilityRatio));
 
-      const scale = 1 + visibilityRatio * 0.2; // Zoom in on scroll down
+      const scale = 1 + visibilityRatio * 0.2;
       zoomImage.style.transform = `scale(${scale})`;
     });
 
@@ -805,17 +979,33 @@
         });
       });
     })(jQuery);
-    
-    // Page Preloader
-    $(window).on('load', function () {
-      $('#page-preloader').fadeOut('slow');
-    });
+
+    // Custom Cursor
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+
+    if (cursorDot && cursorOutline) {
+      window.addEventListener('mousemove', function(e) {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        cursorOutline.animate({
+          left: `${posX}px`,
+          top: `${posY}px`
+        }, { duration: 500, fill: "forwards" });
+      });
+
+      // Hover effects
+      document.querySelectorAll('a, button, input, textarea, .portfolio-box, .review-card, .progress-wrap, .slick-arrow').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+      });
+    }
   </script>
 
 </body>
 
 </html>
-
-<!-- https://uiverse.io/Li-Deheng/bright-firefox-37 -->
-
-<!-- https://uiverse.io/ParasSalunke/selfish-dolphin-96 -->
