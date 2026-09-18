@@ -1,8 +1,8 @@
 "use client"
 
-import { useRef } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
-import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "framer-motion"
+import { motion, useMotionTemplate, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion"
 
 import { AboutFacts, AboutIntro } from "@/components/sections/about-me"
 
@@ -33,6 +33,13 @@ export function AboutPhotoPin() {
   const factsY = useTransform(scrollYProgress, FACTS, [32, 0])
   const factsBlurValue = useTransform(scrollYProgress, FACTS, [10, 0])
   const factsBlur = useMotionTemplate`blur(${factsBlurValue}px)`
+
+  // The rules draw themselves in just as the block starts to arrive
+  const [factsIn, setFactsIn] = useState(false)
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    const next = value > FACTS[0] + 0.015
+    setFactsIn((current) => (current === next ? current : next))
+  })
 
   // Nothing is clickable until it has actually arrived
   const factsPointer = useTransform(factsOpacity, (value) => (value > 0.6 ? "auto" : "none"))
@@ -98,7 +105,7 @@ export function AboutPhotoPin() {
             className="absolute right-6 md:right-12 bottom-[12vh] w-full max-w-[26rem] xl:max-w-[30rem]"
             style={factsStyle}
           >
-            <AboutFacts />
+            <AboutFacts active={reduceMotion ? true : factsIn} />
           </motion.div>
         </div>
       </div>

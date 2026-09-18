@@ -171,7 +171,9 @@
   }
 }
 
-header,
+/* Lift page content above the fixed mesh canvas. `header` is deliberately left
+   out: it sets its own `fixed` + `z-50`, and this rule is unlayered, so it would
+   beat Tailwind's layered utilities and drop the navbar back into the flow. */
 main,
 footer,
 section {
