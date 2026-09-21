@@ -9,12 +9,24 @@ import { motion, useReducedMotion } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const navItems = [
-  { href: "#works", label: "Selected work", short: "Work", number: "01" },
-  { href: "#about", label: "About", short: "About", number: "02" },
-  { href: "#testimonials", label: "What clients say", short: "Clients", number: "03" },
-  { href: "#awards", label: "Awards & Recognition", short: "Awards", number: "04" },
-  { href: "#insights", label: "Insights", short: "Insights", number: "05" },
+type NavItem = {
+  href: string
+  label: string
+  short: string
+  number: string
+  /** An id on the home page. Present means: scroll there instead of leaving. */
+  section?: string
+}
+
+/**
+ * Every entry is a real page, so the href is right from anywhere and a
+ * middle-click still opens a tab. `section` only changes what a plain click
+ * does while we are already on the home page.
+ */
+const navItems: NavItem[] = [
+  { href: "/work", label: "Selected work", short: "Work", number: "01", section: "works" },
+  { href: "/about", label: "About", short: "About", number: "02" },
+  { href: "/insights", label: "Insights", short: "Insights", number: "03" },
 ]
 
 /**
@@ -36,6 +48,9 @@ const HIDE_INTENT = 64
 const SHOW_INTENT = 24
 
 const CTA_GRADIENT = "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)"
+
+/** Height of the fixed bar, so a scrolled-to section is not tucked under it. */
+const HEADER_OFFSET = 80
 
 /** One wordmark, used by the bar, the pill and the mobile drawer. */
 function Wordmark({ size = "text-lg" }: { size?: string }) {
@@ -125,26 +140,29 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // Off the home page the sections do not exist yet - let the router handle it
-    if (!isHome) {
-      setIsMobileMenuOpen(false)
-      return
-    }
+  /**
+   * Every destination is a page now, so the router does the navigating and
+   * this only has to shut the mobile drawer behind the tap.
+   */
+  /**
+   * On the home page a nav item that names a section scrolls to it rather
+   * than navigating away. Modified clicks are left alone so opening in a new
+   * tab still lands on the real page.
+   */
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
+    setIsMobileMenuOpen(false)
+
+    if (!isHome || !item.section) return
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+
+    const element = document.getElementById(item.section)
+    if (!element) return
 
     e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      const headerOffset = 80 // Height of fixed header
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
-    }
-    setIsMobileMenuOpen(false)
+    window.scrollTo({
+      top: element.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET,
+      behavior: reduceMotion ? "auto" : "smooth",
+    })
   }
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -210,8 +228,8 @@ export function Header() {
               {navItems.map((item) => (
                 <motion.div key={item.href} layout="position" transition={morph}>
                   <Link
-                    href={isHome ? item.href : `/${item.href}`}
-                    onClick={(e) => handleNavClick(e, item.href)}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item)}
                     className={cn(
                       "block text-sm whitespace-nowrap transition-colors",
                       isScrolled ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground",
@@ -226,7 +244,7 @@ export function Header() {
             {/* CTA */}
             <motion.div layout="position" transition={morph} className="hidden md:block">
               <Link
-                href={isHome ? "#contact" : "/#contact"}
+                href="/contact"
                 className={cn(
                   "inline-flex items-center justify-center text-sm font-medium rounded-full text-white relative overflow-hidden group whitespace-nowrap transition-[padding,box-shadow] duration-[620ms] ease-out",
                   isScrolled ? "px-6 py-3" : "px-5 py-2.5",
@@ -268,8 +286,8 @@ export function Header() {
               {navItems.map((item) => (
                 <Link
                   key={item.href}
-                  href={isHome ? item.href : `/${item.href}`}
-                  onClick={(e) => handleNavClick(e, item.href)}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item)}
                   className="text-3xl font-semibold hover:text-muted-foreground transition-colors"
                 >
                   {item.label}
@@ -278,7 +296,7 @@ export function Header() {
             </nav>
             <div className="mt-auto">
               <Link
-                href={isHome ? "#contact" : "/#contact"}
+                href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium rounded-full text-white transition-all hover:shadow-xl relative overflow-hidden group"
                 style={{ background: CTA_GRADIENT, boxShadow: "0 4px 20px rgba(32, 62, 236, 0.3)" }}

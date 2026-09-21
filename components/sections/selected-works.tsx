@@ -27,7 +27,7 @@ export function SelectedWorks() {
             Selected work
           </SectionTitle>
           <Link
-            href="#"
+            href="/work"
             className="hidden md:inline-flex items-center gap-2 text-sm transition-colors"
             style={{ color: "#c8e0f5" }}
           >
@@ -130,7 +130,7 @@ export function SelectedWorks() {
         {/* Mobile View All */}
         <div className="md:hidden mt-8 text-center">
           <Link
-            href="#"
+            href="/work"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium border rounded-full hover:bg-secondary transition-colors"
             style={{ color: "#c8e0f5", borderColor: "#c8e0f5" }}
           >

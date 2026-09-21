@@ -1,6 +1,8 @@
 "use client"
 
 import Link from "next/link"
+
+import { CONTACT_EMAIL } from "@/lib/contact"
 import { Github, Linkedin, Twitter, Dribbble } from "lucide-react"
 
 const socialLinks = [
@@ -12,16 +14,16 @@ const socialLinks = [
 
 const footerLinks = [
   { href: "/", label: "Home" },
-  { href: "/#about", label: "About" },
-  { href: "/#works", label: "Works" },
-  { href: "/#insights", label: "Insights" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/about", label: "About" },
+  { href: "/work", label: "Work" },
+  { href: "/insights", label: "Insights" },
+  { href: "/contact", label: "Contact" },
 ]
 
 export function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-28 md:pb-32">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-10 md:pb-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
           {/* Brand */}
           <div className="md:col-span-2">
@@ -48,11 +50,11 @@ export function Footer() {
             </div>
             <div className="mt-4">
               <Link
-                href="mailto:hello@portfolio.com"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="text-sm transition-colors hover:underline"
                 style={{ color: "#c8e0f5" }}
               >
-                hello@portfolio.com
+                {CONTACT_EMAIL}
               </Link>
             </div>
           </div>

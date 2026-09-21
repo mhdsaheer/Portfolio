@@ -1,5 +1,7 @@
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, Download } from "lucide-react"
+
+import { RESUME_PATH } from "@/lib/contact"
 
 export function FinalCTA() {
   return (
@@ -19,7 +21,7 @@ export function FinalCTA() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
             <Link
-              href="mailto:hello@portfolio.com"
+              href="/contact"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-medium text-white rounded-full transition-all hover:shadow-2xl relative overflow-hidden group"
               style={{
                 background: "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)",
@@ -33,13 +35,15 @@ export function FinalCTA() {
               {/* Glow effect on hover */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-2xl bg-gradient-to-r from-[#203eec] to-[#00d4ff]" />
             </Link>
-            <Link
-              href="#"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-full hover:bg-secondary transition-colors"
+            <a
+              href={RESUME_PATH}
+              download
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-medium rounded-full hover:bg-secondary transition-colors"
               style={{ borderColor: "#c8e0f5", borderWidth: "1px", color: "#c8e0f5" }}
             >
-              View Resume
-            </Link>
+              Download Resume
+              <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+            </a>
           </div>
 
           {/* Contact Info */}

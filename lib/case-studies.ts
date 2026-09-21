@@ -3,6 +3,8 @@ export type CaseStudy = {
   index: number
   title: string
   category: string
+  /** The service on offer, not the domain - this is what the index lists. */
+  discipline: "Branding" | "Design" | "Development" | "Design & Development"
   description: string
   image: string
   tags: string[]
@@ -46,6 +48,7 @@ export const caseStudies: CaseStudy[] = [
     index: 1,
     title: "AI Onboarding Assistant",
     category: "AI Product",
+    discipline: "Design & Development",
     description: "Building an intelligent onboarding flow powered by GPT-4 and natural conversations",
     image: "/images/work-onboarding.png",
     tags: ["AI", "v0", "Next.js", "OpenAI"],
@@ -133,6 +136,7 @@ export const caseStudies: CaseStudy[] = [
     index: 2,
     title: "AI Fashion Curator",
     category: "E-commerce AI",
+    discipline: "Design",
     description: "Personalized style recommendations using computer vision and preference learning",
     image: "/images/work-fashion.png",
     tags: ["AI", "Machine Learning", "Midjourney"],
@@ -220,6 +224,7 @@ export const caseStudies: CaseStudy[] = [
     index: 3,
     title: "Smart Task Manager",
     category: "Productivity AI",
+    discipline: "Design",
     description: "AI-powered task prioritization and scheduling with natural language processing",
     image: "/images/work-tasks.png",
     tags: ["AI", "Claude", "Vibe Coding"],
@@ -307,6 +312,7 @@ export const caseStudies: CaseStudy[] = [
     index: 4,
     title: "Crypto AI Analytics",
     category: "FinTech AI",
+    discipline: "Design & Development",
     description: "Real-time market insights and predictions powered by advanced AI models",
     image: "/images/work-crypto.png",
     tags: ["AI", "Data Viz", "GPT-4"],
@@ -389,6 +395,26 @@ export const caseStudies: CaseStudy[] = [
     stack: ["Next.js", "D3.js", "OpenAI GPT-4", "TimescaleDB", "WebSockets"],
   },
 ]
+
+/**
+ * The work index filters by service rather than by discipline directly: the
+ * build side and the design-and-brand side, each mapped onto the disciplines
+ * that belong to it. Retag a study's `discipline` and it moves between pills.
+ */
+export const serviceFilters = {
+  "Web Development": ["Development", "Design & Development"],
+  Branding: ["Branding", "Design"],
+} satisfies Record<string, CaseStudy["discipline"][]>
+
+export type ServiceFilter = keyof typeof serviceFilters
+
+/** No selection means no narrowing - the whole index stays on show. */
+export function filterByService(studies: CaseStudy[], services: ServiceFilter[]) {
+  if (services.length === 0) return studies
+  return studies.filter((study) =>
+    services.some((service) => (serviceFilters[service] as readonly string[]).includes(study.discipline)),
+  )
+}
 
 export function getCaseStudy(slug: string) {
   return caseStudies.find((study) => study.slug === slug)

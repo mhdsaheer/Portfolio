@@ -77,7 +77,7 @@ export function Hero() {
             className="flex flex-row items-start gap-4 mt-10"
           >
             <Link
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white rounded-full transition-all relative overflow-hidden group"
               style={{
                 background: "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)",

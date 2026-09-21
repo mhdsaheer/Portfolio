@@ -48,7 +48,6 @@ export default async function CaseStudyPage({ params }: PageProps) {
   }
 
   const next = getNextCaseStudy(study.slug)
-  const label = String(study.index).padStart(2, "0")
 
   return (
     <>
@@ -67,11 +66,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </Link>
 
             <Reveal className="mt-8 md:mt-12">
-              <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
-                {label} // {study.category} — {study.year}
-              </span>
-
-              <h1 className="mt-5 text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-balance max-w-4xl">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-balance max-w-4xl">
                 {study.title}
               </h1>
 

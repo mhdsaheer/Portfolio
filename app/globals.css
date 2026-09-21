@@ -632,3 +632,27 @@ html.lenis, html.lenis body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
   background-size: 160px 160px;
 }
+
+/* Fluid base for the About page.
+   One em equals one vw, so 1em is 16px at a 1600px viewport and every em-based
+   size in those sections scales with the window instead of snapping between
+   breakpoints. Applied per section rather than globally so rem-based utilities
+   elsewhere on the site are untouched. */
+:root {
+  /* 1vw is the reference scale. The vh ceiling only engages on unusually short
+     or wide windows, where a pure vw base would size the pinned panel taller
+     than the viewport; at 16:9 and 16:10 it never binds. */
+  --about-fluid: min(1vw, 1.9vh);
+}
+
+@media (max-width: 991px) {
+  :root {
+    --about-fluid: 1.882vw;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --about-fluid: 4.103vw;
+  }
+}
