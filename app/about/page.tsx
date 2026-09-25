@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { FinalCTA } from "@/components/sections/final-cta"
 import { AboutHero } from "@/components/about/about-hero"
 import { WhatIDo } from "@/components/about/what-i-do"
 import { Services } from "@/components/about/services"
@@ -33,7 +32,6 @@ export default function AboutPage() {
         <Services />
         <Approach />
         <PhotoStrip />
-        <FinalCTA />
       </main>
 
       <Footer />

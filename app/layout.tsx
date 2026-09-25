@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter_Tight, Playfair_Display, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { MagneticCursor } from "@/components/ui/magnetic-cursor"
 import { IntroLoader } from "@/components/ui/intro-loader"
 import { UnicornBackground } from "@/components/ui/unicorn-background"
@@ -63,6 +64,7 @@ export default function RootLayout({
           <MagneticCursor />
           {children}
           <Analytics />
+          <SpeedInsights />
         </SmoothScroll>
       </body>
     </html>

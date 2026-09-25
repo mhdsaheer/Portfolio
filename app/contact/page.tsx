@@ -1,13 +1,18 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowLeft, Download } from "lucide-react"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { Reveal } from "@/components/case-study/reveal"
-import { ContactForm } from "@/components/contact/contact-form"
-import { LocalTime } from "@/components/contact/local-time"
-import { CONTACT_EMAIL, LOCATION, RESPONSE_TIME, RESUME_PATH, socials } from "@/lib/contact"
+import { LetterShowpiece } from "@/components/contact/letter-showpiece"
+import { ACCENT, HAIRLINE, INK, MUTED } from "@/components/about/tokens"
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  CONTACT_PHONE_DISPLAY,
+  LOCATION,
+  RESPONSE_TIME,
+  RESUME_PATH,
+  socials,
+} from "@/lib/contact"
 
 export const metadata: Metadata = {
   title: "Contact | Muhammed Saheer",
@@ -28,104 +33,88 @@ export default function ContactPage() {
       <Header />
 
       <main>
-        <section id="contact" className="pt-28 md:pt-36 pb-20 md:pb-32">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        <section id="contact" className="px-5 pb-20 pt-28 sm:px-8 md:pb-28 md:pt-36">
+          {/* The letterhead carries the page's title visually; this is for
+              anything reading the document rather than looking at it. */}
+          <h1 className="sr-only">Contact Muhammed Saheer</h1>
+
+          <LetterShowpiece />
+
+          <div className="mx-auto mt-16 w-full max-w-[46rem] md:mt-20">
+            <dl
+              className="grid grid-cols-2 gap-x-8 gap-y-7 border-t pt-8 lg:grid-cols-4"
+              style={{ borderColor: HAIRLINE }}
             >
-              <ArrowLeft className="w-4 h-4" />
-              Back home
-            </Link>
+              <Particular label="Reach me">
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="block underline-offset-4 hover:underline"
+                  style={{ color: ACCENT }}
+                >
+                  {CONTACT_EMAIL}
+                </a>
+                <a
+                  href={`tel:${CONTACT_PHONE}`}
+                  className="mt-1 block underline-offset-4 hover:underline"
+                  style={{ color: ACCENT }}
+                >
+                  {CONTACT_PHONE_DISPLAY}
+                </a>
+              </Particular>
 
-            <Reveal className="mt-8 md:mt-12">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-balance">
-                Let&apos;s talk
-              </h1>
+              <Particular label="Based in">
+                <span style={{ color: INK }}>{LOCATION}</span>
+              </Particular>
 
-              <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl text-pretty">
-                Whether it is a site that needs building, an interface that needs fixing, or something you are still
-                sketching out — tell me about it and I&apos;ll tell you honestly whether I&apos;m the right person for
-                it.
-              </p>
-            </Reveal>
+              <Particular label="Response">
+                <span style={{ color: INK }}>{RESPONSE_TIME}</span>
+              </Particular>
 
-            <div className="mt-14 md:mt-20 grid grid-cols-1 lg:grid-cols-[1.25fr_0.75fr] gap-12 lg:gap-20">
-              <Reveal delay={80}>
-                <ContactForm />
-              </Reveal>
+              <Particular label="Elsewhere">
+                <ul className="flex flex-wrap gap-x-4 gap-y-1">
+                  {activeSocials.map((social) => (
+                    <li key={social.label}>
+                      <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="underline-offset-4 hover:underline"
+                        style={{ color: ACCENT }}
+                      >
+                        {social.label}
+                      </a>
+                    </li>
+                  ))}
 
-              <Reveal delay={160}>
-                <div className="flex flex-col gap-8">
-                  <Detail label="Email">
-                    <a
-                      href={`mailto:${CONTACT_EMAIL}`}
-                      className="text-base md:text-lg font-medium hover:underline"
-                      style={{ color: "#c8e0f5" }}
-                    >
-                      {CONTACT_EMAIL}
-                    </a>
-                  </Detail>
-
-                  <Detail label="Based in">
-                    <p className="text-base md:text-lg font-medium">{LOCATION}</p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Local time <LocalTime />
-                    </p>
-                  </Detail>
-
-                  <Detail label="Response">
-                    <p className="text-base md:text-lg font-medium">{RESPONSE_TIME}</p>
-                  </Detail>
-
-                  {activeSocials.length > 0 && (
-                    <Detail label="Elsewhere">
-                      <ul className="flex flex-wrap gap-x-5 gap-y-2">
-                        {activeSocials.map((social) => (
-                          <li key={social.label}>
-                            <a
-                              href={social.href}
-                              target="_blank"
-                              rel="noreferrer noopener"
-                              className="text-base font-medium hover:underline"
-                              style={{ color: "#c8e0f5" }}
-                            >
-                              {social.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </Detail>
-                  )}
-
-                  <Detail label="Resume">
+                  <li>
                     <a
                       href={RESUME_PATH}
                       download
-                      className="group inline-flex items-center gap-2.5 px-6 py-3 text-sm font-medium rounded-full border border-border hover:bg-secondary transition-colors"
-                      style={{ color: "#c8e0f5" }}
+                      className="underline-offset-4 hover:underline"
+                      style={{ color: ACCENT }}
                     >
-                      Download PDF
-                      <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+                      Resume
                     </a>
-                  </Detail>
-                </div>
-              </Reveal>
-            </div>
+                  </li>
+                </ul>
+              </Particular>
+            </dl>
           </div>
         </section>
       </main>
 
-      <Footer />
+      <Footer invite={false} />
     </>
   )
 }
 
-function Detail({ label, children }: { label: string; children: React.ReactNode }) {
+function Particular({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="pt-5 border-t border-border first:pt-0 first:border-t-0">
-      <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">{label}</h2>
-      {children}
+    <div>
+      <dt className="mb-2 text-[0.7rem] font-medium uppercase tracking-[0.16em]" style={{ color: MUTED }}>
+        {label}
+      </dt>
+      <dd className="text-[0.9375rem]">{children}</dd>
     </div>
   )
 }

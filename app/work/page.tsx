@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { FinalCTA } from "@/components/sections/final-cta"
 import { WorkHero } from "@/components/work/work-hero"
 import { ProjectList } from "@/components/work/project-list"
 import { caseStudies } from "@/lib/case-studies"
@@ -51,7 +50,6 @@ export default function WorkPage() {
       <main>
         <WorkHero count={caseStudies.length} />
         <ProjectList projects={caseStudies} />
-        <FinalCTA />
       </main>
 
       <Footer />

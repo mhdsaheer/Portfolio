@@ -6,7 +6,6 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { FinalCTA } from "@/components/sections/final-cta"
 import { SectionTitle } from "@/components/ui/section-title"
 import { Reveal } from "@/components/case-study/reveal"
 import { caseStudies, getCaseStudy, getNextCaseStudy } from "@/lib/case-studies"
@@ -355,8 +354,6 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </div>
           </section>
         )}
-
-        <FinalCTA />
       </main>
 
       <Footer />

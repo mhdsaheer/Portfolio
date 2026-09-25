@@ -60,14 +60,14 @@ export function AboutPhotoPin() {
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Photograph */}
         <motion.div className="absolute inset-0" style={reduceMotion ? undefined : { scale: imageScale }}>
-          <Image
-            src="/images/designer.png"
-            alt="Designer workspace"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
+            <Image
+              src="/images/designer.png"
+              alt="Designer workspace"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
         </motion.div>
 
         {/* Left scrim - always there, the photograph is already dark on that side */}

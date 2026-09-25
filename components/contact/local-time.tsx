@@ -28,3 +28,24 @@ export function LocalTime() {
 
   return <span className="tabular-nums">{time}</span>
 }
+
+/**
+ * The date the letter is being written, in the same timezone as the clock.
+ * Empty until mount for the same reason `LocalTime` starts at zeroes.
+ */
+export function LocalDate() {
+  const [date, setDate] = useState("")
+
+  useEffect(() => {
+    setDate(
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: TIME_ZONE,
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(new Date()),
+    )
+  }, [])
+
+  return <span>{date}</span>
+}

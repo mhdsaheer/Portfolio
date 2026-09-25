@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { FinalCTA } from "@/components/sections/final-cta"
 import { Reveal } from "@/components/case-study/reveal"
 import { InsightCard } from "@/components/insights/insight-card"
 import { insights } from "@/lib/insights"
@@ -63,8 +62,6 @@ export default function InsightsPage() {
             )}
           </div>
         </section>
-
-        <FinalCTA />
       </main>
 
       <Footer />
