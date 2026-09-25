@@ -50,14 +50,32 @@ export function AboutPhotoPin() {
   // Slow settle on the photograph across the whole pin
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.06, 1])
 
+  // Entry and exit - while either edge of the section crosses the screen, the frame glides at
+  // three-quarter speed. On the way in it starts a quarter of its height behind and catches up
+  // by the time the pin takes over; on the way out it falls a quarter behind again, so the
+  // section edges sweep across the photo instead of it scrolling 1:1
+  const { scrollYProgress: entryProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "start start"],
+  })
+  const { scrollYProgress: exitProgress } = useScroll({
+    target: sectionRef,
+    offset: ["end end", "end start"],
+  })
+  const frameY = useTransform([entryProgress, exitProgress], ([entry, exit]: number[]) => `${(entry - 1 + exit) * 25}%`)
+
   const introStyle = reduceMotion ? undefined : { opacity: introOpacity, y: introY, filter: introBlur }
   const factsStyle = reduceMotion
     ? undefined
     : { opacity: factsOpacity, y: factsY, filter: factsBlur, pointerEvents: factsPointer }
 
+  // overflow-clip, not hidden - it trims the lagging frame at both section edges without breaking sticky
   return (
-    <section ref={sectionRef} className="hidden lg:block relative h-[360vh] mt-20 xl:mt-28" aria-label="About Muhammed Saheer">
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+    <section ref={sectionRef} className="hidden lg:block relative h-[360vh] mt-20 xl:mt-28 overflow-clip" aria-label="About Muhammed Saheer">
+      <motion.div
+        className="sticky top-0 h-screen w-full overflow-hidden"
+        style={reduceMotion ? undefined : { y: frameY }}
+      >
         {/* Photograph */}
         <motion.div className="absolute inset-0" style={reduceMotion ? undefined : { scale: imageScale }}>
             <Image
@@ -108,7 +126,7 @@ export function AboutPhotoPin() {
             <AboutFacts active={reduceMotion ? true : factsIn} />
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
