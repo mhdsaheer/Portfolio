@@ -13,16 +13,14 @@ import {
 
 import { AccentStar } from "@/components/about/accent-star"
 import {
-  ACCENT,
-  DIM,
+  CUT,
+  CUT_DIM,
+  CUT_HAIRLINE,
   EASE_IN_QUAD,
   EASE_OUT_QUAD,
   EASE_OUT_QUART,
   FLUID,
-  HAIRLINE,
-  INK,
-  PANEL,
-  TRACK,
+  SHEET,
 } from "@/components/about/tokens"
 
 /**
@@ -63,9 +61,19 @@ const services = [
  */
 const STEP_TRIGGERS = [0, 0.2, 0.5, 0.8]
 
+/**
+ * The white sheet both layouts sit on. Screen keeps the white and lets the
+ * page's moving background through wherever the text is black. It is set on
+ * the panel itself: the sticky pane is its own stacking context, so a blend on
+ * anything inside it would only ever see the white.
+ */
+const SHEET_STYLE = { backgroundColor: SHEET, mixBlendMode: "screen" } as const
+
 export function Services() {
   return (
-    <section id="services" aria-label="Services" style={{ fontSize: FLUID }}>
+    // No z-index here, unlike every other section: one would seal the panel's
+    // blend off from the background behind the page (see app/about/page.tsx)
+    <section id="services" aria-label="Services" style={{ fontSize: FLUID, zIndex: "auto" }}>
       <ServicesPinned />
       <ServicesStacked />
     </section>
@@ -102,7 +110,7 @@ function ServicesPinned() {
 
   return (
     <div ref={sectionRef} className="relative hidden h-[400vh] min-[992px]:block">
-      <div className="sticky top-0 flex h-[100dvh] w-full overflow-hidden" style={{ backgroundColor: PANEL }}>
+      <div className="sticky top-0 flex h-[100dvh] w-full overflow-hidden" style={SHEET_STYLE}>
         <div className="flex flex-1 flex-col justify-between px-[2.5em] pt-[1.5em] pb-[2.5em]">
           <Eyebrow>My services</Eyebrow>
 
@@ -117,7 +125,7 @@ function ServicesPinned() {
                     onClick={() => scrollToStep(sectionRef.current, index)}
                     aria-current={index === active ? "true" : undefined}
                     className="block w-full text-left text-[3.2em] font-medium leading-[1.3] tracking-[-0.03em]"
-                    style={{ color: INK }}
+                    style={{ color: CUT }}
                     initial={false}
                     animate={{ opacity: index === active ? 1 : 0.4 }}
                     transition={
@@ -141,7 +149,7 @@ function ServicesPinned() {
               <motion.div
                 key={current.number}
                 className="flex shrink-0 items-start gap-[0.25em]"
-                style={{ color: DIM }}
+                style={{ color: CUT_DIM }}
                 initial={{ y: still ? 0 : 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: still ? 0 : -40, opacity: 0 }}
@@ -156,13 +164,13 @@ function ServicesPinned() {
           {/* Likewise reserved for four lines of copy, so the rule keeps its
               place whether the description runs to two lines or four */}
           <div className="min-h-[8.25em]">
-            <div className="h-px" style={{ backgroundColor: HAIRLINE }} />
+            <div className="h-px" style={{ backgroundColor: CUT_HAIRLINE }} />
 
             <AnimatePresence mode="wait" initial={false}>
               <motion.p
                 key={current.number}
                 className="mt-[2em] max-w-[34em] text-[1.0625em] leading-[1.45]"
-                style={{ color: INK }}
+                style={{ color: CUT }}
                 initial={{ y: still ? 0 : 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: still ? 0 : -40, opacity: 0 }}
@@ -213,7 +221,7 @@ function SkillColumn({ service, still }: { service: (typeof services)[number]; s
           key={service.number}
           className="grid border-t"
           style={{
-            borderColor: HAIRLINE,
+            borderColor: CUT_HAIRLINE,
             gridTemplateRows: `repeat(${rows}, auto)`,
             gridAutoFlow: "column",
             gridAutoColumns: "minmax(0, 1fr)",
@@ -228,18 +236,18 @@ function SkillColumn({ service, still }: { service: (typeof services)[number]; s
             <motion.li
               key={skill}
               className="flex items-baseline justify-between gap-[1em] border-b py-[0.8em]"
-              style={{ borderColor: HAIRLINE }}
+              style={{ borderColor: CUT_HAIRLINE }}
               variants={itemVariants(still)}
             >
               <span
                 className={`font-medium leading-[1.3] ${size}`}
-                style={{ color: INK }}
+                style={{ color: CUT }}
               >
                 {skill}
               </span>
               <span
                 className="shrink-0 text-[0.875em] font-medium italic uppercase leading-none"
-                style={{ color: DIM }}
+                style={{ color: CUT_DIM }}
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -255,9 +263,9 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="inline-flex items-center gap-[0.25em] text-[0.875em] font-medium italic uppercase leading-none"
-      style={{ color: INK }}
+      style={{ color: CUT }}
     >
-      <AccentStar className="h-[0.625em] w-[0.625em] shrink-0" style={{ color: ACCENT }} />
+      <AccentStar className="h-[0.625em] w-[0.625em] shrink-0" />
       {children}
     </span>
   )
@@ -297,8 +305,8 @@ function ProgressSegment({ progress, start, end }: { progress: MotionValue<numbe
   const height = useTransform(progress, [start, end], ["0%", "100%"], { clamp: true })
 
   return (
-    <div className="h-1/4 w-px overflow-hidden" style={{ backgroundColor: TRACK }}>
-      <motion.div className="w-px" style={{ height, backgroundColor: INK }} />
+    <div className="h-1/4 w-px overflow-hidden" style={{ backgroundColor: CUT_HAIRLINE }}>
+      <motion.div className="w-px" style={{ height, backgroundColor: CUT }} />
     </div>
   )
 }
@@ -306,7 +314,7 @@ function ProgressSegment({ progress, start, end }: { progress: MotionValue<numbe
 /** Below the pin's breakpoint the four services simply stack, skills and all. */
 function ServicesStacked() {
   return (
-    <div className="py-[4em] min-[992px]:hidden" style={{ backgroundColor: PANEL }}>
+    <div className="py-[4em] min-[992px]:hidden" style={SHEET_STYLE}>
       <div className="px-[2.5em]">
         <Eyebrow>My services</Eyebrow>
 
@@ -316,30 +324,30 @@ function ServicesStacked() {
               <div className="flex items-start justify-between gap-[1em]">
                 <h3
                   className="text-[1.875em] font-medium leading-[1.2] tracking-[-0.03em] md:text-[2.625em]"
-                  style={{ color: INK }}
+                  style={{ color: CUT }}
                 >
                   {service.title}
                 </h3>
-                <div className="flex shrink-0 items-start gap-[0.25em]" style={{ color: DIM }}>
+                <div className="flex shrink-0 items-start gap-[0.25em]" style={{ color: CUT_DIM }}>
                   <span className="text-[1.5em] font-medium italic uppercase leading-none">{service.number}</span>
                   <AccentStar className="mt-[0.25em] h-[0.5em] w-[0.5em]" />
                 </div>
               </div>
 
-              <p className="mt-[0.75em] text-[1.0625em] leading-[1.45]" style={{ color: INK }}>
+              <p className="mt-[0.75em] text-[1.0625em] leading-[1.45]" style={{ color: CUT }}>
                 {service.body}
               </p>
 
               <ul className="mt-[1.5em] grid grid-cols-2 gap-x-[1.5em] gap-y-[1em] md:grid-cols-3">
                 {service.skills.map((skill, index) => (
-                  <li key={skill} className="border-t pt-[0.75em]" style={{ borderColor: HAIRLINE }}>
+                  <li key={skill} className="border-t pt-[0.75em]" style={{ borderColor: CUT_HAIRLINE }}>
                     <span
                       className="block text-[0.875em] font-medium italic uppercase leading-none"
-                      style={{ color: DIM }}
+                      style={{ color: CUT_DIM }}
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="mt-[0.4em] block text-[1.0625em] font-medium leading-[1.25]" style={{ color: INK }}>
+                    <span className="mt-[0.4em] block text-[1.0625em] font-medium leading-[1.25]" style={{ color: CUT }}>
                       {skill}
                     </span>
                   </li>

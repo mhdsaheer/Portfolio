@@ -183,19 +183,6 @@ export function IntroLoader() {
             transition={{ duration: 0.35, ease: "easeInOut" }}
           >
             <div className="max-w-[1280px] mx-auto">
-              <div className="flex items-end justify-between gap-6 mb-4">
-                <motion.span
-                  className="text-[10px] md:text-[11px] font-mono uppercase tracking-[0.18em] text-neutral-500"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.35 }}
-                >
-                  Muhammed Saheer — Frontend Developer
-                </motion.span>
-                <span className="text-[10px] md:text-[11px] font-mono tabular-nums text-neutral-500">
-                  {String(count).padStart(3, "0")}
-                </span>
-              </div>
 
               <div className="h-px w-full bg-neutral-900/15">
                 <motion.div className="h-full bg-neutral-900/70" style={{ width: barWidth }} />

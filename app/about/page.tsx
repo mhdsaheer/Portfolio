@@ -26,7 +26,11 @@ export default function AboutPage() {
     <>
       <Header />
 
-      <main>
+      {/* No z-index, overriding the global `main` rule: it would make main a
+          stacking context, and the services panel's blend could then only
+          reach main's own empty ground, not the background behind the page.
+          Inline, because that rule is unlayered and outranks a utility. */}
+      <main style={{ zIndex: "auto" }}>
         <AboutHero />
         <WhatIDo />
         <Services />

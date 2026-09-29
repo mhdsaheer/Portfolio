@@ -9,8 +9,19 @@ export const FLUID = "var(--about-fluid)"
 
 /** Sections sit on the site's mesh background rather than their own ground. */
 export const SURFACE = "transparent"
-/** The one opaque surface: the services panel. */
+/** Dark ink for text sitting on a light fill, like the work list's active row. */
 export const PANEL = "#0a121c"
+
+/**
+ * The services panel is a white sheet screen-blended onto the page: white stays
+ * white and black turns see-through. So its text is set in black to be cut out
+ * of the sheet, and the lighter the black, the less of the background shows.
+ */
+export const SHEET = "#ffffff"
+export const CUT = "#000000"
+/** The counter and the faded lines - cut only partway through. */
+export const CUT_DIM = "rgba(0, 0, 0, 0.55)"
+export const CUT_HAIRLINE = "rgba(0, 0, 0, 0.18)"
 
 export const INK = "#ffffff"
 export const MUTED = "#a8c4dc"
@@ -19,7 +30,6 @@ export const ACCENT = "#c8e0f5"
 export const DIM = "rgba(255, 255, 255, 0.45)"
 
 export const HAIRLINE = "rgba(255, 255, 255, 0.15)"
-export const TRACK = "rgba(255, 255, 255, 0.18)"
 
 export const CTA_GRADIENT = "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)"
 export const CTA_SHADOW = "0 8px 32px rgba(32, 62, 236, 0.35)"

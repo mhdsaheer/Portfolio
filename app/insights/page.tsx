@@ -1,6 +1,4 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
@@ -26,15 +24,7 @@ export default function InsightsPage() {
       <main>
         <section className="pt-28 md:pt-36 pb-12 md:pb-16">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back home
-            </Link>
-
-            <Reveal className="mt-8 md:mt-12">
+            <Reveal>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-balance">
                 Insights
               </h1>

@@ -1,114 +1,148 @@
 "use client"
 
+import type React from "react"
+import { useRef } from "react"
 import Link from "next/link"
 import { ArrowDown } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 
 import { useIntroDone } from "@/hooks/use-intro-done"
 
-export function Hero() {
-  const introDone = useIntroDone()
+const EASE = [0.16, 1, 0.3, 1] as const
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
-    },
-  }
+/** Height of the fixed bar, so the scrolled-to section is not tucked under it. */
+const HEADER_OFFSET = 80
 
-  const lineVariants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
-  }
+/** How far each line travels sideways by the time the hero has scrolled away. */
+const DRIFT = "36vw"
 
+/** The S mark, traced from the logo. It leans the same way the name beside it does. */
+function Monogram({ className }: { className?: string }) {
   return (
-    <section className="min-h-screen flex flex-col justify-center pt-24 relative overflow-hidden">
+    <svg viewBox="0 0 184 94" fill="currentColor" aria-hidden className={className}>
+      <path d="M65 0H184Q170.1 20 148.5 20H85.5A10 10 0 0 0 85.5 40H156.4L119 94H0Q13.9 74 35.5 74H98.5A10 10 0 0 0 98.5 54H27.6Z" />
+    </svg>
+  )
+}
 
+export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const introDone = useIntroDone()
+  const reduceMotion = useReducedMotion()
 
-      <div className="max-w-[1280px] mx-auto px-6 md:px-12 pt-4 pb-4 md:pt-10 md:pb-4 z-10">
-        <div className="max-w-4xl">
-          <motion.p 
-            initial={{ opacity: 0, x: -20 }}
-            animate={introDone ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-muted-foreground mb-6 text-lg font-normal"
-          >
-            I'm Muhammed Saheer, 
+  // The two lines part ways as the hero leaves: one out left, one out right
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  })
+  const driftLeft = useTransform(scrollYProgress, [0, 1], ["0vw", `-${DRIFT}`])
+  const driftRight = useTransform(scrollYProgress, [0, 1], ["0vw", DRIFT])
+
+  const lines = [
+    { text: "Designer.", x: driftLeft },
+    { text: "Developer.", x: driftRight },
+  ]
+
+  const rise = (delay: number) => ({
+    initial: { opacity: 0, y: 16 },
+    animate: introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
+    transition: reduceMotion ? { duration: 0 } : { duration: 0.9, delay, ease: EASE },
+  })
+
+  /** Lenis owns the scroll position, so ask it first, like the nav does. */
+  const toWorks = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+
+    const works = document.getElementById("works")
+    if (!works) return
+
+    e.preventDefault()
+    if (window.__lenis) {
+      window.__lenis.scrollTo(works, { offset: -HEADER_OFFSET })
+      return
+    }
+    window.scrollTo({
+      top: works.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET,
+      behavior: reduceMotion ? "auto" : "smooth",
+    })
+  }
+
+  // overflow-clip, not hidden - it trims the lines as they drift off the sides without
+  // turning the section into a scroll container
+  return (
+    <section ref={sectionRef} className="relative flex min-h-svh flex-col overflow-clip pt-24 md:pt-28">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-1 flex-col px-6 pb-10 md:px-12 md:pb-12">
+        {/*
+          The headline is sized by whichever runs out first, width or height. At weight 800
+          and -0.06em, "Developer." sets 4.47em wide, so 22.4cqi fills the column. Two lines at
+          leading 1 take 2em, so 46cqh keeps both, descenders included, inside the space left
+          between the nav and the bottom row - that is what shrinks it on short laptops.
+          The container is pinned inside the flex slot rather than being the slot itself:
+          Chrome reads cqh as 0 on a container whose height comes from flex-grow.
+        */}
+        <div className="relative min-h-48 flex-1">
+          <div className="absolute inset-0 flex flex-col justify-end [container-type:size]">
+            <h1 className="font-sans text-[length:min(22.4cqi,46cqh)] font-extrabold leading-none tracking-[-0.06em] text-white">
+              {lines.map((line, index) => (
+                <motion.span
+                  key={line.text}
+                  // Each line is its own mask. The padding lets descenders show, the negative
+                  // margin gives the space back; the nudge left sits the D's stem on the column edge.
+                  className="-mb-[0.1em] -ml-[0.03em] block w-max overflow-hidden pb-[0.1em]"
+                  style={reduceMotion ? undefined : { x: line.x }}
+                >
+                  <motion.span
+                    className="block whitespace-nowrap"
+                    initial={{ y: "115%" }}
+                    animate={{ y: introDone ? "0%" : "115%" }}
+                    transition={
+                      reduceMotion ? { duration: 0 } : { duration: 1.1, delay: 0.1 + index * 0.12, ease: EASE }
+                    }
+                  >
+                    {line.text}
+                  </motion.span>
+                </motion.span>
+              ))}
+            </h1>
+          </div>
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 items-end gap-8 md:mt-10 md:grid-cols-2 md:gap-x-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,23.5rem)_auto] lg:gap-x-10 xl:gap-x-16">
+          {/* Tablets give the tagline a row of its own; half the width would break it in two.
+              From lg the row is three columns sized by their contents, so the paragraph
+              lands near the centre and "View Works" never wraps. */}
+          <motion.div className="md:col-span-2 lg:col-span-1" {...rise(0.45)}>
+            <p className="flex items-center gap-2.5 text-sm font-medium uppercase italic text-[#c8e0f5]">
+              <Monogram className="h-2.5 w-auto text-white" />
+              Muhammed Saheer
+            </p>
+            <p className="mt-3 font-serif text-4xl italic leading-[1.1] text-white md:text-5xl lg:text-4xl xl:text-5xl">who removes friction</p>
+          </motion.div>
+
+          <motion.p className="max-w-[23.5rem] text-pretty text-[15px] leading-relaxed text-white/75" {...rise(0.55)}>
+            I craft intelligent, intuitive <span className="whitespace-nowrap">AI-powered</span> products using vibe
+            coding, generative design tools, and <span className="whitespace-nowrap">cutting-edge</span> AI
+            technologies. Let's build the future of <span className="whitespace-nowrap">human-AI</span> interaction
+            together.
           </motion.p>
 
-          <motion.h1 
-            variants={containerVariants}
-            initial="hidden"
-            animate={introDone ? "visible" : "hidden"}
-            className="text-6xl sm:text-7xl lg:text-[96px] font-semibold tracking-tight leading-[1.05] flex flex-col items-start gap-1"
-          >
-            <motion.span variants={lineVariants} className="block text-white font-sans font-extrabold">
-              Designer.
-            </motion.span>
-            <motion.span variants={lineVariants} className="block text-white font-sans font-extrabold">
-              Developer.
-            </motion.span>
-            <motion.span 
-              variants={lineVariants} 
-              className="block font-serif italic font-normal text-4xl sm:text-5xl lg:text-[72px] text-[#c8e0f5] mt-2 relative"
-              style={{
-                textShadow: "0 0 40px rgba(200, 224, 245, 0.15)",
-              }}
-            >
-              who removes friction
-            </motion.span>
-          </motion.h1>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.55, ease: "easeOut" }}
-            className="mt-8 max-w-xl leading-relaxed text-left text-lg text-zinc-300 ml-0"
-          >
-            I craft intelligent, intuitive AI-powered products using vibe coding, generative design tools, and
-            cutting-edge AI technologies. Let's build the future of human-AI interaction together.
-          </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.75, ease: "easeOut" }}
-            className="flex flex-row items-start gap-4 mt-10"
-          >
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white rounded-full transition-all relative overflow-hidden group"
-              style={{
-                background: "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)",
-                boxShadow: "0 4px 20px rgba(32, 62, 236, 0.3)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = "0 8px 30px rgba(32, 62, 236, 0.5), 0 0 40px rgba(0, 212, 255, 0.3)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "0 4px 20px rgba(32, 62, 236, 0.3)"
-              }}
-            >
-              Let's Talk
-            </Link>
+          <motion.div className="md:justify-self-end" {...rise(0.65)}>
             <Link
               href="#works"
-              className="inline-flex items-center gap-2 px-8 py-4 text-base font-medium transition-colors hover:text-white"
-              style={{ color: "#c8e0f5" }}
+              onClick={toWorks}
+              className="group inline-flex items-center gap-4 whitespace-nowrap text-base font-medium text-white"
             >
               View Works
-              <motion.div
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <ArrowDown className="w-4 h-4" />
-              </motion.div>
+              <span className="grid size-12 place-items-center rounded-full border border-white/35 transition-colors duration-300 group-hover:border-white group-hover:bg-white group-hover:text-[#0d1b2c]">
+                <ArrowDown
+                  className="size-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                  aria-hidden
+                />
+              </span>
             </Link>
           </motion.div>
         </div>
       </div>
-
     </section>
   )
 }
