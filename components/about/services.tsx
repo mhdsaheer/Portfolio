@@ -32,25 +32,21 @@ const services = [
   {
     number: "01",
     title: "Front-End Development",
-    body: "Every screen gets built the way it was drawn. React and Next.js, componentised and responsive, with the loading and empty states handled rather than bolted on once something breaks.",
     skills: ["React.js", "Next.js", "JavaScript (ES6+)", "HTML5 & CSS3", "Tailwind CSS", "Bootstrap"],
   },
   {
     number: "02",
     title: "Back-End & CMS",
-    body: "The half nobody sees. Node and Express behind a Mongo database, REST endpoints that stay predictable, and Strapi, Moodle or Notion wired up so your team can edit the content without calling me.",
     skills: ["Node.js", "Express", "MongoDB", "REST APIs", "Strapi CMS", "Moodle"],
   },
   {
     number: "03",
     title: "UI/UX Design",
-    body: "Every aspect of the design is thought through, and you can see it. Figma and XD from the first wireframe to the final state, laid out to hold up on a phone and in every browser you care about.",
     skills: ["Figma", "Adobe XD", "Responsive Design", "Cross-Browser Compatibility", "Canva","Notion"],
   },
   {
     number: "04",
     title: "Branding & Identity",
-    body: "A strong identity is the base the rest of it sits on. Logo, type and colour built into a system, so the site, the deck and anything printed all read as one thing.",
     skills: ["Logo Design", "Brand Identity", "Photoshop", "Illustrator", "InDesign"],
   },
 ]
@@ -81,10 +77,10 @@ export function Services() {
 }
 
 /**
- * One full-width panel rather than a split. Three bands - the label, then the
- * titles with the skills and the counter alongside them, then the description
- * under a rule - spaced apart by `justify-between`, so the slack is shared
- * between them instead of pooling in one hole beside the titles.
+ * One full-width panel rather than a split: the label and the counter across
+ * the top, then the titles with the skills alongside them, set between two
+ * spacers so the slack is shared above and beneath instead of pooling in one
+ * hole beside the titles.
  */
 function ServicesPinned() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -111,12 +107,33 @@ function ServicesPinned() {
   return (
     <div ref={sectionRef} className="relative hidden h-[400vh] min-[992px]:block">
       <div className="sticky top-0 flex h-[100dvh] w-full overflow-hidden" style={SHEET_STYLE}>
-        <div className="flex flex-1 flex-col justify-between px-[2.5em] pt-[1.5em] pb-[2.5em]">
-          <Eyebrow>My services</Eyebrow>
+        <div className="flex flex-1 flex-col px-[2.5em] pt-[1.5em] pb-[2.5em]">
+          <div className="flex items-start justify-between gap-[4em]">
+            <Eyebrow>My services</Eyebrow>
+
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={current.number}
+                className="mt-[3.5em] flex shrink-0 items-start gap-[0.75em]"
+                style={{ color: CUT_DIM }}
+                initial={{ y: still ? 0 : 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: still ? 0 : -40, opacity: 0 }}
+                transition={still ? { duration: 0 } : { duration: 0.5, ease: EASE_OUT_QUART }}
+              >
+                <span className="text-[3.5em] font-medium italic uppercase leading-none">{current.number}</span>
+                <AccentStar className="mt-[0.3em] h-[0.9em] w-[0.9em] shrink-0" />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* A third of the free height above the band, two thirds below, so
+              it rides high in the panel rather than dead centre */}
+          <div className="flex-[1]" />
 
           {/* Reserved to the tallest it can ever be - six skill rows - so the
               band does not resize when a service carries fewer of them */}
-          <div className="flex min-h-[20.5em] items-start justify-between gap-[4em]">
+          <div className="flex min-h-[20.5em] shrink-0 items-start gap-[4em]">
             <ol>
               {services.map((service, index) => (
                 <li key={service.number}>
@@ -142,44 +159,12 @@ function ServicesPinned() {
               ))}
             </ol>
 
-            {/* The toolkit for the current service, filling the middle */}
+            {/* The toolkit for the current service, centred in the space the
+                titles leave */}
             <SkillColumn service={current} still={still} />
-
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={current.number}
-                className="flex shrink-0 items-start gap-[0.25em]"
-                style={{ color: CUT_DIM }}
-                initial={{ y: still ? 0 : 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: still ? 0 : -40, opacity: 0 }}
-                transition={still ? { duration: 0 } : { duration: 0.5, ease: EASE_OUT_QUART }}
-              >
-                <span className="text-[3.5em] font-medium italic uppercase leading-none">{current.number}</span>
-                <AccentStar className="mt-[0.3em] h-[0.9em] w-[0.9em] shrink-0" />
-              </motion.div>
-            </AnimatePresence>
           </div>
 
-          {/* Likewise reserved for four lines of copy, so the rule keeps its
-              place whether the description runs to two lines or four */}
-          <div className="min-h-[8.25em]">
-            <div className="h-px" style={{ backgroundColor: CUT_HAIRLINE }} />
-
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.p
-                key={current.number}
-                className="mt-[2em] max-w-[34em] text-[1.0625em] leading-[1.45]"
-                style={{ color: CUT }}
-                initial={{ y: still ? 0 : 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: still ? 0 : -40, opacity: 0 }}
-                transition={still ? { duration: 0 } : { duration: 0.6, ease: EASE_OUT_QUART }}
-              >
-                {current.body}
-              </motion.p>
-            </AnimatePresence>
-          </div>
+          <div className="flex-[2]" />
         </div>
 
         {/* Four stacked segments, one per service, filling as you scroll it */}
@@ -202,7 +187,7 @@ function ServicesPinned() {
 
 /**
  * Six rows is what sits level with the four titles. Rather than let a longer
- * list grow down the panel and shove the description out of the frame, the
+ * list grow down the panel and push the band out of the frame, the
  * overflow turns into another column - so the block's height is capped by
  * construction and no count can break the band.
  */
@@ -215,7 +200,7 @@ function SkillColumn({ service, still }: { service: (typeof services)[number]; s
   const size = columns === 1 ? "text-[1.375em]" : columns === 2 ? "text-[1.125em]" : "text-[0.95em]"
 
   return (
-    <div className="min-w-0" style={{ width: `${Math.min(columns === 1 ? 30 : columns * 22, 52)}em` }}>
+    <div className="mx-auto min-w-0" style={{ width: `${Math.min(columns === 1 ? 30 : columns * 22, 52)}em` }}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.ul
           key={service.number}
@@ -259,14 +244,21 @@ function SkillColumn({ service, still }: { service: (typeof services)[number]; s
   )
 }
 
+/**
+ * The section label, with the total beside it so it reads against the counter
+ * across the top row - "(04)" here, "02" there.
+ */
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <span
-      className="inline-flex items-center gap-[0.25em] text-[0.875em] font-medium italic uppercase leading-none"
+      className="inline-flex items-center gap-[0.5em] text-[0.875em] font-medium italic uppercase leading-none tracking-[0.04em]"
       style={{ color: CUT }}
     >
-      <AccentStar className="h-[0.625em] w-[0.625em] shrink-0" />
+      <AccentStar className="h-[0.75em] w-[0.75em] shrink-0" />
       {children}
+      <span className="tabular-nums" style={{ color: CUT_DIM }}>
+        ({String(services.length).padStart(2, "0")})
+      </span>
     </span>
   )
 }
@@ -333,10 +325,6 @@ function ServicesStacked() {
                   <AccentStar className="mt-[0.25em] h-[0.5em] w-[0.5em]" />
                 </div>
               </div>
-
-              <p className="mt-[0.75em] text-[1.0625em] leading-[1.45]" style={{ color: CUT }}>
-                {service.body}
-              </p>
 
               <ul className="mt-[1.5em] grid grid-cols-2 gap-x-[1.5em] gap-y-[1em] md:grid-cols-3">
                 {service.skills.map((skill, index) => (

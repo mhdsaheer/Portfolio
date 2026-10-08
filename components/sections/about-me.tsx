@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils"
 
 const facts = [
   { label: "Currently", value: "Frontend Developer at Febno Technologies" },
-  { label: "Based in", value: "Kerala, India" },
-  { label: "Focus", value: "Fintech, Design Systems, Product UI" },
+  { label: "Based in", value: "Kerala, India · Open to remote & relocation" },
+  { label: "Focus", value: "Design systems, motion & interactive UI" },
 ]
 
 /** Beat one: who I am. */

@@ -3,8 +3,7 @@
  * the whole site follows - nothing here is duplicated anywhere else.
  */
 
-/** TODO: replace with your real address before this goes live. */
-export const CONTACT_EMAIL = "hello@example.com"
+export const CONTACT_EMAIL = "muhammedsaheerk6@gmail.com"
 
 /**
  * Kept in two forms: the dialable one for `tel:`, which needs the country code

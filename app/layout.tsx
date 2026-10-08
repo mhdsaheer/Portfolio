@@ -27,16 +27,26 @@ const playfairDisplay = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Portfolio | Digital Product Designer",
-  description: "Independent digital product designer crafting thoughtful, pixel-perfect experiences for the web.",
-  keywords: ["design", "portfolio", "UI/UX", "product design", "digital design"],
-  authors: [{ name: "Portfolio" }],
+  title: "Muhammed Saheer - Front-End Developer & UI/UX Designer, India",
+  description:
+    "Front-end developer & UI/UX designer in Kerala, India. I design in Figma and build fast React & Next.js websites for businesses in India and the UAE.",
+  keywords: [
+    "Muhammed Saheer",
+    "front-end developer",
+    "UI/UX designer",
+    "React developer",
+    "Next.js developer",
+    "Kerala",
+    "India",
+    "UAE",
+  ],
+  authors: [{ name: "Muhammed Saheer" }],
   openGraph: {
-    title: "Portfolio | Digital Product Designer",
-    description: "Independent digital product designer crafting thoughtful, pixel-perfect experiences for the web.",
+    title: "Muhammed Saheer - Front-End Developer & UI/UX Designer, India",
+    description:
+      "Front-end developer & UI/UX designer in Kerala, India. I design in Figma and build fast React & Next.js websites for businesses in India and the UAE.",
     type: "website",
   },
-  generator: 'v0.app'
 }
 
 export const viewport: Viewport = {

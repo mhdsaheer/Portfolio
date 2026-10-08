@@ -50,7 +50,7 @@ export function AboutHero() {
           }}
         />
 
-        <div className="absolute inset-0 flex flex-col items-start justify-end gap-[3em] px-[2.5em]">
+        <div className="absolute inset-0 flex flex-col items-start justify-end gap-[1.25em] px-[2.5em]">
           <h1
             className="text-[4em] font-medium italic leading-none tracking-[-0.03em]"
             style={{ color: INK }}

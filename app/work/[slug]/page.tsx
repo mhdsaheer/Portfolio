@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const study = getCaseStudy(slug)
 
   if (!study) {
-    return { title: "Case study not found | Portfolio" }
+    return { title: "Case study not found | Muhammed Saheer" }
   }
 
   return {
@@ -57,7 +57,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="pt-28 md:pt-36 pb-10 md:pb-14">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <Link
-              href="/#works"
+              href="/work"
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -92,7 +92,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <Reveal className="relative aspect-[1.2/1] md:aspect-[2/1] overflow-hidden rounded-2xl md:rounded-3xl border border-border bg-secondary">
               <Image
-                src={study.image || "/placeholder.svg"}
+                src={study.image}
                 alt={study.title}
                 fill
                 priority
@@ -153,7 +153,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20">
               <div className="lg:col-span-4">
                 <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
-                  01 // The problem
+                  01 The problem
                 </span>
                 <SectionTitle className="mt-4 text-3xl md:text-4xl font-semibold tracking-tight text-balance">
                   {study.challenge.title}
@@ -191,7 +191,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
-              02 // The approach
+              02 The approach
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
               How it came together
@@ -224,7 +224,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <Reveal as="figure" key={shot.src + i}>
                 <div className="relative aspect-[1.2/1] md:aspect-[16/9] overflow-hidden rounded-2xl md:rounded-3xl border border-border bg-secondary">
                   <Image
-                    src={shot.src || "/placeholder.svg"}
+                    src={shot.src}
                     alt={shot.alt}
                     fill
                     sizes="(max-width: 768px) 100vw, 1280px"
@@ -243,7 +243,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
-              03 // The outcome
+              03 The outcome
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
               What changed
@@ -323,7 +323,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <Reveal className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-border transition-all duration-300 hover:shadow-lg">
                   <div className="relative aspect-[1.4/1] md:aspect-[3/1] overflow-hidden bg-secondary">
                     <Image
-                      src={next.image || "/placeholder.svg"}
+                      src={next.image}
                       alt={next.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 1280px"

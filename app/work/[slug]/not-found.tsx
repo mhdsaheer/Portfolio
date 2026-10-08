@@ -20,7 +20,7 @@ export default function CaseStudyNotFound() {
             The project you are looking for is not here. The rest of the work is still worth a look.
           </p>
           <Link
-            href="/#works"
+            href="/work"
             className="inline-flex items-center gap-2 mt-10 px-6 py-3 text-sm font-medium border rounded-full hover:bg-secondary transition-colors"
             style={{ color: "#c8e0f5", borderColor: "#c8e0f5" }}
           >

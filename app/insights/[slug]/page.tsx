@@ -118,7 +118,7 @@ export default async function InsightPage({ params }: PageProps) {
             <div className="max-w-[1280px] mx-auto px-6 md:px-12">
               <Reveal className="relative aspect-[16/9] overflow-hidden rounded-2xl md:rounded-3xl bg-secondary">
                 <Image
-                  src={insight.image || "/placeholder.svg"}
+                  src={insight.image}
                   alt=""
                   fill
                   priority
@@ -191,7 +191,7 @@ export default async function InsightPage({ params }: PageProps) {
                 <Reveal className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-border transition-all duration-300 hover:shadow-lg">
                   <div className="relative aspect-[1.4/1] md:aspect-[3/1] overflow-hidden bg-secondary">
                     <Image
-                      src={next.image || "/placeholder.svg"}
+                      src={next.image}
                       alt=""
                       fill
                       sizes="(max-width: 768px) 100vw, 1280px"

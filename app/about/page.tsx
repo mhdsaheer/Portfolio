@@ -6,12 +6,11 @@ import { AboutHero } from "@/components/about/about-hero"
 import { WhatIDo } from "@/components/about/what-i-do"
 import { Services } from "@/components/about/services"
 import { Approach } from "@/components/about/approach"
-import { PhotoStrip } from "@/components/about/photo-strip"
 
 export const metadata: Metadata = {
   title: "About | Muhammed Saheer — Frontend Developer",
   description:
-    "Frontend developer with a designer's eye, based in Kerala. I design and build interfaces that stand out and hold up in production — React, Next.js, design systems and motion.",
+    "Frontend developer in Kerala with a designer's eye. I design and build interfaces that hold up in production — React, Next.js, design systems and motion.",
   openGraph: {
     title: "About | Muhammed Saheer — Frontend Developer",
     description:
@@ -35,7 +34,6 @@ export default function AboutPage() {
         <WhatIDo />
         <Services />
         <Approach />
-        <PhotoStrip />
       </main>
 
       <Footer />

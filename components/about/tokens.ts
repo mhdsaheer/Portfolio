@@ -7,9 +7,15 @@
  */
 export const FLUID = "var(--about-fluid)"
 
+/**
+ * The footer's side gutter, 2.5em of the fluid base. Sections that set their
+ * type in rem use it to share the footer's edge without taking on its scale.
+ */
+export const GUTTER = "calc(var(--about-fluid) * 2.5)"
+
 /** Sections sit on the site's mesh background rather than their own ground. */
 export const SURFACE = "transparent"
-/** Dark ink for text sitting on a light fill, like the work list's active row. */
+/** Dark ink for text sitting on a light fill, like the work index's active filter. */
 export const PANEL = "#0a121c"
 
 /**

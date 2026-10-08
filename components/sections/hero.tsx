@@ -16,15 +16,6 @@ const HEADER_OFFSET = 80
 /** How far each line travels sideways by the time the hero has scrolled away. */
 const DRIFT = "36vw"
 
-/** The S mark, traced from the logo. It leans the same way the name beside it does. */
-function Monogram({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 184 94" fill="currentColor" aria-hidden className={className}>
-      <path d="M65 0H184Q170.1 20 148.5 20H85.5A10 10 0 0 0 85.5 40H156.4L119 94H0Q13.9 74 35.5 74H98.5A10 10 0 0 0 98.5 54H27.6Z" />
-    </svg>
-  )
-}
-
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const introDone = useIntroDone()
@@ -112,18 +103,12 @@ export function Hero() {
               From lg the row is three columns sized by their contents, so the paragraph
               lands near the centre and "View Works" never wraps. */}
           <motion.div className="md:col-span-2 lg:col-span-1" {...rise(0.45)}>
-            <p className="flex items-center gap-2.5 text-sm font-medium uppercase italic text-[#c8e0f5]">
-              <Monogram className="h-2.5 w-auto text-white" />
-              Muhammed Saheer
-            </p>
-            <p className="mt-3 font-serif text-4xl italic leading-[1.1] text-white md:text-5xl lg:text-4xl xl:text-5xl">who removes friction</p>
+            <p className="font-serif text-4xl italic leading-[1.1] text-white md:text-5xl lg:text-4xl xl:text-5xl">who removes friction</p>
           </motion.div>
 
           <motion.p className="max-w-[23.5rem] text-pretty text-[15px] leading-relaxed text-white/75" {...rise(0.55)}>
-            I craft intelligent, intuitive <span className="whitespace-nowrap">AI-powered</span> products using vibe
-            coding, generative design tools, and <span className="whitespace-nowrap">cutting-edge</span> AI
-            technologies. Let's build the future of <span className="whitespace-nowrap">human-AI</span> interaction
-            together.
+            I design in Figma and build fast, responsive websites in React and Next.js, with Strapi CMS so you can
+            update content yourself, and branding to match. Let's build yours.
           </motion.p>
 
           <motion.div className="md:justify-self-end" {...rise(0.65)}>

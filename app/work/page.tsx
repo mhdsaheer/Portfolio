@@ -3,8 +3,9 @@ import type { Metadata } from "next"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { WorkHero } from "@/components/work/work-hero"
-import { ProjectList } from "@/components/work/project-list"
+import { WorkIndex } from "@/components/work/work-index"
 import { caseStudies } from "@/lib/case-studies"
+import { ARCHIVE_PDF, workFiles } from "@/lib/work-files"
 
 export const metadata: Metadata = {
   title: "Work | Muhammed Saheer — Interfaces built with care",
@@ -48,8 +49,8 @@ export default function WorkPage() {
       <Header />
 
       <main>
-        <WorkHero count={caseStudies.length} />
-        <ProjectList projects={caseStudies} />
+        <WorkHero archive={ARCHIVE_PDF} />
+        <WorkIndex studies={caseStudies} files={workFiles} archive={ARCHIVE_PDF} />
       </main>
 
       <Footer />

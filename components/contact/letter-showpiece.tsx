@@ -11,7 +11,7 @@ import { LetterDesk } from "@/components/contact/letter-desk"
 import { WaxSeal } from "@/components/contact/wax-seal"
 import { LocalDate } from "@/components/contact/local-time"
 import { FOCUS_WASH, INK, INK_FAINT, INK_MUTED, INVALID, RULE, RULE_STRONG } from "@/components/contact/paper"
-import { CONTACT_EMAIL, CONTACT_ENDPOINT, LOCATION } from "@/lib/contact"
+import { CONTACT_EMAIL, CONTACT_ENDPOINT } from "@/lib/contact"
 
 type Status = "idle" | "pressing" | "sending" | "sent" | "error"
 
@@ -340,7 +340,7 @@ function Letterhead() {
           right. The date only - a clock ticking through a letter is unsettling. */}
       <div className="mt-2.5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <p className="text-[0.7rem] uppercase tracking-[0.16em]" style={{ color: INK_MUTED }}>
-          Frontend developer · {LOCATION}
+          Frontend developer
         </p>
 
         <p className="text-[0.7rem] uppercase tracking-[0.16em]" style={{ color: INK_MUTED }}>

@@ -14,17 +14,11 @@ type NavItem = {
   label: string
   short: string
   number: string
-  /** An id on the home page. Present means: scroll there instead of leaving. */
-  section?: string
 }
 
-/**
- * Every entry is a real page, so the href is right from anywhere and a
- * middle-click still opens a tab. `section` only changes what a plain click
- * does while we are already on the home page.
- */
+/** Every entry is a real page, so the href is right from anywhere. */
 const navItems: NavItem[] = [
-  { href: "/work", label: "Selected work", short: "Work", number: "01", section: "works" },
+  { href: "/work", label: "Selected work", short: "Work", number: "01" },
   { href: "/about", label: "About", short: "About", number: "02" },
   { href: "/insights", label: "Insights", short: "Insights", number: "03" },
 ]
@@ -48,9 +42,6 @@ const HIDE_INTENT = 64
 const SHOW_INTENT = 24
 
 const CTA_GRADIENT = "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)"
-
-/** Height of the fixed bar, so a scrolled-to section is not tucked under it. */
-const HEADER_OFFSET = 80
 
 /** One wordmark, used by the bar, the pill and the mobile drawer. */
 function Wordmark({ size = "text-lg" }: { size?: string }) {
@@ -141,29 +132,10 @@ export function Header() {
   }, [])
 
   /**
-   * Every destination is a page now, so the router does the navigating and
-   * this only has to shut the mobile drawer behind the tap.
+   * Every destination is a page, so the router does the navigating and this
+   * only has to shut the mobile drawer behind the tap.
    */
-  /**
-   * On the home page a nav item that names a section scrolls to it rather
-   * than navigating away. Modified clicks are left alone so opening in a new
-   * tab still lands on the real page.
-   */
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
-    setIsMobileMenuOpen(false)
-
-    if (!isHome || !item.section) return
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
-
-    const element = document.getElementById(item.section)
-    if (!element) return
-
-    e.preventDefault()
-    window.scrollTo({
-      top: element.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET,
-      behavior: reduceMotion ? "auto" : "smooth",
-    })
-  }
+  const handleNavClick = () => setIsMobileMenuOpen(false)
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!isHome) return
@@ -229,7 +201,7 @@ export function Header() {
                 <motion.div key={item.href} layout="position" transition={morph}>
                   <Link
                     href={item.href}
-                    onClick={(e) => handleNavClick(e, item)}
+                    onClick={handleNavClick}
                     className={cn(
                       "block text-sm whitespace-nowrap transition-colors",
                       isScrolled ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground",
@@ -287,7 +259,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item)}
+                  onClick={handleNavClick}
                   className="text-3xl font-semibold hover:text-muted-foreground transition-colors"
                 >
                   {item.label}

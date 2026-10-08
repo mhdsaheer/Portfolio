@@ -1,21 +1,24 @@
 "use client"
 
 const skills = [
-  "AI Product Design",
-  "Vibe Coding",
-  "v0 by Vercel",
-  "Prompt Engineering",
-  "Midjourney/DALL-E",
-  "ChatGPT/Claude",
-  "Figma AI",
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Tailwind CSS",
+  "Framer Motion",
+  "Node.js",
+  "Strapi CMS",
+  "WordPress",
+  "Figma",
+  "Adobe Illustrator",
   "Design Systems",
-  "Generative UI",
+  "Responsive Design",
 ]
 
 const stats = [
-  { value: "8+", label: "Years Experience" },
-  { value: "50+", label: "AI Projects" },
-  { value: "30+", label: "Happy Clients" },
+  { value: "15+", label: "Projects Shipped" },
+  { value: "2+", label: "Years in Development" },
+  { value: "6+", label: "Years Designing" },
 ]
 
 import { SectionTitle } from "@/components/ui/section-title"
@@ -28,17 +31,17 @@ export function About() {
           {/* Left Content */}
           <div>
             <SectionTitle className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-balance">
-              Bridging AI Technology & Human-Centered Design
+              Where Thoughtful Design Meets Working Code
             </SectionTitle>
             <p className="mt-6 text-muted-foreground leading-relaxed">
-              I'm an AI Digital Product Designer specializing in vibe coding and generative design. I leverage
-              cutting-edge AI tools like v0, Midjourney, and Claude to rapidly prototype and build production-ready
-              experiences.
+              I'm a frontend developer with a degree in multimedia from the University of Calicut.
+              That background shapes how I build: I care about spacing, type, and motion as much as clean,
+              maintainable React.
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              My approach combines prompt engineering mastery, AI-powered design workflows, and deep understanding of
-              LLMs to create products that feel intuitive and magical. I believe AI should amplify creativity, not
-              replace it.
+              Day to day, I work across UI/UX and frontend, taking designs from Figma to responsive, production-ready
+              interfaces. I'm also at home on the backend with Node.js and Strapi, so I can wire up the APIs and CMS
+              behind what I build.
             </p>
           </div>
 

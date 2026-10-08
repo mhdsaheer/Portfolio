@@ -39,7 +39,7 @@ export function Lines({
           : { duration, ease: EASE_OUT_QUART, delay: index * 0.1 }
 
         return (
-          <span key={index} className="block overflow-hidden py-[0.1em] -my-[0.1em]">
+          <span key={index} className="block overflow-hidden px-[0.2em] py-[0.1em] -mx-[0.2em] -my-[0.1em]">
             <motion.span
               className="block"
               initial={{ y: "100%", opacity: restingOpacity }}

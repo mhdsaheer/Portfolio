@@ -1,0 +1,41 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 443 >>
+stream
+0.227 0.373 0.529 rg 0 0 842 595 re f
+0.784 0.878 0.961 RG 1 w 60 470 m 782 470 l S
+BT /F1 12 Tf 0.784 0.878 0.961 rg 60 500 Td (DEMO FILE) Tj ET
+BT /F1 44 Tf 1 1 1 rg 60 380 Td (Sample PDF) Tj ET
+BT /F2 18 Tf 1 1 1 rg 60 340 Td (This file stands in for your real one while you review the demo.) Tj ET
+BT /F2 14 Tf 0.784 0.878 0.961 rg 60 110 Td (Replace public/demo/sample.pdf, or point the entry in lib/work-files.ts at your own file.) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000745 00000 n 
+0000000820 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+890
+%%EOF

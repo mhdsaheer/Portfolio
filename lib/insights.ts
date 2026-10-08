@@ -11,6 +11,8 @@ export type Insight = {
   date: string
   /** Derived from the word count in `readingTime`, not written by hand. */
   readTime: string
+  /** The one label on the card - kept apart from `tags`, which all lead with "AI". */
+  category: string
   tags: string[]
   /** Stands above the first heading, set larger than the body. */
   intro: string[]
@@ -32,6 +34,7 @@ export const insights: Insight[] = [
     image: "/images/bg-1.png",
     date: "Dec 15, 2025",
     readTime: "",
+    category: "Workflow",
     tags: ["AI", "v0", "Workflow", "Frontend"],
     intro: [
       "Vibe coding — describing what you want in plain language and letting a model build it — picked up a reputation as a way to skip the work. After a year of building production interfaces this way, I don’t think that’s what it is. It moves where the effort goes. It doesn’t remove it.",
@@ -85,6 +88,7 @@ export const insights: Insight[] = [
     image: "/images/bg-2.png",
     date: "Nov 28, 2025",
     readTime: "",
+    category: "Process",
     tags: ["AI", "Process", "Design Systems"],
     intro: [
       "Prompt engineering sounds like a discipline of secret phrases. It isn’t. It’s writing a brief, and designers have been writing briefs for a very long time.",
@@ -135,6 +139,7 @@ export const insights: Insight[] = [
     image: "/images/bg-3.png",
     date: "Nov 10, 2025",
     readTime: "",
+    category: "UX",
     tags: ["AI", "UX", "Interaction Design", "Trust"],
     intro: [
       "The hard part of an AI feature is rarely the model. It’s what the interface promises on the model’s behalf.",

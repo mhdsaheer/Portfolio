@@ -4,18 +4,18 @@ import { AccentStar } from "@/components/about/accent-star"
 const steps = [
   {
     number: "01",
-    title: "Concept to pixel-perfect design",
-    body: "The design and the build are the same job done twice if they are handed between two people. Doing both means the translation never loses a corner radius, a spacing rhythm or an interaction state along the way.",
+    title: "Plan the sprint",
+    body: "Every project starts as a backlog of user stories, prioritised with the team. Sprint planning turns the top of that list into a clear, achievable goal, so everyone knows what “done” looks like before a single frame is drawn.",
   },
   {
     number: "02",
-    title: "Built to scale",
-    body: "Everything gets assembled from modular, reusable pieces. Adding the next page, the next locale or the next data source is an afternoon rather than a rewrite — and maintenance stays something your team can do without me.",
+    title: "Design and build in short cycles",
+    body: "Design and development happen in the same sprint, not in separate phases. Daily stand-ups keep blockers small, and each sprint ends with a working, responsive increment rather than a mockup waiting on a handoff.",
   },
   {
     number: "03",
-    title: "Motion with meaning",
-    body: "Framer Motion carries the movement, but nothing animates for the sake of it. Scroll-triggers orient you, transitions explain what changed, and every one of them still respects prefers-reduced-motion.",
+    title: "Review, then refine",
+    body: "Sprint reviews put real, clickable work in front of stakeholders early, and retrospectives sharpen how we work next time. Feedback lands while it is still cheap to act on, so the final product reflects what people actually need.",
   },
 ]
 
@@ -50,7 +50,7 @@ export function Approach() {
 
             <Reveal delay={140}>
               <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground text-pretty">
-                Three habits that decide whether a project ships on time and still feels good a year later.
+                I work in Agile sprints using Scrum: short cycles, visible progress, and room to change course without starting over.
               </p>
             </Reveal>
           </div>

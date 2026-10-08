@@ -6,6 +6,8 @@ export type CaseStudy = {
   /** The service on offer, not the domain - this is what the index lists. */
   discipline: "Branding" | "Design" | "Development" | "Design & Development"
   description: string
+  /** The work index's one line: where the project started, and what it became. */
+  summary: string
   image: string
   tags: string[]
   year: string
@@ -50,6 +52,8 @@ export const caseStudies: CaseStudy[] = [
     category: "AI Product",
     discipline: "Design & Development",
     description: "Building an intelligent onboarding flow powered by GPT-4 and natural conversations",
+    summary:
+      "A twelve-question setup wizard, replaced by an assistant that asks for one thing at a time and configures the workspace as you talk.",
     image: "/images/work-onboarding.png",
     tags: ["AI", "v0", "Next.js", "OpenAI"],
     year: "2025",
@@ -136,8 +140,10 @@ export const caseStudies: CaseStudy[] = [
     index: 2,
     title: "AI Fashion Curator",
     category: "E-commerce AI",
-    discipline: "Design",
+    discipline: "Branding",
     description: "Personalized style recommendations using computer vision and preference learning",
+    summary:
+      "A search box and 40,000 items, turned into a daily edit that learns taste from what each shopper saves, skips and returns to.",
     image: "/images/work-fashion.png",
     tags: ["AI", "Machine Learning", "Midjourney"],
     year: "2025",
@@ -226,6 +232,8 @@ export const caseStudies: CaseStudy[] = [
     category: "Productivity AI",
     discipline: "Design",
     description: "AI-powered task prioritization and scheduling with natural language processing",
+    summary:
+      "Three task tools and a lot of Slack, folded into one ordered list that plans against the real calendar and explains every ranking.",
     image: "/images/work-tasks.png",
     tags: ["AI", "Claude", "Vibe Coding"],
     year: "2024",
@@ -314,6 +322,8 @@ export const caseStudies: CaseStudy[] = [
     category: "FinTech AI",
     discipline: "Design & Development",
     description: "Real-time market insights and predictions powered by advanced AI models",
+    summary:
+      "Eleven sources and a four-hour lag, distilled into one morning brief where every claim traces back to the data behind it.",
     image: "/images/work-crypto.png",
     tags: ["AI", "Data Viz", "GPT-4"],
     year: "2024",
@@ -397,23 +407,31 @@ export const caseStudies: CaseStudy[] = [
 ]
 
 /**
- * The work index filters by service rather than by discipline directly: the
- * build side and the design-and-brand side, each mapped onto the disciplines
- * that belong to it. Retag a study's `discipline` and it moves between pills.
+ * The work index filters by service rather than by discipline directly: each
+ * pill is mapped onto the disciplines that belong to it, so a project that was
+ * both designed and built sits under Development and UI/UX alike. Retag a
+ * study's `discipline` and it moves between pills.
  */
 export const serviceFilters = {
-  "Web Development": ["Development", "Design & Development"],
-  Branding: ["Branding", "Design"],
+  Development: ["Development", "Design & Development"],
+  "UI/UX": ["Design", "Design & Development"],
+  Branding: ["Branding"],
 } satisfies Record<string, CaseStudy["discipline"][]>
 
 export type ServiceFilter = keyof typeof serviceFilters
 
+/** The pills, in the order the index lists them. */
+export const services = Object.keys(serviceFilters) as ServiceFilter[]
+
+/** The pills a study is filed under. */
+export function servicesOf(study: CaseStudy) {
+  return services.filter((service) => (serviceFilters[service] as readonly string[]).includes(study.discipline))
+}
+
 /** No selection means no narrowing - the whole index stays on show. */
-export function filterByService(studies: CaseStudy[], services: ServiceFilter[]) {
-  if (services.length === 0) return studies
-  return studies.filter((study) =>
-    services.some((service) => (serviceFilters[service] as readonly string[]).includes(study.discipline)),
-  )
+export function filterByService(studies: CaseStudy[], selected: ServiceFilter[]) {
+  if (selected.length === 0) return studies
+  return studies.filter((study) => servicesOf(study).some((service) => selected.includes(service)))
 }
 
 export function getCaseStudy(slug: string) {

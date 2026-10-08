@@ -15,7 +15,7 @@ export function InsightCard({ insight, priority = false }: { insight: Insight; p
       <Link href={`/insights/${insight.slug}`} className="group block h-full">
         <div className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-secondary mb-4">
           <Image
-            src={insight.image || "/placeholder.svg"}
+            src={insight.image}
             alt=""
             fill
             priority={priority}
