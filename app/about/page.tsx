@@ -8,11 +8,11 @@ import { Services } from "@/components/about/services"
 import { Approach } from "@/components/about/approach"
 
 export const metadata: Metadata = {
-  title: "About | Muhammed Saheer — Frontend Developer",
+  title: "About | Muhammed Saheer - Frontend Developer",
   description:
     "Frontend developer in Kerala with a designer's eye. I design and build interfaces that hold up in production — React, Next.js, design systems and motion.",
   openGraph: {
-    title: "About | Muhammed Saheer — Frontend Developer",
+    title: "About | Muhammed Saheer - Frontend Developer",
     description:
       "Frontend developer with a designer's eye, based in Kerala. I design and build interfaces that stand out and hold up in production.",
     type: "profile",

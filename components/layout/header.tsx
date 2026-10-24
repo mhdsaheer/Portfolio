@@ -6,7 +6,9 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, useReducedMotion } from "framer-motion"
+import * as Dialog from "@radix-ui/react-dialog"
 import { Menu, X } from "lucide-react"
+import { CTA_GRADIENT } from "@/components/about/tokens"
 import { cn } from "@/lib/utils"
 
 type NavItem = {
@@ -40,8 +42,6 @@ const DIRECTION_DEADZONE = 6
  */
 const HIDE_INTENT = 64
 const SHOW_INTENT = 24
-
-const CTA_GRADIENT = "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)"
 
 /** One wordmark, used by the bar, the pill and the mobile drawer. */
 function Wordmark({ size = "text-lg" }: { size?: string }) {
@@ -131,6 +131,14 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Lenis scrolls the page from its own wheel handler, which the dialog's
+  // scroll lock never sees - so the page is held still while the menu is open
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    window.__lenis?.stop()
+    return () => window.__lenis?.start()
+  }, [isMobileMenuOpen])
+
   /**
    * Every destination is a page, so the router does the navigating and this
    * only has to shut the mobile drawer behind the tap.
@@ -153,7 +161,7 @@ export function Header() {
     : { duration: 0.62, ease: [0.32, 0.72, 0, 1] as const }
 
   return (
-    <>
+    <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
       <header className="fixed top-0 left-0 right-0 z-50">
         <motion.div
           className="flex justify-center px-4 md:px-6"
@@ -170,8 +178,9 @@ export function Header() {
                   opacity: hidden ? { duration: 0.55, ease: "easeOut" } : { duration: 0.3, ease: "easeOut" },
                 }
           }
-          style={{ pointerEvents: hidden ? "none" : "auto" }}
-          aria-hidden={hidden}
+          // Inert rather than aria-hidden: a hidden bar has to leave the tab
+          // order and the pointer too, not only the accessibility tree
+          inert={hidden}
         >
           <motion.nav
             layout
@@ -223,36 +232,41 @@ export function Header() {
                 )}
                 style={{ background: CTA_GRADIENT, boxShadow: "0 4px 20px rgba(32, 62, 236, 0.32)" }}
               >
-                <span className="relative z-10">Let's Talk</span>
+                <span className="relative z-10">Let&apos;s Talk</span>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-gradient-to-r from-[#203eec] to-[#00d4ff]" />
               </Link>
             </motion.div>
 
             {/* Mobile menu button */}
-            <motion.button
-              layout="position"
-              transition={morph}
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden p-2.5 rounded-full text-white/80 hover:text-white"
-              aria-label="Open menu"
-            >
-              <Menu className="w-5 h-5" />
-            </motion.button>
+            <Dialog.Trigger asChild>
+              <motion.button
+                layout="position"
+                transition={morph}
+                className="md:hidden p-2.5 rounded-full text-white/80 hover:text-white"
+                aria-label="Open menu"
+              >
+                <Menu className="w-5 h-5" />
+              </motion.button>
+            </Dialog.Trigger>
           </motion.nav>
         </motion.div>
       </header>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-background md:hidden">
+      {/* Mobile menu, as a dialog: focus stays inside it, Escape closes it, and
+          focus goes back to the menu button after. Not md:hidden - a menu left
+          open across a resize stays visible to close, rather than locking an
+          invisible dialog over the page. */}
+      <Dialog.Portal>
+        <Dialog.Content aria-describedby={undefined} className="fixed inset-0 z-50 bg-background outline-none">
+          <Dialog.Title className="sr-only">Menu</Dialog.Title>
           <div className="flex flex-col h-full p-6">
             <div className="flex items-center justify-between">
               <Link href="/">
                 <Wordmark />
               </Link>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 -mr-2" aria-label="Close menu">
+              <Dialog.Close className="p-2 -mr-2" aria-label="Close menu">
                 <X className="w-5 h-5" />
-              </button>
+              </Dialog.Close>
             </div>
             <nav className="flex flex-col gap-6 mt-12">
               {navItems.map((item) => (
@@ -273,13 +287,13 @@ export function Header() {
                 className="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium rounded-full text-white transition-all hover:shadow-xl relative overflow-hidden group"
                 style={{ background: CTA_GRADIENT, boxShadow: "0 4px 20px rgba(32, 62, 236, 0.3)" }}
               >
-                <span className="relative z-10">Let's Talk</span>
+                <span className="relative z-10">Let&apos;s Talk</span>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-gradient-to-r from-[#203eec] to-[#00d4ff]" />
               </Link>
             </div>
           </div>
-        </div>
-      )}
-    </>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }

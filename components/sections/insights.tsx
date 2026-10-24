@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
+import { ACCENT } from "@/components/about/tokens"
 import { SectionTitle } from "@/components/ui/section-title"
 import { InsightCard } from "@/components/insights/insight-card"
 import { insights } from "@/lib/insights"
@@ -19,14 +20,14 @@ export function Insights() {
           <Link
             href="/insights"
             className="hidden md:inline-flex items-center gap-2 text-sm transition-colors hover:underline"
-            style={{ color: "#c8e0f5" }}
+            style={{ color: ACCENT }}
           >
             View all insights
             <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
           {latest.map((insight) => (
             <li key={insight.slug}>
               <InsightCard insight={insight} />
@@ -38,7 +39,7 @@ export function Insights() {
           <Link
             href="/insights"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium border rounded-full hover:bg-secondary transition-colors"
-            style={{ color: "#c8e0f5", borderColor: "#c8e0f5" }}
+            style={{ color: ACCENT, borderColor: ACCENT }}
           >
             View all insights
             <ArrowUpRight className="w-4 h-4" />

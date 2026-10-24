@@ -1,14 +1,17 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ArrowUpRight } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Reveal } from "@/components/case-study/reveal"
-import { AccentStar } from "@/components/about/accent-star"
+import { ACCENT } from "@/components/about/tokens"
+import { InsightCover } from "@/components/insights/insight-cover"
+import { COVER_ACTION, COVER_ACTION_ROUND } from "@/components/insights/cover-styles"
+import { NoteTile } from "@/components/insights/note-tile"
 import { insights, getInsight, getNextInsight, publishedAt } from "@/lib/insights"
+import { SITE_URL } from "@/lib/site"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -56,7 +59,7 @@ export default async function InsightPage({ params }: PageProps) {
     "@type": "BlogPosting",
     headline: insight.title,
     description: insight.excerpt,
-    image: insight.image,
+    image: `${SITE_URL}${insight.image}`,
     datePublished: publishedAt(insight),
     keywords: insight.tags.join(", "),
     author: { "@type": "Person", name: "Muhammed Saheer" },
@@ -68,39 +71,76 @@ export default async function InsightPage({ params }: PageProps) {
 
       <main>
         <article>
-          <section className="pt-28 md:pt-36 pb-10 md:pb-14">
-            <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-              <Link
-                href="/insights"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back to insights
+          {/* Opens the way the index does: the art full-bleed, the title set large over it,
+              and beside the excerpt the way back to every other article */}
+          <InsightCover
+            insight={insight}
+            titleAs="h1"
+            action={
+              <Link href="/insights" className={COVER_ACTION}>
+                <span className={COVER_ACTION_ROUND}>
+                  <ArrowLeft
+                    aria-hidden
+                    className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5"
+                  />
+                </span>
+                All insights
               </Link>
+            }
+          />
 
-              <Reveal className="mt-8 md:mt-12 max-w-3xl">
-                <div className="flex items-center gap-2" style={{ color: "#c8e0f5" }}>
-                  <AccentStar className="h-2.5 w-2.5 shrink-0" />
-                  <span className="text-xs font-medium uppercase italic tracking-[0.16em] leading-none">
-                    {insight.date}
-                  </span>
-                  <span aria-hidden className="opacity-50">
-                    ·
-                  </span>
-                  <span className="text-xs font-medium uppercase italic tracking-[0.16em] leading-none">
-                    {insight.readTime}
-                  </span>
+          {/* The text runs the full width of the content column, the cover's own grid, so the
+              title above and every line below share both edges. */}
+          <section className="pb-20 pt-16 md:pb-28 md:pt-24">
+            <div className="max-w-[1280px] mx-auto px-6 md:px-12">
+              <Reveal>
+                {insight.intro.map((paragraph) => (
+                  <p key={paragraph} className="text-lg md:text-xl leading-[1.7] text-pretty mb-6 last:mb-0">
+                    {paragraph}
+                  </p>
+                ))}
+              </Reveal>
+
+              {insight.sections.map((section, index) => (
+                <div key={section.heading}>
+                  <Reveal as="section" className="mt-14 md:mt-16">
+                    <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-balance">
+                      {section.heading}
+                    </h2>
+
+                    {section.body.map((paragraph) => (
+                      <p
+                        key={paragraph}
+                        className="mt-5 text-base md:text-lg leading-[1.75] text-muted-foreground text-pretty"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </Reveal>
+
+                  {insight.pullQuote?.afterSection === index && (
+                    <Reveal as="figure" className="mt-14 md:mt-16">
+                      <blockquote
+                        className="border-l-2 pl-6 md:pl-8 text-xl md:text-2xl leading-[1.45] text-balance"
+                        style={{ borderColor: ACCENT }}
+                      >
+                        {insight.pullQuote.text}
+                      </blockquote>
+                    </Reveal>
+                  )}
                 </div>
+              ))}
 
-                <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-balance">
-                  {insight.title}
-                </h1>
+              <Reveal className="mt-14 md:mt-16 pt-10 border-t border-border">
+                {insight.outro.map((paragraph) => (
+                  <p key={paragraph} className="text-lg md:text-xl leading-[1.7] text-pretty mb-6 last:mb-0">
+                    {paragraph}
+                  </p>
+                ))}
 
-                <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty">
-                  {insight.excerpt}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mt-8">
+                {/* The tags close the article, now the cover carries the category up top */}
+                <div className="mt-10 flex flex-wrap items-center gap-2">
+                  <span className="mr-2 font-mono text-xs uppercase tracking-[0.18em] text-white/55">Filed under</span>
                   {insight.tags.map((tag) => (
                     <span
                       key={tag}
@@ -113,112 +153,22 @@ export default async function InsightPage({ params }: PageProps) {
               </Reveal>
             </div>
           </section>
-
-          <section className="pb-12 md:pb-20">
-            <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-              <Reveal className="relative aspect-[16/9] overflow-hidden rounded-2xl md:rounded-3xl bg-secondary">
-                <Image
-                  src={insight.image}
-                  alt=""
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 1280px"
-                  className="object-cover"
-                />
-              </Reveal>
-            </div>
-          </section>
-
-          {/* The measure is the point of this page: roughly 70 characters, which
-              is where long-form reading stops being work. */}
-          <section className="pb-20 md:pb-28">
-            <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-              <div className="mx-auto max-w-[42rem]">
-                <Reveal>
-                  {insight.intro.map((paragraph) => (
-                    <p key={paragraph} className="text-lg md:text-xl leading-[1.7] text-pretty mb-6 last:mb-0">
-                      {paragraph}
-                    </p>
-                  ))}
-                </Reveal>
-
-                {insight.sections.map((section, index) => (
-                  <div key={section.heading}>
-                    <Reveal as="section" className="mt-14 md:mt-16">
-                      <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-balance">
-                        {section.heading}
-                      </h2>
-
-                      {section.body.map((paragraph) => (
-                        <p
-                          key={paragraph}
-                          className="mt-5 text-base md:text-lg leading-[1.75] text-muted-foreground text-pretty"
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
-                    </Reveal>
-
-                    {insight.pullQuote?.afterSection === index && (
-                      <Reveal as="figure" className="mt-14 md:mt-16">
-                        <blockquote
-                          className="border-l-2 pl-6 md:pl-8 text-xl md:text-2xl leading-[1.45] text-balance"
-                          style={{ borderColor: "#c8e0f5" }}
-                        >
-                          {insight.pullQuote.text}
-                        </blockquote>
-                      </Reveal>
-                    )}
-                  </div>
-                ))}
-
-                <Reveal className="mt-14 md:mt-16 pt-10 border-t border-border">
-                  {insight.outro.map((paragraph) => (
-                    <p key={paragraph} className="text-lg md:text-xl leading-[1.7] text-pretty mb-6 last:mb-0">
-                      {paragraph}
-                    </p>
-                  ))}
-                </Reveal>
-              </div>
-            </div>
-          </section>
         </article>
 
         {next && next.slug !== insight.slug && (
-          <section className="pb-12 md:pb-20">
+          <section className="pb-20 md:pb-28">
             <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-              <Link href={`/insights/${next.slug}`} className="group block">
-                <Reveal className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-border transition-all duration-300 hover:shadow-lg">
-                  <div className="relative aspect-[1.4/1] md:aspect-[3/1] overflow-hidden bg-secondary">
-                    <Image
-                      src={next.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, 1280px"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+              <Reveal className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
+                <h2 className="text-3xl font-semibold tracking-[-0.04em] text-white md:text-5xl">Up next</h2>
+                <Link
+                  href="/insights"
+                  className="text-sm text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
+                >
+                  All insights
+                </Link>
+              </Reveal>
 
-                    <div className="absolute inset-x-6 bottom-6 md:inset-x-10 md:bottom-10 flex items-end justify-between gap-6">
-                      <div>
-                        <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
-                          Next article
-                        </span>
-                        <h2 className="mt-3 text-2xl md:text-4xl font-semibold tracking-tight">{next.title}</h2>
-                        <p className="hidden md:block mt-3 text-muted-foreground max-w-xl leading-relaxed">
-                          {next.excerpt}
-                        </p>
-                      </div>
-                      <div className="p-3 rounded-full bg-secondary/80 border border-border transition-colors group-hover:bg-secondary shrink-0">
-                        <ArrowUpRight
-                          className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                          style={{ color: "#c8e0f5" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              </Link>
+              <NoteTile as="div" insight={next} wide />
             </div>
           </section>
         )}

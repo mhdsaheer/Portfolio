@@ -57,7 +57,7 @@ export function DisciplineFilter({
             aria-pressed={active}
             onClick={() => onChange(option.value)}
             className={cn(
-              "relative min-w-0 rounded-full px-1 py-2 text-[11px] font-medium leading-none transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c8e0f5] sm:px-4 sm:py-2.5 sm:text-sm",
+              "relative min-w-0 rounded-full px-1 py-2 text-[11px] font-medium leading-none transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:px-4 sm:py-2.5 sm:text-sm",
               active ? "text-[#0a121c]" : "text-white/70 hover:bg-white/[0.07] hover:text-white",
             )}
           >

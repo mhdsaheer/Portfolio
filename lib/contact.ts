@@ -23,6 +23,7 @@ export const WHATSAPP_URL = `https://wa.me/${CONTACT_PHONE.replace(/\D/g, "")}`
 export const CONTACT_ENDPOINT: string = ""
 
 export const LOCATION = "Kerala, India"
+export const AVAILABILITY = "Open to remote & relocation"
 export const TIME_ZONE = "Asia/Kolkata"
 export const RESPONSE_TIME = "Usually within a day"
 export const RESUME_PATH = "/muhammed-saheer-resume.pdf"
@@ -33,5 +34,5 @@ export type Social = { label: string; href: string }
 export const socials: Social[] = [
   { label: "GitHub", href: "https://github.com/mhdsaheer" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammed-saheer-bbb6132ab/" },
-  { label: "WhatsApp", href: `https://wa.me/${CONTACT_PHONE.replace(/\D/g, "")}` },
+  { label: "WhatsApp", href: WHATSAPP_URL },
 ]

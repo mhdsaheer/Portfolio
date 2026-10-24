@@ -6,13 +6,14 @@ import { WorkHero } from "@/components/work/work-hero"
 import { WorkIndex } from "@/components/work/work-index"
 import { caseStudies } from "@/lib/case-studies"
 import { ARCHIVE_PDF, workFiles } from "@/lib/work-files"
+import { SITE_URL } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: "Work | Muhammed Saheer — Interfaces built with care",
+  title: "Work | Muhammed Saheer - Interfaces built with care",
   description:
     "Selected projects in frontend development, interface design and product UI — each written up end to end, from the problem to what changed once it shipped.",
   openGraph: {
-    title: "Work | Muhammed Saheer — Interfaces built with care",
+    title: "Work | Muhammed Saheer - Interfaces built with care",
     description:
       "Selected projects in frontend development, interface design and product UI, written up end to end.",
     type: "website",
@@ -35,8 +36,8 @@ const collectionSchema = {
       item: {
         "@type": "CreativeWork",
         name: study.title,
-        url: `/work/${study.slug}`,
-        image: study.image,
+        url: `${SITE_URL}/work/${study.slug}`,
+        image: `${SITE_URL}${study.image}`,
         genre: study.category,
       },
     })),

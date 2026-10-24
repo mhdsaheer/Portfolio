@@ -283,13 +283,25 @@ const itemVariants = (still: boolean) => ({
   },
 })
 
-/** Puts the reader in the middle of a service's band of scroll. */
+/**
+ * Puts the reader in the middle of a service's band of scroll.
+ *
+ * The pin's place on the page comes from its box, not `offsetTop`: every
+ * section is positioned, so `offsetTop` is measured from the services section
+ * itself and reads as zero. Lenis owns the scroll, so it is asked first.
+ */
 function scrollToStep(section: HTMLDivElement | null, index: number) {
   if (!section) return
   const travel = section.offsetHeight - window.innerHeight
   const start = STEP_TRIGGERS[index]
   const end = STEP_TRIGGERS[index + 1] ?? 1
-  window.scrollTo({ top: section.offsetTop + travel * ((start + end) / 2), behavior: "smooth" })
+  const top = section.getBoundingClientRect().top + window.scrollY + travel * ((start + end) / 2)
+
+  if (window.__lenis) {
+    window.__lenis.scrollTo(top)
+    return
+  }
+  window.scrollTo({ top, behavior: "smooth" })
 }
 
 /** One quarter of the track, filling across its own slice of the scroll. */

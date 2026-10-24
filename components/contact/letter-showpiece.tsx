@@ -95,7 +95,9 @@ export function LetterShowpiece() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!ready || status === "sending") return
+    // A press already under way owns the letter until it lands, or a second
+    // click during the seal's animation would send it twice
+    if (!ready || status === "pressing" || status === "sending") return
 
     // Let the seal finish pressing before anything else happens
     setStatus("pressing")
@@ -160,161 +162,161 @@ export function LetterShowpiece() {
           transition={reduceMotion ? { duration: 0 } : { duration: 0.8, ease: [0.65, 0.1, 0, 1] }}
         >
           <LetterDesk>
-        <form onSubmit={handleSubmit}>
-          <Letterhead />
+            <form onSubmit={handleSubmit}>
+              <Letterhead />
 
-          <div
-            className="flex flex-col gap-y-12 text-base font-normal leading-none md:gap-y-16 md:text-xl"
-            style={{ color: INK }}
-          >
-            <motion.h2 {...stanza(0)} className="text-base font-normal leading-none md:text-xl">
-              Hi Saheer,
-            </motion.h2>
+              <div
+                className="flex flex-col gap-y-12 text-base font-normal leading-none md:gap-y-16 md:text-xl"
+                style={{ color: INK }}
+              >
+                <motion.h2 {...stanza(0)} className="text-base font-normal leading-none md:text-xl">
+                  Hi Saheer,
+                </motion.h2>
 
-            <motion.div {...stanza(1)} className="flex flex-col gap-y-6 md:gap-y-8">
-              <Line>
-                <span>I,</span>
-                <Blank
-                  {...blank}
-                  name="name"
-                  label="Your name"
-                  placeholder="your name"
-                  value={fields.name}
-                  onChange={set("name")}
-                  autoComplete="name"
-                  maxCh={16}
-                  required
-                />
-                <span>want to</span>
-                <Tail>
-                  <Blank
-                    {...blank}
-                    name="intent"
-                    label="What you want to do"
-                    placeholder="redesign my site"
-                    value={fields.intent}
-                    onChange={set("intent")}
-                    maxCh={20}
-                    required
+                <motion.div {...stanza(1)} className="flex flex-col gap-y-6 md:gap-y-8">
+                  <Line>
+                    <span>I,</span>
+                    <Blank
+                      {...blank}
+                      name="name"
+                      label="Your name"
+                      placeholder="your name"
+                      value={fields.name}
+                      onChange={set("name")}
+                      autoComplete="name"
+                      maxCh={16}
+                      required
+                    />
+                    <span>want to</span>
+                    <Tail>
+                      <Blank
+                        {...blank}
+                        name="intent"
+                        label="What you want to do"
+                        placeholder="redesign my site"
+                        value={fields.intent}
+                        onChange={set("intent")}
+                        maxCh={20}
+                        required
+                      />
+                      <Stop />
+                    </Tail>
+                  </Line>
+
+                  <Line>
+                    <span>You can reach me via</span>
+                    <Blank
+                      {...blank}
+                      name="email"
+                      label="Your email"
+                      placeholder="email@company.com"
+                      value={fields.email}
+                      onChange={set("email")}
+                      type="email"
+                      autoComplete="email"
+                      maxCh={24}
+                      required
+                      invalid={emailWrong}
+                      onFocusChange={(focused) => !focused && setEmailTouched(true)}
+                    />
+                    <span>or at</span>
+                    <Tail>
+                      <Blank
+                        {...blank}
+                        name="phone"
+                        label="Your phone number (optional)"
+                        placeholder="+91 000 000 0000"
+                        value={fields.phone}
+                        onChange={set("phone")}
+                        type="tel"
+                        autoComplete="tel"
+                        maxCh={20}
+                      />
+                      <Stop />
+                    </Tail>
+                  </Line>
+
+                  {emailWrong && (
+                    <p id="letter-email-error" className="text-[0.8125rem] leading-[1.4]" style={{ color: INVALID }}>
+                      That address doesn&apos;t look right — I won&apos;t be able to reply to it.
+                    </p>
+                  )}
+                </motion.div>
+
+                <motion.div {...stanza(2)}>
+                  <Line>
+                    {/* Named as optional in the prose, so the dashed rules below
+                        have something to mean rather than being decoration. */}
+                    <span>If it helps: my project is called</span>
+                    <Blank
+                      {...blank}
+                      name="project"
+                      label="Project name"
+                      placeholder="Project name"
+                      value={fields.project}
+                      onChange={set("project")}
+                      maxCh={16}
+                    />
+                    <span>and I&apos;m aiming to launch by</span>
+                    <Tail>
+                      <Blank
+                        {...blank}
+                        name="timeline"
+                        label="Target launch"
+                        placeholder="Q3 2025"
+                        value={fields.timeline}
+                        onChange={set("timeline")}
+                        maxCh={12}
+                      />
+                      <Stop />
+                    </Tail>
+                  </Line>
+                </motion.div>
+
+                <motion.div {...stanza(3)} className="flex flex-col gap-y-6 md:gap-y-8">
+                  <Line>
+                    <span>Cheers,</span>
+                  </Line>
+
+                  <Line>
+                    {/* The signature is the same answer as the opening line - filling
+                        in either one signs the letter, so nobody types their name
+                        twice. Set in the serif italic, the way a name is signed. */}
+                    <Blank
+                      {...blank}
+                      name="signature"
+                      label="Sign off"
+                      placeholder="your name"
+                      value={fields.name}
+                      onChange={set("name")}
+                      autoComplete="name"
+                      maxCh={18}
+                      face="font-serif italic"
+                      italicPlaceholder={false}
+                    />
+                  </Line>
+                </motion.div>
+
+                <motion.div {...stanza(4)} className="flex justify-end pt-2">
+                  <WaxSeal
+                    ready={ready}
+                    pressing={status === "pressing"}
+                    sending={status === "sending"}
+                    caption={caption}
                   />
-                  <Stop />
-                </Tail>
-              </Line>
+                </motion.div>
 
-              <Line>
-                <span>You can reach me via</span>
-                <Blank
-                  {...blank}
-                  name="email"
-                  label="Your email"
-                  placeholder="email@company.com"
-                  value={fields.email}
-                  onChange={set("email")}
-                  type="email"
-                  autoComplete="email"
-                  maxCh={24}
-                  required
-                  invalid={emailWrong}
-                  onFocusChange={(focused) => !focused && setEmailTouched(true)}
-                />
-                <span>or at</span>
-                <Tail>
-                  <Blank
-                    {...blank}
-                    name="phone"
-                    label="Your phone number (optional)"
-                    placeholder="+91 000 000 0000"
-                    value={fields.phone}
-                    onChange={set("phone")}
-                    type="tel"
-                    autoComplete="tel"
-                    maxCh={20}
-                  />
-                  <Stop />
-                </Tail>
-              </Line>
-
-              {emailWrong && (
-                <p id="letter-email-error" className="text-[0.8125rem] leading-[1.4]" style={{ color: INVALID }}>
-                  That address doesn&apos;t look right — I won&apos;t be able to reply to it.
-                </p>
-              )}
-            </motion.div>
-
-            <motion.div {...stanza(2)}>
-              <Line>
-                {/* Named as optional in the prose, so the dashed rules below
-                    have something to mean rather than being decoration. */}
-                <span>If it helps: my project is called</span>
-                <Blank
-                  {...blank}
-                  name="project"
-                  label="Project name"
-                  placeholder="Project name"
-                  value={fields.project}
-                  onChange={set("project")}
-                  maxCh={16}
-                />
-                <span>and I&apos;m aiming to launch by</span>
-                <Tail>
-                  <Blank
-                    {...blank}
-                    name="timeline"
-                    label="Target launch"
-                    placeholder="Q3 2025"
-                    value={fields.timeline}
-                    onChange={set("timeline")}
-                    maxCh={12}
-                  />
-                  <Stop />
-                </Tail>
-              </Line>
-            </motion.div>
-
-            <motion.div {...stanza(3)} className="flex flex-col gap-y-6 md:gap-y-8">
-              <Line>
-                <span>Cheers,</span>
-              </Line>
-
-              <Line>
-                {/* The signature is the same answer as the opening line - filling
-                    in either one signs the letter, so nobody types their name
-                    twice. Set in the serif italic, the way a name is signed. */}
-                <Blank
-                  {...blank}
-                  name="signature"
-                  label="Sign off"
-                  placeholder="your name"
-                  value={fields.name}
-                  onChange={set("name")}
-                  autoComplete="name"
-                  maxCh={18}
-                  face="font-serif italic"
-                  italicPlaceholder={false}
-                />
-              </Line>
-            </motion.div>
-
-            <motion.div {...stanza(4)} className="flex justify-end pt-2">
-              <WaxSeal
-                ready={ready}
-                pressing={status === "pressing"}
-                sending={status === "sending"}
-                caption={caption}
-              />
-            </motion.div>
-
-            {status === "error" && (
-              <p role="alert" className="text-right text-[0.8125rem]" style={{ color: "#8c2f39" }}>
-                That didn&apos;t send. Email me directly at{" "}
-                <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-2">
-                  {CONTACT_EMAIL}
-                </a>
-                .
-              </p>
-            )}
-          </div>
-        </form>
+                {status === "error" && (
+                  <p role="alert" className="text-right text-[0.8125rem]" style={{ color: "#8c2f39" }}>
+                    That didn&apos;t send. Email me directly at{" "}
+                    <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-2">
+                      {CONTACT_EMAIL}
+                    </a>
+                    .
+                  </p>
+                )}
+              </div>
+            </form>
           </LetterDesk>
         </motion.div>
       )}
@@ -322,7 +324,6 @@ export function LetterShowpiece() {
   )
 }
 
-/** Who the letter is to, when it is being written, and how far along it is. */
 /**
  * Printed stationery: the name it belongs to, the particulars under it, and a
  * rule. Nothing here reports on the form - a letterhead that opens by telling

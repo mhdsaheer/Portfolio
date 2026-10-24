@@ -1,9 +1,14 @@
 import type { Metadata } from "next"
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Reveal } from "@/components/case-study/reveal"
-import { InsightCard } from "@/components/insights/insight-card"
+import { AccentStar } from "@/components/about/accent-star"
+import { InsightCover } from "@/components/insights/insight-cover"
+import { COVER_ACTION, COVER_ACTION_ROUND, COVER_LABEL } from "@/components/insights/cover-styles"
+import { NoteTile } from "@/components/insights/note-tile"
 import { insights } from "@/lib/insights"
 
 export const metadata: Metadata = {
@@ -16,42 +21,75 @@ export const metadata: Metadata = {
   },
 }
 
+/**
+ * The insights index as a magazine: the newest article is the cover - its art
+ * full-bleed, its title set large over it - and the rest follow as tiles in
+ * the Work page's manner. Each article opens on the same cover.
+ */
 export default function InsightsPage() {
+  const [latest, ...rest] = insights
+
   return (
     <>
       <Header />
 
       <main>
-        <section className="pt-28 md:pt-36 pb-12 md:pb-16">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-            <Reveal>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-balance">
-                Insights
+        {latest ? (
+          <InsightCover
+            insight={latest}
+            label={
+              <h1 className={COVER_LABEL}>
+                <AccentStar className="size-3 text-accent" />
+                {/* The spaces are for anything reading the text: the flex gap sets them apart visually */}
+                Insights{" "}
+                <span aria-hidden className="text-white/45">
+                  /
+                </span>{" "}
+                <span className="text-white/70">The latest</span>
               </h1>
+            }
+            action={
+              <Link href={`/insights/${latest.slug}`} className={COVER_ACTION}>
+                <span className={COVER_ACTION_ROUND}>
+                  <ArrowUpRight
+                    aria-hidden
+                    className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </span>
+                Read the article
+              </Link>
+            }
+          />
+        ) : (
+          <section className="px-6 pb-24 pt-36 md:px-12 md:pt-44">
+            <div className="mx-auto max-w-[1280px]">
+              <h1 className="text-5xl font-semibold tracking-[-0.04em] text-white md:text-7xl">Insights</h1>
+              <p className="mt-6 text-lg leading-relaxed text-white/70">Nothing published yet. Check back soon.</p>
+            </div>
+          </section>
+        )}
 
-              <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl text-pretty">
-                Notes on frontend development, interface design and the parts of shipping product UI that only show up
-                once real data hits the screen.
-              </p>
-            </Reveal>
-          </div>
-        </section>
+        {rest.length > 0 && (
+          <section className="px-6 py-20 md:px-12 md:py-28">
+            <div className="mx-auto max-w-[1280px]">
+              <Reveal className="mb-10 md:mb-14">
+                <h2 className="text-4xl font-semibold tracking-[-0.04em] text-white md:text-6xl">More notes</h2>
+              </Reveal>
 
-        <section className="pb-20 md:pb-32">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-            {insights.length === 0 ? (
-              <p className="text-muted-foreground">Nothing published yet. Check back soon.</p>
-            ) : (
-              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-                {insights.map((insight, index) => (
-                  <Reveal as="li" key={insight.slug} delay={(index % 3) * 80}>
-                    <InsightCard insight={insight} priority={index < 3} />
-                  </Reveal>
+              <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+                {rest.map((insight, index) => (
+                  <NoteTile
+                    key={insight.slug}
+                    insight={insight}
+                    delay={(index % 2) * 90}
+                    // An odd one out takes the whole row rather than leaving a hole beside it
+                    wide={rest.length % 2 === 1 && index === rest.length - 1}
+                  />
                 ))}
               </ul>
-            )}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
       </main>
 
       <Footer />

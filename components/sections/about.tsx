@@ -1,4 +1,4 @@
-"use client"
+import { SectionTitle } from "@/components/ui/section-title"
 
 const skills = [
   "React",
@@ -21,8 +21,6 @@ const stats = [
   { value: "6+", label: "Years Designing" },
 ]
 
-import { SectionTitle } from "@/components/ui/section-title"
-
 export function About() {
   return (
     <section id="about" className="py-20 border-border border-t-0 md:py-10 md:pb-32 md:pt-32">
@@ -34,13 +32,13 @@ export function About() {
               Where Thoughtful Design Meets Working Code
             </SectionTitle>
             <p className="mt-6 text-muted-foreground leading-relaxed">
-              I'm a frontend developer with a degree in multimedia from the University of Calicut.
+              I&apos;m a frontend developer with a degree in multimedia from the University of Calicut.
               That background shapes how I build: I care about spacing, type, and motion as much as clean,
               maintainable React.
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               Day to day, I work across UI/UX and frontend, taking designs from Figma to responsive, production-ready
-              interfaces. I'm also at home on the backend with Node.js and Strapi, so I can wire up the APIs and CMS
+              interfaces. I&apos;m also at home on the backend with Node.js and Strapi, so I can wire up the APIs and CMS
               behind what I build.
             </p>
           </div>

@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 
 /**
  * The viewer is a light sheet over the page, so its controls are set in the
- * site's dark ink (PANEL) and fill with it on hover - the inverse of the page.
+ * site's dark ink, #0a121c, and fill with it on hover - the inverse of the page.
  */
 const INK_FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0a121c]"
 
@@ -43,7 +43,9 @@ export function FileViewer({
   // The last image shown, so closing can hand focus to its card - which, after
   // stepping through, is not always the card the viewer was opened from
   const lastShown = useRef<string | null>(null)
-  if (file) lastShown.current = file.slug
+  useEffect(() => {
+    if (file) lastShown.current = file.slug
+  }, [file])
 
   // Lenis scrolls the page from its own wheel handler, which the dialog's
   // scroll lock never sees - so the page is held still while this is open

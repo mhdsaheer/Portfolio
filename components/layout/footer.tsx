@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import Link from "next/link"
 import { ArrowUpRight, Download } from "lucide-react"
 
@@ -28,17 +29,18 @@ const activeSocials = socials.filter((social) => social.href)
 
 /**
  * Written as explicit lines so each rises from its own mask, the way the About
- * page sets its statements.
+ * page sets its statements. Keyed, because the list crosses from this server
+ * component into the client-side `Lines`, and React checks its keys on the way.
  */
 const headingLines = [
-  <>Have something in mind?</>,
-  <>
+  <Fragment key="ask">Have something in mind?</Fragment>,
+  <Fragment key="invite">
     Write me a{" "}
     <em className="font-serif text-[1.06em] font-normal italic" style={{ color: ACCENT, textShadow: ACCENT_GLOW }}>
       letter
     </em>
     .
-  </>,
+  </Fragment>,
 ]
 
 /**

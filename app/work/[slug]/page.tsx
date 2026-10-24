@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { SectionTitle } from "@/components/ui/section-title"
 import { Reveal } from "@/components/case-study/reveal"
+import { ACCENT } from "@/components/about/tokens"
 import { caseStudies, getCaseStudy, getNextCaseStudy } from "@/lib/case-studies"
 
 type PageProps = {
@@ -152,7 +153,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20">
               <div className="lg:col-span-4">
-                <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
+                <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
                   01 The problem
                 </span>
                 <SectionTitle className="mt-4 text-3xl md:text-4xl font-semibold tracking-tight text-balance">
@@ -176,7 +177,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   <ul className="mt-5 space-y-4">
                     {study.challenge.pains.map((pain) => (
                       <li key={pain} className="flex gap-3 text-sm md:text-base leading-relaxed">
-                        <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c8e0f5]" />
+                        <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                         {pain}
                       </li>
                     ))}
@@ -190,7 +191,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         {/* Approach */}
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-            <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
+            <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
               02 The approach
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
@@ -202,7 +203,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <Reveal as="li" key={item.step} delay={i * 60} className="border-b border-border">
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-12 py-8 md:py-10 group">
                     <div className="md:col-span-2">
-                      <span className="text-sm font-mono text-muted-foreground transition-colors group-hover:text-[#c8e0f5]">
+                      <span className="text-sm font-mono text-muted-foreground transition-colors group-hover:text-accent">
                         {item.step}
                       </span>
                     </div>
@@ -242,7 +243,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         {/* Results */}
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-            <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
+            <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
               03 The outcome
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
@@ -256,7 +257,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   delay={i * 80}
                   className="p-6 md:p-8 rounded-2xl md:rounded-3xl bg-card backdrop-blur-xl border border-border"
                 >
-                  <div className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight" style={{ color: "#c8e0f5" }}>
+                  <div className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight" style={{ color: ACCENT }}>
                     {result.value}
                   </div>
                   <div className="mt-3 text-sm text-muted-foreground leading-snug">{result.label}</div>
@@ -333,7 +334,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
                     <div className="absolute inset-x-6 bottom-6 md:inset-x-10 md:bottom-10 flex items-end justify-between gap-6">
                       <div>
-                        <span className="text-[11px] font-mono tracking-tight" style={{ color: "#c8e0f5" }}>
+                        <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
                           Next case study
                         </span>
                         <h2 className="mt-3 text-2xl md:text-4xl font-semibold tracking-tight">{next.title}</h2>
@@ -344,7 +345,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                       <div className="p-3 rounded-full bg-secondary/80 border border-border transition-colors group-hover:bg-secondary shrink-0">
                         <ArrowUpRight
                           className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                          style={{ color: "#c8e0f5" }}
+                          style={{ color: ACCENT }}
                         />
                       </div>
                     </div>

@@ -71,7 +71,7 @@ export function planTiles(studies: CaseStudy[], files: WorkFile[]): Tile[] {
  * is drawn inside, where the tile's own clipping cannot shave it off.
  */
 const STRETCH =
-  "text-left focus-visible:outline-hidden after:absolute after:inset-0 after:z-10 after:rounded-[1.5rem] focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-[#c8e0f5]"
+  "text-left focus-visible:outline-hidden after:absolute after:inset-0 after:z-10 after:rounded-[1.5rem] focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-accent"
 
 /** Darkens the foot of a cover so the words set over it stay readable. */
 const SCRIM =
@@ -293,7 +293,7 @@ export function ArchiveTile({
       <PageStack large={tile.span > 1} />
 
       <div className="flex flex-col p-5 md:p-7">
-        <p className="flex items-center gap-2.5 text-xs font-medium uppercase italic text-[#c8e0f5]">
+        <p className="flex items-center gap-2.5 text-xs font-medium uppercase italic text-accent">
           <AccentStar className="size-2.5 text-white" />
           Archive
         </p>
@@ -363,7 +363,7 @@ function LetteredCover({ file }: { file: WorkFile }) {
       )}
     >
       <span
-        className="font-serif text-[length:15cqi] italic leading-none text-[#c8e0f5]"
+        className="font-serif text-[length:15cqi] italic leading-none text-accent"
         style={{ textShadow: ACCENT_GLOW }}
       >
         {mark}

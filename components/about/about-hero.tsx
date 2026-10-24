@@ -6,9 +6,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 
 import { Lines } from "@/components/about/lines"
 import { ACCENT, FLUID, INK, SURFACE } from "@/components/about/tokens"
-
-const PLACE = "Kerala, India"
-const TIME_ZONE = "Asia/Kolkata"
+import { LOCATION, TIME_ZONE } from "@/lib/contact"
 
 export function AboutHero() {
   const frameRef = useRef<HTMLDivElement>(null)
@@ -64,7 +62,7 @@ export function AboutHero() {
               className="text-[0.875em] font-medium italic uppercase leading-[135%]"
               style={{ color: ACCENT }}
             >
-              {PLACE}
+              {LOCATION}
             </div>
           </div>
         </div>

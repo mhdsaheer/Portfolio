@@ -15,8 +15,6 @@ export const GUTTER = "calc(var(--about-fluid) * 2.5)"
 
 /** Sections sit on the site's mesh background rather than their own ground. */
 export const SURFACE = "transparent"
-/** Dark ink for text sitting on a light fill, like the work index's active filter. */
-export const PANEL = "#0a121c"
 
 /**
  * The services panel is a white sheet screen-blended onto the page: white stays
@@ -31,16 +29,18 @@ export const CUT_HAIRLINE = "rgba(0, 0, 0, 0.18)"
 
 export const INK = "#ffffff"
 export const MUTED = "#a8c4dc"
-export const ACCENT = "#c8e0f5"
-/** The service counter - present, but never competing with the titles. */
-export const DIM = "rgba(255, 255, 255, 0.45)"
+/**
+ * Read from `--accent` in globals.css, where the colour is set once, so inline
+ * styles and Tailwind's `text-accent` can never drift apart.
+ */
+export const ACCENT = "var(--accent)"
 
 export const HAIRLINE = "rgba(255, 255, 255, 0.15)"
 
 export const CTA_GRADIENT = "linear-gradient(135deg, #203eec 0%, #00d4ff 100%)"
 export const CTA_SHADOW = "0 8px 32px rgba(32, 62, 236, 0.35)"
-/** Matches the glow the hero and about sections put behind accent words. */
-export const ACCENT_GLOW = "0 0 40px rgba(200, 224, 245, 0.18)"
+/** The glow behind accent words - the accent itself at 18%, so a new accent brings its own glow. */
+export const ACCENT_GLOW = "0 0 40px color-mix(in srgb, var(--accent) 18%, transparent)"
 
 export type Cubic = [number, number, number, number]
 export const EASE_OUT_QUART: Cubic = [0.165, 0.84, 0.44, 1]

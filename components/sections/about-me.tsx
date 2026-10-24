@@ -1,14 +1,14 @@
-"use client"
-
 import type React from "react"
 
 import { Download } from "lucide-react"
 
+import { ACCENT, ACCENT_GLOW } from "@/components/about/tokens"
+import { AVAILABILITY, LOCATION, RESUME_PATH } from "@/lib/contact"
 import { cn } from "@/lib/utils"
 
 const facts = [
   { label: "Currently", value: "Frontend Developer at Febno Technologies" },
-  { label: "Based in", value: "Kerala, India · Open to remote & relocation" },
+  { label: "Based in", value: `${LOCATION} · ${AVAILABILITY}` },
   { label: "Focus", value: "Design systems, motion & interactive UI" },
 ]
 
@@ -18,12 +18,12 @@ export function AboutIntro() {
     <div className="w-full">
       {/* Display lede - the hero's sans/serif-italic pairing, one statement only */}
       <p className="font-sans font-semibold tracking-tight text-[1.75rem] lg:text-[2rem] xl:text-[2.5rem] leading-[1.12] text-white text-balance">
-        I'm Muhammed Saheer, a frontend developer with{" "}
+        I&apos;m Muhammed Saheer, a frontend developer with{" "}
         <em
           className="font-serif italic font-normal text-[1.06em]"
-          style={{ color: "#c8e0f5", textShadow: "0 0 40px rgba(200, 224, 245, 0.18)" }}
+          style={{ color: ACCENT, textShadow: ACCENT_GLOW }}
         >
-          a designer's eye.
+          a designer&apos;s eye.
         </em>
       </p>
 
@@ -72,7 +72,7 @@ export function AboutFacts({ active = true }: { active?: boolean }) {
       </dl>
 
       <a
-        href="/muhammed-saheer-resume.pdf"
+        href={RESUME_PATH}
         download="Muhammed-Saheer-Frontend-Developer-Resume.pdf"
         className={cn(
           "group inline-flex items-center gap-2.5 mt-8 xl:mt-10 px-6 py-3 text-sm font-medium rounded-full border border-white/35 bg-[#0a121c]/55 backdrop-blur-md",
@@ -80,7 +80,7 @@ export function AboutFacts({ active = true }: { active?: boolean }) {
           "motion-reduce:transition-none motion-reduce:translate-y-0 motion-reduce:opacity-100",
           active ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
         )}
-        style={{ color: "#c8e0f5", transitionDelay: `${facts.length * 130 + 180}ms` }}
+        style={{ color: ACCENT, transitionDelay: `${facts.length * 130 + 180}ms` }}
       >
         Download Resume
         <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />

@@ -108,7 +108,7 @@ export function Hero() {
 
           <motion.p className="max-w-[23.5rem] text-pretty text-[15px] leading-relaxed text-white/75" {...rise(0.55)}>
             I design in Figma and build fast, responsive websites in React and Next.js, with Strapi CMS so you can
-            update content yourself, and branding to match. Let's build yours.
+            update content yourself, and branding to match. Let&apos;s build yours.
           </motion.p>
 
           <motion.div className="md:justify-self-end" {...rise(0.65)}>

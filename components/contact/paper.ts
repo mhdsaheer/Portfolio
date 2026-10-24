@@ -21,13 +21,6 @@ export const RULE_STRONG = "rgba(22, 32, 44, 0.5)"
 /** Sits behind a field while it holds focus, like a highlighter pass. */
 export const FOCUS_WASH = "rgba(22, 32, 44, 0.045)"
 
-/** Where the sheet rests once it has been set down. */
-export const SHADOW_SETTLED =
-  "0 48px 90px -28px rgba(4, 10, 18, 0.62), 0 10px 28px rgba(4, 10, 18, 0.26)"
-/** Held just above the desk - a tighter, darker contact shadow. */
-export const SHADOW_LIFTED =
-  "0 10px 22px -10px rgba(4, 10, 18, 0.34), 0 3px 8px rgba(4, 10, 18, 0.16)"
-
 /**
  * Paper grain. An inline turbulence filter rather than an image, so it costs a
  * few hundred bytes and stays sharp at any density.

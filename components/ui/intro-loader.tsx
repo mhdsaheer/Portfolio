@@ -51,7 +51,6 @@ function markDone() {
 export function IntroLoader() {
   const [isOpen, setIsOpen] = useState(true)
   const [phase, setPhase] = useState<Phase>("loading")
-  const [count, setCount] = useState(0)
   const progress = useMotionValue(0)
   const barWidth = useMotionTemplate`${progress}%`
   const skipped = useRef(false)
@@ -111,12 +110,8 @@ export function IntroLoader() {
       const next = progress.get() + (target - progress.get()) * 0.14
       progress.set(next)
 
-      const rounded = Math.round(next)
-      setCount((current) => (current === rounded ? current : rounded))
-
       if (next >= 99.4 && elapsed >= MIN_HOLD) {
         progress.set(100)
-        setCount(100)
         setPhase("plate")
         return
       }
@@ -176,14 +171,13 @@ export function IntroLoader() {
             <div className="intro-grain absolute inset-0" />
           </motion.div>
 
-          {/* Hairline and counter, drawn the way the reference draws its rules */}
+          {/* Hairline, drawn the way the reference draws its rules */}
           <motion.div
             className="absolute inset-x-0 bottom-0 px-6 md:px-12 pb-8 md:pb-10"
             animate={{ opacity: phase === "loading" ? 1 : 0 }}
             transition={{ duration: 0.35, ease: "easeInOut" }}
           >
             <div className="max-w-[1280px] mx-auto">
-
               <div className="h-px w-full bg-neutral-900/15">
                 <motion.div className="h-full bg-neutral-900/70" style={{ width: barWidth }} />
               </div>

@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/case-study/reveal"
 import { AccentStar } from "@/components/about/accent-star"
+import { ACCENT, ACCENT_GLOW } from "@/components/about/tokens"
 
 const steps = [
   {
@@ -29,7 +30,7 @@ export function Approach() {
             <Reveal>
               <span
                 className="inline-flex items-center gap-2.5 text-[11px] font-mono uppercase tracking-[0.18em]"
-                style={{ color: "#c8e0f5" }}
+                style={{ color: ACCENT }}
               >
                 <AccentStar className="w-3 h-3" />
                 Approach
@@ -41,7 +42,7 @@ export function Approach() {
                 From idea to a{" "}
                 <em
                   className="font-serif italic font-normal text-[1.06em]"
-                  style={{ color: "#c8e0f5", textShadow: "0 0 40px rgba(200, 224, 245, 0.18)" }}
+                  style={{ color: ACCENT, textShadow: ACCENT_GLOW }}
                 >
                   live experience
                 </em>
@@ -61,7 +62,7 @@ export function Approach() {
                 <div className="flex items-baseline gap-5 md:gap-8">
                   <span
                     className="text-sm md:text-base font-mono tracking-tight shrink-0"
-                    style={{ color: "#c8e0f5" }}
+                    style={{ color: ACCENT }}
                   >
                     {step.number}
                   </span>

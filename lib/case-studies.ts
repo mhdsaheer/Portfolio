@@ -428,12 +428,6 @@ export function servicesOf(study: CaseStudy) {
   return services.filter((service) => (serviceFilters[service] as readonly string[]).includes(study.discipline))
 }
 
-/** No selection means no narrowing - the whole index stays on show. */
-export function filterByService(studies: CaseStudy[], selected: ServiceFilter[]) {
-  if (selected.length === 0) return studies
-  return studies.filter((study) => servicesOf(study).some((service) => selected.includes(service)))
-}
-
 export function getCaseStudy(slug: string) {
   return caseStudies.find((study) => study.slug === slug)
 }

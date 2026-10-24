@@ -1,12 +1,9 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
+import { ACCENT } from "@/components/about/tokens"
 import { SectionTitle } from "@/components/ui/section-title"
 import { caseStudies } from "@/lib/case-studies"
-
-const ACCENT = "#c8e0f5"
 
 /** The folder tab's outline. Wide enough for the number and the category. */
 const TAB_WIDTH = 212
@@ -120,20 +117,6 @@ export function SelectedWorks() {
                           />
                         </div>
                       </div>
-
-                      {/* Headline results - only where there is room for them */}
-                      {work.results.length > 0 && (
-                        <div className="hidden lg:grid grid-cols-2 gap-6 mt-6 pt-5 border-t border-white/10">
-                          {work.results.slice(0, 2).map((result) => (
-                            <div key={result.label}>
-                              <div className="text-2xl font-semibold tracking-tight text-foreground tabular-nums">
-                                {result.value}
-                              </div>
-                              <div className="mt-1 text-xs text-muted-foreground">{result.label}</div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
 
                       {/* Tags */}
                       <div className="flex flex-wrap gap-2 mt-6">

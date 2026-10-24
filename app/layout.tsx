@@ -6,13 +6,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { MagneticCursor } from "@/components/ui/magnetic-cursor"
 import { IntroLoader } from "@/components/ui/intro-loader"
 import { UnicornBackground } from "@/components/ui/unicorn-background"
+import { SITE_URL } from "@/lib/site"
 import "./globals.css"
 
 import { SmoothScroll } from "@/components/smooth-scroll"
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
-  variable: "--font-inter-tight",
 })
 
 const geistMono = Geist_Mono({
@@ -27,6 +27,8 @@ const playfairDisplay = Playfair_Display({
 })
 
 export const metadata: Metadata = {
+  // Resolves every page's relative share-image path against the live domain
+  metadataBase: new URL(SITE_URL),
   title: "Muhammed Saheer - Front-End Developer & UI/UX Designer, India",
   description:
     "Front-end developer & UI/UX designer in Kerala, India. I design in Figma and build fast React & Next.js websites for businesses in India and the UAE.",
@@ -50,7 +52,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  // The page's own ground (--background), so the mobile browser bar matches it
+  themeColor: "#3a5f87",
   width: "device-width",
   initialScale: 1,
 }

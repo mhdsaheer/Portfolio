@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer"
 import { LetterShowpiece } from "@/components/contact/letter-showpiece"
 import { ACCENT, HAIRLINE, INK, MUTED } from "@/components/about/tokens"
 import {
+  AVAILABILITY,
   CONTACT_EMAIL,
   CONTACT_PHONE,
   CONTACT_PHONE_DISPLAY,
@@ -40,12 +41,16 @@ export default function ContactPage() {
 
           <LetterShowpiece />
 
-          <div className="mx-auto mt-16 w-full max-w-[46rem] md:mt-20">
+          {/* Wider than the sheet from lg: four columns inside its 46rem leave
+              about 160px each, which the email address alone overruns */}
+          <div className="mx-auto mt-16 w-full max-w-[46rem] md:mt-20 lg:max-w-[64rem]">
             <dl
               className="grid grid-cols-2 gap-x-8 gap-y-7 border-t pt-8 lg:grid-cols-4"
               style={{ borderColor: HAIRLINE }}
             >
-              <Particular label="Reach me">
+              {/* Phones give the address and the links the full width; half of
+                  it is narrower than the email address */}
+              <Particular label="Reach me" className="col-span-2 sm:col-span-1">
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
                   className="block underline-offset-4 hover:underline"
@@ -62,15 +67,27 @@ export default function ContactPage() {
                 </a>
               </Particular>
 
+              {/* Every column carries two lines, so the middle of the row holds
+                  its weight against the email and the links either side */}
               <Particular label="Based in">
-                <span style={{ color: INK }}>{LOCATION}</span>
+                <span className="block" style={{ color: INK }}>
+                  {LOCATION}
+                </span>
+                <span className="mt-1 block" style={{ color: MUTED }}>
+                  {AVAILABILITY}
+                </span>
               </Particular>
 
               <Particular label="Response">
-                <span style={{ color: INK }}>{RESPONSE_TIME}</span>
+                <span className="block" style={{ color: INK }}>
+                  {RESPONSE_TIME}
+                </span>
+                <span className="mt-1 block" style={{ color: MUTED }}>
+                  I answer every one
+                </span>
               </Particular>
 
-              <Particular label="Elsewhere">
+              <Particular label="Elsewhere" className="col-span-2 sm:col-span-1">
                 <ul className="flex flex-wrap gap-x-4 gap-y-1">
                   {activeSocials.map((social) => (
                     <li key={social.label}>
@@ -108,9 +125,17 @@ export default function ContactPage() {
   )
 }
 
-function Particular({ label, children }: { label: string; children: React.ReactNode }) {
+function Particular({
+  label,
+  className,
+  children,
+}: {
+  label: string
+  className?: string
+  children: React.ReactNode
+}) {
   return (
-    <div>
+    <div className={className}>
       <dt className="mb-2 text-[0.7rem] font-medium uppercase tracking-[0.16em]" style={{ color: MUTED }}>
         {label}
       </dt>

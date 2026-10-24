@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import Link from "next/link"
 
 import { Lines } from "@/components/about/lines"
@@ -17,10 +18,11 @@ import {
 /**
  * Written as explicit lines so each one can rise from its own mask. Roughly
  * forty characters is what the nine-column measure holds at this size - longer
- * lines wrap and break the stagger into an uneven stack.
+ * lines wrap and break the stagger into an uneven stack. Keyed, because the list
+ * crosses into the client-side `Lines`, and React checks its keys on the way.
  */
 const headingLines = [
-  <>
+  <Fragment key="hello">
     Hi, I&apos;m Muhammed &ndash; also just{" "}
     <em
       className="font-serif italic font-normal text-[1.06em]"
@@ -29,9 +31,9 @@ const headingLines = [
       Saheer
     </em>
     .
-  </>,
-  <>I design and build interfaces that</>,
-  <>stand out and perform in production.</>,
+  </Fragment>,
+  <Fragment key="build">I design and build interfaces that</Fragment>,
+  <Fragment key="perform">stand out and perform in production.</Fragment>,
 ]
 
 const paragraphs = [

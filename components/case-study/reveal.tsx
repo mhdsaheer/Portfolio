@@ -19,11 +19,6 @@ export function Reveal({ children, className = "", delay = 0, as = "div" }: Reve
     const node = ref.current
     if (!node) return
 
-    if (typeof IntersectionObserver === "undefined") {
-      setIsVisible(true)
-      return
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
