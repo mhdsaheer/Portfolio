@@ -20,6 +20,7 @@ import {
   CONTACT_PHONE,
   CONTACT_PHONE_DISPLAY,
   RESPONSE_TIME,
+  RESUME_FILENAME,
   RESUME_PATH,
   socials,
 } from "@/lib/contact"
@@ -89,7 +90,7 @@ export function Footer({ invite = true }: { invite?: boolean }) {
                     control, clearly the second choice. */}
                 <a
                   href={RESUME_PATH}
-                  download
+                  download={RESUME_FILENAME}
                   className="group inline-flex items-center gap-[0.5em] rounded-full border px-[1.6em] py-[0.85em] text-[1.0625em] font-medium leading-none transition-colors hover:bg-white/5"
                   style={{ borderColor: ACCENT, color: ACCENT }}
                 >

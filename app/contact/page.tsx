@@ -11,6 +11,7 @@ import {
   CONTACT_PHONE_DISPLAY,
   LOCATION,
   RESPONSE_TIME,
+  RESUME_FILENAME,
   RESUME_PATH,
   socials,
 } from "@/lib/contact"
@@ -106,7 +107,7 @@ export default function ContactPage() {
                   <li>
                     <a
                       href={RESUME_PATH}
-                      download
+                      download={RESUME_FILENAME}
                       className="underline-offset-4 hover:underline"
                       style={{ color: ACCENT }}
                     >

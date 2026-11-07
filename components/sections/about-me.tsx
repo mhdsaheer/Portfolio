@@ -3,7 +3,7 @@ import type React from "react"
 import { Download } from "lucide-react"
 
 import { ACCENT, ACCENT_GLOW } from "@/components/about/tokens"
-import { AVAILABILITY, LOCATION, RESUME_PATH } from "@/lib/contact"
+import { AVAILABILITY, LOCATION, RESUME_FILENAME, RESUME_PATH } from "@/lib/contact"
 import { cn } from "@/lib/utils"
 
 const facts = [
@@ -73,7 +73,7 @@ export function AboutFacts({ active = true }: { active?: boolean }) {
 
       <a
         href={RESUME_PATH}
-        download="Muhammed-Saheer-Frontend-Developer-Resume.pdf"
+        download={RESUME_FILENAME}
         className={cn(
           "group inline-flex items-center gap-2.5 mt-8 xl:mt-10 px-6 py-3 text-sm font-medium rounded-full border border-white/35 bg-[#0a121c]/55 backdrop-blur-md",
           "transition-[background-color,border-color,opacity,transform] duration-[800ms] ease-out hover:bg-[#0a121c]/75 hover:border-white/55",

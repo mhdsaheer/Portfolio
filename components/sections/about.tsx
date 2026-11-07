@@ -7,6 +7,7 @@ const skills = [
   "Tailwind CSS",
   "Framer Motion",
   "Node.js",
+  "PHP",
   "Strapi CMS",
   "WordPress",
   "Figma",
