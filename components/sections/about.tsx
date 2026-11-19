@@ -33,12 +33,12 @@ export function About() {
               Where Thoughtful Design Meets Working Code
             </SectionTitle>
             <p className="mt-6 text-muted-foreground leading-relaxed">
-              I&apos;m a frontend developer with a degree in multimedia from the University of Calicut.
+              I&apos;m a front-end developer with a degree in multimedia from the University of Calicut.
               That background shapes how I build: I care about spacing, type, and motion as much as clean,
               maintainable React.
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              Day to day, I work across UI/UX and frontend, taking designs from Figma to responsive, production-ready
+              Day to day, I work across UI/UX and front-end development, taking designs from Figma to responsive, production-ready
               interfaces. I&apos;m also at home on the backend with Node.js and Strapi, so I can wire up the APIs and CMS
               behind what I build.
             </p>

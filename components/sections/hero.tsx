@@ -59,19 +59,24 @@ export function Hero() {
   }
 
   // overflow-clip, not hidden - it trims the lines as they drift off the sides without
-  // turning the section into a scroll container
+  // turning the section into a scroll container. Only landscape screens fill the viewport:
+  // the words sit at the foot, so on a portrait screen all its spare height would pile up
+  // above the headline. There the hero is just as tall as its words.
   return (
-    <section ref={sectionRef} className="relative flex min-h-svh flex-col overflow-clip pt-24 md:pt-28">
+    <section ref={sectionRef} className="relative flex flex-col overflow-clip pt-24 landscape:min-h-svh md:pt-28">
       <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-1 flex-col px-6 pb-10 md:px-12 md:pb-12">
         {/*
           The headline is sized by whichever runs out first, width or height. At weight 800
           and -0.06em, "Developer." sets 4.47em wide, so 22.4cqi fills the column. Two lines at
           leading 1 take 2em, so 46cqh keeps both, descenders included, inside the space left
           between the nav and the bottom row - that is what shrinks it on short laptops.
+          In portrait there is no spare height to grow into, so the slot is sized from the
+          width: 50vw is the least that leaves the width in charge at 46cqh, and anything past
+          that is the air above the first line.
           The container is pinned inside the flex slot rather than being the slot itself:
           Chrome reads cqh as 0 on a container whose height comes from flex-grow.
         */}
-        <div className="relative min-h-48 flex-1">
+        <div className="relative min-h-48 flex-1 portrait:min-h-[75vw]">
           <div className="absolute inset-0 flex flex-col justify-end [container-type:size]">
             <h1 className="font-sans text-[length:min(22.4cqi,46cqh)] font-extrabold leading-none tracking-[-0.06em] text-white">
               {lines.map((line, index) => (

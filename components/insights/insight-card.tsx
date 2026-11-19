@@ -12,7 +12,7 @@ import { publishedAt, type Insight } from "@/lib/insights"
 const STRETCH =
   "focus-visible:outline-hidden after:absolute after:inset-0 after:z-10 after:rounded-3xl focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-[#0a121c]"
 
-/** Every article's tags lead with "AI", so the pills are its category and the first tag that adds something. */
+/** The pills are the category and the first tag that adds something to it - "AI" alone is too broad to say much. */
 function pillsFor(insight: Insight) {
   const extra = insight.tags.find((tag) => tag !== "AI" && tag !== insight.category)
   return extra ? [insight.category, extra] : [insight.category]
@@ -61,7 +61,7 @@ export function InsightCard({ insight }: { insight: Insight }) {
               {pill}
             </span>
           ))}
-          <time dateTime={publishedAt(insight)} className="ml-1.5 text-xs text-[#8a8a8a]">
+          <time dateTime={publishedAt(insight)} className="ml-1.5 text-xs text-[#737373]">
             {insight.date}
           </time>
         </div>

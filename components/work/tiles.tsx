@@ -11,7 +11,7 @@ import { ACCENT, ACCENT_GLOW } from "@/components/about/tokens"
 import { entrances } from "@/components/work/motion"
 import { useHydratedReducedMotion } from "@/hooks/use-hydrated-reduced-motion"
 import type { CaseStudy } from "@/lib/case-studies"
-import type { WorkFile } from "@/lib/work-files"
+import { shotsOf, type WorkFile } from "@/lib/work-files"
 import { cn } from "@/lib/utils"
 
 export type Tile =
@@ -71,7 +71,7 @@ export function planTiles(studies: CaseStudy[], files: WorkFile[]): Tile[] {
  * is drawn inside, where the tile's own clipping cannot shave it off.
  */
 const STRETCH =
-  "text-left focus-visible:outline-hidden after:absolute after:inset-0 after:z-10 after:rounded-[1.5rem] focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-accent"
+  "text-left focus-visible:outline-hidden after:absolute after:inset-0 after:z-10 after:rounded-[1rem] focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-accent"
 
 /** Darkens the foot of a cover so the words set over it stay readable. */
 const SCRIM =
@@ -124,7 +124,7 @@ function TileFrame({
       animate={still || (inView && ready) ? "shown" : "hidden"}
       variants={card}
       className={cn(
-        "group relative isolate flex flex-col justify-between overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5",
+        "group relative isolate flex flex-col justify-between overflow-hidden rounded-[1rem] border border-white/10 bg-white/5",
         className,
       )}
     >
@@ -209,8 +209,11 @@ export function FileTile({
   onView: () => void
 }) {
   const { file, wideBelowLg } = tile
-  const { hint, Icon } = FORMATS[file.format]
+  const { Icon } = FORMATS[file.format]
   const cover = file.cover ?? (file.format === "image" ? file.src : undefined)
+  // A piece shown from several sides says so, before it is opened
+  const views = file.format === "image" ? shotsOf(file).length : 1
+  const hint = views > 1 ? `view all ${views} images` : FORMATS[file.format].hint
 
   return (
     <TileFrame
@@ -234,8 +237,13 @@ export function FileTile({
       )}
       <div aria-hidden className={cn("absolute inset-0 -z-10", SCRIM)} />
 
-      <div className="flex items-start justify-end p-3 md:p-5">
-        <span aria-hidden className={CORNER}>
+      <div className="flex items-start gap-2 p-3 md:p-5">
+        {views > 1 && (
+          <p aria-hidden className={CHIP}>
+            {views} images
+          </p>
+        )}
+        <span aria-hidden className={cn(CORNER, "ml-auto")}>
           <Icon className="size-3.5 md:size-4" />
         </span>
       </div>

@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import * as Dialog from "@radix-ui/react-dialog"
 import { ArrowLeft, ArrowRight, ArrowUpRight, X } from "lucide-react"
 
 import { pad } from "@/components/work/motion"
-import type { WorkFile } from "@/lib/work-files"
+import { shotsOf, type WorkFile } from "@/lib/work-files"
 import { cn } from "@/lib/utils"
 
 /**
@@ -23,10 +23,16 @@ const ROUND_BUTTON = `grid size-11 shrink-0 place-items-center rounded-full ${IN
 /** The way from a piece to a conversation about one like it, outlined like the controls beside it. */
 const CTA = `inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium ${INK_CONTROL}`
 
+/** Where the viewer starts: no piece yet, and so the first picture of whichever opens. */
+const FIRST = { slug: "", shot: 0 }
+
 /**
  * Full-screen viewer for the image files. The arrow keys and buttons step
  * through whatever the current filter shows; Escape, the close button or a
  * click on the margin around the image puts it away.
+ *
+ * A piece with several pictures lists them as thumbnails - down the left side,
+ * or in a row under the one on view on phones - and the arrows walk through all of them before moving on.
  */
 export function FileViewer({
   files,
@@ -39,6 +45,23 @@ export function FileViewer({
 }) {
   const file = index === null ? undefined : files[index]
   const open = file !== undefined
+
+  // Which picture of the piece is on view. Held with the piece it belongs to,
+  // so arriving at another piece starts from its first picture
+  const [at, setAt] = useState(FIRST)
+  const shots = file ? shotsOf(file) : []
+  const shot = file && at.slug === file.slug ? Math.min(at.shot, shots.length - 1) : 0
+  const picture = shots[shot]
+
+  // The counter runs over every picture, not every piece
+  const count = (pieces: WorkFile[]) => pieces.reduce((sum, piece) => sum + shotsOf(piece).length, 0)
+  const total = count(files)
+  const position = count(files.slice(0, index ?? 0)) + shot + 1
+
+  const close = () => {
+    setAt(FIRST)
+    onChange(null)
+  }
 
   // The last image shown, so closing can hand focus to its card - which, after
   // stepping through, is not always the card the viewer was opened from
@@ -56,12 +79,19 @@ export function FileViewer({
   }, [open])
 
   const step = (by: number) => {
-    if (index === null || files.length < 2) return
-    onChange((index + by + files.length) % files.length)
+    if (index === null || !file || total < 2) return
+
+    const within = shot + by
+    if (within >= 0 && within < shots.length) return setAt({ slug: file.slug, shot: within })
+
+    // Off either end of the piece: on to the next one, entered from the near side
+    const to = (index + by + files.length) % files.length
+    setAt({ slug: files[to].slug, shot: by < 0 ? shotsOf(files[to]).length - 1 : 0 })
+    onChange(to)
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={(next) => !next && onChange(null)}>
+    <Dialog.Root open={open} onOpenChange={(next) => !next && close()}>
       <Dialog.Portal>
         {/* A white sheet: the page still shows through, softly, behind it */}
         <Dialog.Overlay className="fixed inset-0 z-[60] bg-[#f6f8fb]/90 backdrop-blur-xl data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:animate-in data-[state=open]:fade-in" />
@@ -80,7 +110,7 @@ export function FileViewer({
           }}
           className="fixed inset-0 z-[61] flex flex-col outline-none animation-duration-300 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95"
         >
-          {file && (
+          {file && picture && (
             <>
               <div className="flex items-center justify-between gap-4 px-5 pt-5 md:px-8 md:pt-6">
                 <div className="min-w-0">
@@ -105,14 +135,15 @@ export function FileViewer({
 
               {/* The margin around the image closes the viewer, as a backdrop would */}
               <div
-                className="relative min-h-0 flex-1 px-5 py-5 md:px-24 md:py-8"
-                onClick={(event) => event.target === event.currentTarget && onChange(null)}
+                // A piece with several pictures keeps its left margin clear for their thumbnails
+                className={cn("relative min-h-0 flex-1 px-5 py-5 md:px-24 md:py-8", shots.length > 1 && "md:px-40")}
+                onClick={(event) => event.target === event.currentTarget && close()}
               >
                 <div className="relative h-full w-full">
                   <Image
-                    key={file.src}
-                    src={file.src}
-                    alt={file.alt ?? ""}
+                    key={picture.src}
+                    src={picture.src}
+                    alt={picture.alt}
                     fill
                     sizes="100vw"
                     // The shadow follows the picture's own edges, not the letterboxed box
@@ -121,21 +152,60 @@ export function FileViewer({
                 </div>
               </div>
 
+              {shots.length > 1 && (
+                <ul
+                  aria-label={`Images of ${file.title}`}
+                  // A row under the picture on phones; a column down the left side from 768px up
+                  className="flex shrink-0 justify-center gap-3 px-5 pb-4 md:absolute md:left-6 md:top-1/2 md:-translate-y-1/2 md:flex-col md:gap-3 md:rounded-[1.25rem] md:border md:border-[#0a121c]/10 md:bg-white/70 md:p-3 md:shadow-[0_16px_40px_rgba(10,18,28,0.1)] md:backdrop-blur-md"
+                >
+                  {shots.map((each, i) => (
+                    <li key={each.src}>
+                      <button
+                        type="button"
+                        onClick={() => setAt({ slug: file.slug, shot: i })}
+                        aria-label={`Image ${i + 1} of ${shots.length}`}
+                        aria-current={i === shot ? "true" : undefined}
+                        className={cn(
+                          "group/thumb relative block h-12 w-16 overflow-hidden rounded-xl transition-[box-shadow,opacity] duration-300 md:h-[4.5rem] md:w-24",
+                          INK_FOCUS,
+                          // A see-through ring, so the sheet behind shows in it; the
+                          // one on view is told apart by full strength and its zoom
+                          i === shot
+                            ? "ring-2 ring-[#0a121c]/15"
+                            : "opacity-60 ring-1 ring-[#0a121c]/5 hover:opacity-100",
+                        )}
+                      >
+                        <Image
+                          src={each.src}
+                          alt=""
+                          fill
+                          sizes="96px"
+                          className={cn(
+                            "object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                            i === shot ? "scale-110" : "group-hover/thumb:scale-110",
+                          )}
+                        />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
               {/* Phones need the top bar's width for the title, so the way to get
                   in touch comes down here, beside the steppers, as a shorter ask */}
               <div
                 className={cn(
                   "flex items-center justify-between gap-3 px-5 pb-5 sm:justify-center md:px-8 md:pb-8",
-                  files.length < 2 && "sm:hidden",
+                  total < 2 && "sm:hidden",
                 )}
               >
-                {files.length > 1 && (
+                {total > 1 && (
                   <div className="flex items-center gap-3 sm:gap-4">
                     <button type="button" onClick={() => step(-1)} className={ROUND_BUTTON} aria-label="Previous image">
                       <ArrowLeft aria-hidden className="size-5" />
                     </button>
                     <span className="min-w-[3.5rem] text-center text-sm tabular-nums text-[#0a121c]/60 sm:min-w-[4.5rem]">
-                      {pad((index ?? 0) + 1)} / {pad(files.length)}
+                      {pad(position)} / {pad(total)}
                     </span>
                     <button type="button" onClick={() => step(1)} className={ROUND_BUTTON} aria-label="Next image">
                       <ArrowRight aria-hidden className="size-5" />

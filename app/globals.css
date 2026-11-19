@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Where the services deck has the width for its three-column tile: from md up,
+   and on anything clearly wider than tall, such as a phone on its side. */
+@custom-variant deck-wide {
+  @media (min-width: 48rem) {
+    @slot;
+  }
+  @media (min-aspect-ratio: 3/2) {
+    @slot;
+  }
+}
+
 :root {
   --background: #3a5f87;
   --foreground: #ffffff;
@@ -223,6 +234,9 @@ html.lenis, html.lenis body {
      or wide windows, where a pure vw base would size the pinned panel taller
      than the viewport; at 16:9 and 16:10 it never binds. */
   --about-fluid: min(1vw, 1.9vh);
+  /* The footer follows the same scale, except where noted below. */
+  --footer-fluid: var(--about-fluid);
+  --footer-gutter: calc(var(--footer-fluid) * 2.5);
 }
 
 @media (max-width: 991px) {
@@ -234,5 +248,10 @@ html.lenis, html.lenis body {
 @media (max-width: 767px) {
   :root {
     --about-fluid: 4.103vw;
+    /* 4.103vw suits a phone but reaches 31px by 767px, about twice the footer's
+       size at any other width, so the footer stops growing at 15px. */
+    --footer-fluid: min(var(--about-fluid), 15px);
+    /* A fixed margin on small screens, matching the home page's sections. */
+    --footer-gutter: 24px;
   }
 }

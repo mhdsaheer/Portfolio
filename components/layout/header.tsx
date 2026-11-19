@@ -151,6 +151,26 @@ export function Header() {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
+  /**
+   * The drawer's logo always shuts the drawer. On the home page it also goes
+   * back to the top, like the bar's logo - but only once the drawer has gone,
+   * since its scroll lock (and the stopped Lenis) would swallow the scroll.
+   */
+  const scrollTopOnClose = useRef(false)
+
+  const handleDrawerLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setIsMobileMenuOpen(false)
+    if (!isHome) return
+    e.preventDefault()
+    scrollTopOnClose.current = true
+  }
+
+  const handleDrawerClosed = () => {
+    if (!scrollTopOnClose.current) return
+    scrollTopOnClose.current = false
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   // Geometry is animated by framer (layout), the skin by CSS. They are kept
   // apart on purpose: a CSS `transition-all` here would fight the transform
   // framer uses to tween the box.
@@ -257,11 +277,15 @@ export function Header() {
           open across a resize stays visible to close, rather than locking an
           invisible dialog over the page. */}
       <Dialog.Portal>
-        <Dialog.Content aria-describedby={undefined} className="fixed inset-0 z-50 bg-background outline-none">
+        <Dialog.Content
+          aria-describedby={undefined}
+          onCloseAutoFocus={handleDrawerClosed}
+          className="fixed inset-0 z-50 bg-background outline-none"
+        >
           <Dialog.Title className="sr-only">Menu</Dialog.Title>
           <div className="flex flex-col h-full p-6">
             <div className="flex items-center justify-between">
-              <Link href="/">
+              <Link href="/" onClick={handleDrawerLogoClick}>
                 <Wordmark />
               </Link>
               <Dialog.Close className="p-2 -mr-2" aria-label="Close menu">

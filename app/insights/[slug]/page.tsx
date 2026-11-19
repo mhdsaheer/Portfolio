@@ -1,20 +1,44 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, ArrowUpRight } from "lucide-react"
 
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Reveal } from "@/components/case-study/reveal"
-import { ACCENT } from "@/components/about/tokens"
-import { InsightCover } from "@/components/insights/insight-cover"
+import { ArticleBody } from "@/components/insights/article-body"
+import { ArticleFaq } from "@/components/insights/article-faq"
+import { ArticlePager } from "@/components/insights/article-pager"
+import { ArticleToc, ArticleTocDisclosure } from "@/components/insights/article-toc"
+import { AuthorByline, AuthorCard } from "@/components/insights/author"
+import { Breadcrumbs } from "@/components/insights/breadcrumbs"
 import { COVER_ACTION, COVER_ACTION_ROUND } from "@/components/insights/cover-styles"
-import { NoteTile } from "@/components/insights/note-tile"
-import { insights, getInsight, getNextInsight, publishedAt } from "@/lib/insights"
+import { InsightCard } from "@/components/insights/insight-card"
+import { InsightCover } from "@/components/insights/insight-cover"
+import { ShareLinks } from "@/components/insights/share-links"
+import {
+  AUTHOR,
+  getAdjacentInsights,
+  getInsight,
+  getRelatedInsights,
+  insightPath,
+  insightUrl,
+  insights,
+  modifiedAt,
+  publishedAt,
+  type Insight,
+} from "@/lib/insights"
 import { SITE_URL } from "@/lib/site"
 
 type PageProps = {
   params: Promise<{ slug: string }>
+}
+
+const BRAND = " | Muhammed Saheer"
+
+/** The tab and search title: the name joins the article's own title wherever both fit in 60 characters. */
+function documentTitle(insight: Insight) {
+  return insight.seoTitle.length + BRAND.length <= 60 ? insight.seoTitle + BRAND : insight.seoTitle
 }
 
 export function generateStaticParams() {
@@ -26,20 +50,102 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const insight = getInsight(slug)
 
   if (!insight) {
-    return { title: "Article not found | Muhammed Saheer" }
+    return { title: "Article not found | Muhammed Saheer", robots: { index: false } }
   }
 
+  const path = insightPath(insight.slug)
+  const image = { url: insight.image, alt: insight.imageAlt }
+
   return {
-    title: `${insight.title} | Insights`,
-    description: insight.excerpt,
-    openGraph: {
-      title: insight.title,
-      description: insight.excerpt,
-      type: "article",
-      publishedTime: publishedAt(insight),
-      tags: insight.tags,
-      images: [{ url: insight.image }],
+    title: documentTitle(insight),
+    description: insight.description,
+    keywords: insight.seo ? [insight.seo.focusKeyword, ...insight.seo.secondaryKeywords] : insight.tags,
+    authors: [{ name: AUTHOR.name, url: `${SITE_URL}${AUTHOR.path}` }],
+    alternates: { canonical: path },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
     },
+    openGraph: {
+      type: "article",
+      url: path,
+      siteName: AUTHOR.name,
+      title: insight.social.title,
+      description: insight.social.description,
+      publishedTime: publishedAt(insight),
+      modifiedTime: modifiedAt(insight),
+      authors: [`${SITE_URL}${AUTHOR.path}`],
+      section: insight.category,
+      tags: insight.tags,
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: insight.social.title,
+      description: insight.social.description,
+      images: [image],
+    },
+  }
+}
+
+/**
+ * Mirrors what is on the page: the article, its author and where it sits.
+ * BlogPosting is one of the three types Google reads for article results,
+ * and the images run 16:9, 4:3 and 1:1, the crops it asks for.
+ *
+ * The FAQ is deliberately left out of the markup. Google retired FAQ rich
+ * results in May 2026, so the questions stay on the page for readers only.
+ */
+function structuredData(insight: Insight) {
+  const url = insightUrl(insight.slug)
+  const personId = `${SITE_URL}/#person`
+  const authorUrl = `${SITE_URL}${AUTHOR.path}`
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        headline: insight.title,
+        description: insight.description,
+        image: [insight.image, ...(insight.imageCrops ?? [])].map((path) => `${SITE_URL}${path}`),
+        datePublished: publishedAt(insight),
+        dateModified: modifiedAt(insight),
+        author: { "@type": "Person", "@id": personId, name: AUTHOR.name, url: authorUrl },
+        publisher: { "@id": personId },
+        mainEntityOfPage: { "@type": "WebPage", "@id": url },
+        url,
+        isPartOf: {
+          "@type": "Blog",
+          "@id": `${SITE_URL}/insights#blog`,
+          name: "Insights",
+          url: `${SITE_URL}/insights`,
+        },
+        articleSection: insight.category,
+        keywords: insight.seo ? [insight.seo.focusKeyword, ...insight.seo.secondaryKeywords] : insight.tags,
+        wordCount: insight.wordCount,
+        inLanguage: "en",
+      },
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: AUTHOR.name,
+        url: authorUrl,
+        image: `${SITE_URL}${AUTHOR.image}`,
+        jobTitle: AUTHOR.jobTitle,
+        sameAs: AUTHOR.profiles.map((profile) => profile.href),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Insights", item: `${SITE_URL}/insights` },
+          { "@type": "ListItem", position: 3, name: insight.title, item: url },
+        ],
+      },
+    ],
   }
 }
 
@@ -51,19 +157,9 @@ export default async function InsightPage({ params }: PageProps) {
     notFound()
   }
 
-  const next = getNextInsight(insight.slug)
-
-  /* Mirrors what is on the page, so search results carry the byline and date. */
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: insight.title,
-    description: insight.excerpt,
-    image: `${SITE_URL}${insight.image}`,
-    datePublished: publishedAt(insight),
-    keywords: insight.tags.join(", "),
-    author: { "@type": "Person", name: "Muhammed Saheer" },
-  }
+  const url = insightUrl(insight.slug)
+  const { previous, next } = getAdjacentInsights(insight.slug)
+  const related = getRelatedInsights(insight)
 
   return (
     <>
@@ -71,11 +167,16 @@ export default async function InsightPage({ params }: PageProps) {
 
       <main>
         <article>
-          {/* Opens the way the index does: the art full-bleed, the title set large over it,
-              and beside the excerpt the way back to every other article */}
+          {/* Opens the way the index does: the art full-bleed, the title set large over it, the
+              trail back at the head and beside the excerpt the way back to every other article */}
           <InsightCover
             insight={insight}
             titleAs="h1"
+            label={
+              <Breadcrumbs
+                items={[{ name: "Home", href: "/" }, { name: "Insights", href: "/insights" }, { name: insight.title }]}
+              />
+            }
             action={
               <Link href="/insights" className={COVER_ACTION}>
                 <span className={COVER_ACTION_ROUND}>
@@ -89,94 +190,130 @@ export default async function InsightPage({ params }: PageProps) {
             }
           />
 
-          {/* The text runs the full width of the content column, the cover's own grid, so the
-              title above and every line below share both edges. */}
-          <section className="pb-20 pt-16 md:pb-28 md:pt-24">
-            <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-              <Reveal>
-                {insight.intro.map((paragraph) => (
-                  <p key={paragraph} className="text-lg md:text-xl leading-[1.7] text-pretty mb-6 last:mb-0">
-                    {paragraph}
-                  </p>
-                ))}
-              </Reveal>
+          {/* The mesh behind the site moves and has bright patches, which is fine for a headline
+              and hard on a paragraph. The text gets a dim layer of the page's own navy, faded in
+              from the cover and out before the footer, so the mesh still shows through it. */}
+          <div className="relative">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(7,17,28,0)_0,rgba(7,17,28,0.72)_14rem,rgba(7,17,28,0.72)_calc(100%-14rem),rgba(7,17,28,0)_100%)]"
+            />
+            <div className="mx-auto max-w-[1280px] px-6 pb-24 pt-12 md:px-12 md:pb-32 md:pt-16">
+              <div className="lg:grid lg:grid-cols-12 lg:gap-x-10">
+                {/* The contents keep their place beside the text on wide screens. A plain
+                    column, not an aside: the nav inside is already the landmark */}
+                <div className="hidden lg:col-span-3 lg:block">
+                  <div className="sticky top-28 max-h-[calc(100svh-8rem)] overflow-y-auto pb-6 pr-2">
+                    <ArticleToc items={insight.toc} />
+                  </div>
+                </div>
 
-              {insight.sections.map((section, index) => (
-                <div key={section.heading}>
-                  <Reveal as="section" className="mt-14 md:mt-16">
-                    <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-balance">
-                      {section.heading}
-                    </h2>
+                {/* About 70 characters a line: seven columns of twelve, eight below xl */}
+                <div className="min-w-0 lg:col-span-8 lg:col-start-5 xl:col-span-7">
+                  <div className="flex flex-wrap items-end justify-between gap-6 border-b border-white/15 pb-8">
+                    <AuthorByline />
+                    <ShareLinks
+                      id="share-top"
+                      url={url}
+                      title={insight.title}
+                      label="Share"
+                      className="hidden md:flex md:items-end"
+                    />
+                  </div>
 
-                    {section.body.map((paragraph) => (
+                  <div className="mt-10 md:mt-12">
+                    {insight.intro.map((paragraph) => (
                       <p
                         key={paragraph}
-                        className="mt-5 text-base md:text-lg leading-[1.75] text-muted-foreground text-pretty"
+                        className="mb-6 text-pretty text-xl leading-[1.6] text-white last:mb-0 md:text-[1.375rem]"
                       >
                         {paragraph}
                       </p>
                     ))}
-                  </Reveal>
+                  </div>
 
-                  {insight.pullQuote?.afterSection === index && (
-                    <Reveal as="figure" className="mt-14 md:mt-16">
-                      <blockquote
-                        className="border-l-2 pl-6 md:pl-8 text-xl md:text-2xl leading-[1.45] text-balance"
-                        style={{ borderColor: ACCENT }}
-                      >
-                        {insight.pullQuote.text}
-                      </blockquote>
-                    </Reveal>
+                  <div className="lg:hidden">
+                    <ArticleTocDisclosure items={insight.toc} />
+                  </div>
+
+                  <ArticleBody blocks={insight.body} />
+
+                  {insight.outro && (
+                    <div className="mt-14 border-t border-white/15 pt-10 md:mt-16">
+                      {insight.outro.map((paragraph) => (
+                        <p
+                          key={paragraph}
+                          className="mb-6 text-pretty text-lg leading-[1.7] text-white last:mb-0 md:text-xl"
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
                   )}
-                </div>
-              ))}
 
-              <Reveal className="mt-14 md:mt-16 pt-10 border-t border-border">
-                {insight.outro.map((paragraph) => (
-                  <p key={paragraph} className="text-lg md:text-xl leading-[1.7] text-pretty mb-6 last:mb-0">
-                    {paragraph}
-                  </p>
-                ))}
+                  {insight.faq && insight.faq.length > 0 && <ArticleFaq items={insight.faq} />}
 
-                {/* The tags close the article, now the cover carries the category up top */}
-                <div className="mt-10 flex flex-wrap items-center gap-2">
-                  <span className="mr-2 font-mono text-xs uppercase tracking-[0.18em] text-white/55">Filed under</span>
-                  {insight.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3.5 py-1.5 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full border border-border/50"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  <div className="mt-12 flex flex-col gap-8 md:mt-14">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="mr-2 font-mono text-xs uppercase tracking-[0.18em] text-white/75">
+                        Filed under
+                      </span>
+                      {insight.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-border/50 bg-secondary/50 px-3.5 py-1.5 text-xs font-medium text-secondary-foreground"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <ShareLinks id="share-end" url={url} title={insight.title} />
+                  </div>
+
+                  <AuthorCard />
                 </div>
-              </Reveal>
+              </div>
             </div>
-          </section>
+          </div>
         </article>
 
-        {next && next.slug !== insight.slug && (
-          <section className="pb-20 md:pb-28">
-            <div className="max-w-[1280px] mx-auto px-6 md:px-12">
+        <div className="mx-auto max-w-[1280px] px-6 pb-20 md:px-12 md:pb-28">
+          <ArticlePager previous={previous} next={next} />
+
+          {related.length > 0 && (
+            <section aria-labelledby="related-heading" className="mt-16 md:mt-24">
               <Reveal className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
-                <h2 className="text-3xl font-semibold tracking-[-0.04em] text-white md:text-5xl">Up next</h2>
+                <h2 id="related-heading" className="text-3xl font-semibold tracking-[-0.04em] text-white md:text-5xl">
+                  Keep reading
+                </h2>
                 <Link
                   href="/insights"
-                  className="text-sm text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
+                  className="inline-flex items-center gap-2 text-sm text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline"
                 >
                   All insights
+                  <ArrowUpRight aria-hidden className="size-4" />
                 </Link>
               </Reveal>
 
-              <NoteTile as="div" insight={next} wide />
-            </div>
-          </section>
-        )}
+              <ul className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-7">
+                {related.map((item) => (
+                  <li key={item.slug}>
+                    <InsightCard insight={item} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
       </main>
 
       <Footer />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      {/* `<` escaped so nothing in the data can close the script tag early */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(insight)).replace(/</g, "\\u003c") }}
+      />
     </>
   )
 }

@@ -8,6 +8,8 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { SectionTitle } from "@/components/ui/section-title"
 import { Reveal } from "@/components/case-study/reveal"
+import { DesignSystem } from "@/components/case-study/design-system"
+import { Gallery } from "@/components/case-study/gallery"
 import { ACCENT } from "@/components/about/tokens"
 import { caseStudies, getCaseStudy, getNextCaseStudy } from "@/lib/case-studies"
 
@@ -48,6 +50,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
   }
 
   const next = getNextCaseStudy(study.slug)
+  // The design system, where a study has one, takes 03 and pushes the outcome to 04
+  const outcomeNumber = study.designSystem ? "04" : "03"
 
   return (
     <>
@@ -74,15 +78,30 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 {study.description}
               </p>
 
-              <div className="flex flex-wrap gap-2 mt-8">
-                {study.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3.5 py-1.5 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full border border-border/50"
+              <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-wrap gap-2">
+                  {study.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3.5 py-1.5 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full border border-border/50"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {study.liveUrl && (
+                  <a
+                    href={study.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex shrink-0 items-center gap-2 self-start md:self-auto text-sm font-medium"
+                    style={{ color: ACCENT }}
                   >
-                    {tag}
-                  </span>
-                ))}
+                    Visit the live site
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                )}
               </div>
             </Reveal>
           </div>
@@ -218,36 +237,27 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Gallery */}
-        <section className="py-12 md:py-20">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-12 space-y-12 md:space-y-20">
-            {study.gallery.map((shot, i) => (
-              <Reveal as="figure" key={shot.src + i}>
-                <div className="relative aspect-[1.2/1] md:aspect-[16/9] overflow-hidden rounded-2xl md:rounded-3xl border border-border bg-secondary">
-                  <Image
-                    src={shot.src}
-                    alt={shot.alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 1280px"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption className="mt-4 text-sm text-muted-foreground max-w-2xl leading-relaxed">
-                  {shot.caption}
-                </figcaption>
-              </Reveal>
-            ))}
-          </div>
-        </section>
+        {study.designSystem && <DesignSystem system={study.designSystem} number="03" />}
+
+        {/* Gallery: a collage, each picture opening in the full-screen viewer */}
+        <Gallery
+          study={{
+            slug: study.slug,
+            title: study.title,
+            category: study.category,
+            year: study.year,
+            gallery: study.gallery,
+          }}
+        />
 
         {/* Results */}
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-              03 The outcome
+              {outcomeNumber} The outcome
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
-              What changed
+              {study.outcomeHeading ?? "What changed"}
             </SectionTitle>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-12">
@@ -281,19 +291,21 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </section>
 
         {/* Testimonial */}
-        <section className="py-12 md:py-20">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-            <Reveal className="max-w-4xl mx-auto text-center p-8 md:p-16 rounded-2xl md:rounded-3xl bg-card backdrop-blur-xl border border-border">
-              <blockquote className="text-2xl md:text-3xl lg:text-4xl font-serif italic leading-snug text-balance">
-                “{study.testimonial.quote}”
-              </blockquote>
-              <div className="mt-8">
-                <div className="font-semibold">{study.testimonial.author}</div>
-                <div className="text-sm text-muted-foreground mt-1">{study.testimonial.role}</div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
+        {study.testimonial && (
+          <section className="py-12 md:py-20">
+            <div className="max-w-[1280px] mx-auto px-6 md:px-12">
+              <Reveal className="max-w-4xl mx-auto text-center p-8 md:p-16 rounded-2xl md:rounded-3xl bg-card backdrop-blur-xl border border-border">
+                <blockquote className="text-2xl md:text-3xl lg:text-4xl font-serif italic leading-snug text-balance">
+                  “{study.testimonial.quote}”
+                </blockquote>
+                <div className="mt-8">
+                  <div className="font-semibold">{study.testimonial.author}</div>
+                  <div className="text-sm text-muted-foreground mt-1">{study.testimonial.role}</div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+        )}
 
         {/* Stack */}
         <section className="py-12 md:py-20">

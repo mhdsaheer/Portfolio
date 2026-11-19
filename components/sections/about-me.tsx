@@ -7,7 +7,7 @@ import { AVAILABILITY, LOCATION, RESUME_FILENAME, RESUME_PATH } from "@/lib/cont
 import { cn } from "@/lib/utils"
 
 const facts = [
-  { label: "Currently", value: "Frontend Developer at Febno Technologies" },
+  { label: "Currently", value: "Front-End Developer at Febno Technologies" },
   { label: "Based in", value: `${LOCATION} · ${AVAILABILITY}` },
   { label: "Focus", value: "Design systems, motion & interactive UI" },
 ]
@@ -18,7 +18,7 @@ export function AboutIntro() {
     <div className="w-full">
       {/* Display lede - the hero's sans/serif-italic pairing, one statement only */}
       <p className="font-sans font-semibold tracking-tight text-[1.75rem] lg:text-[2rem] xl:text-[2.5rem] leading-[1.12] text-white text-balance">
-        I&apos;m Muhammed Saheer, a frontend developer with{" "}
+        I&apos;m Muhammed Saheer, a front-end developer with{" "}
         <em
           className="font-serif italic font-normal text-[1.06em]"
           style={{ color: ACCENT, textShadow: ACCENT_GLOW }}

@@ -7,11 +7,14 @@
  */
 export const FLUID = "var(--about-fluid)"
 
+/** `FLUID` for the footer: the same scale, capped below 768px. See globals.css. */
+export const FOOTER_FLUID = "var(--footer-fluid)"
+
 /**
- * The footer's side gutter, 2.5em of the fluid base. Sections that set their
- * type in rem use it to share the footer's edge without taking on its scale.
+ * The footer's side gutter. Sections that set their type in rem use it to share
+ * the footer's edge without taking on its scale. See globals.css.
  */
-export const GUTTER = "calc(var(--about-fluid) * 2.5)"
+export const GUTTER = "var(--footer-gutter)"
 
 /** Sections sit on the site's mesh background rather than their own ground. */
 export const SURFACE = "transparent"

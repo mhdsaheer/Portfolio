@@ -1,7 +1,9 @@
+import type { CSSProperties } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { ACCENT } from "@/components/about/tokens"
+import { TileStack } from "@/components/sections/tile-stack"
 import { SectionTitle } from "@/components/ui/section-title"
 import { caseStudies } from "@/lib/case-studies"
 
@@ -9,6 +11,19 @@ import { caseStudies } from "@/lib/case-studies"
 const TAB_WIDTH = 212
 const TAB_HEIGHT = 32
 const TAB_PATH = `M 0,${TAB_HEIGHT} L 0,12 A 12,12 0 0,1 12,0 L ${TAB_WIDTH - 36},0 A 12,12 0 0,1 ${TAB_WIDTH - 26},5 L ${TAB_WIDTH - 10},27 A 12,12 0 0,0 ${TAB_WIDTH},${TAB_HEIGHT}`
+
+/** How far each pinned card sits below the one before it, which leaves that card's tab on show. */
+const STACK_STEP = 32
+/** The space above a card that its folder tab sits in: the Link's pt-12. */
+const TAB_SPACE = 48
+const LAST_CARD = caseStudies.length - 1
+
+/**
+ * The panel's colour running up into the image, masked along an S-curve. A straight
+ * ramp leaves a visible edge where it meets the panel, most of all over a bright image.
+ */
+const FADE =
+  "bg-background [mask-image:linear-gradient(to_top,#000,rgb(0_0_0/0.9)_20%,rgb(0_0_0/0.65)_40%,rgb(0_0_0/0.35)_60%,rgb(0_0_0/0.1)_80%,transparent)]"
 
 export function SelectedWorks() {
   return (
@@ -38,21 +53,40 @@ export function SelectedWorks() {
           </Link>
         </div>
 
-        <div className="relative">
+        {/* Cards pin and stack at every size, but a pinned card's foot can never scroll into view.
+            So below 992px each is held to the height left under the stack's tabs, and the pins
+            come from the room a card leaves on screen: with plenty they sit a full step apart,
+            with less the step tightens so the last still ends on screen, and with none they all
+            pin by the foot, the next sliding up over the whole card. */}
+        <TileStack
+          style={
+            {
+              "--stack-depth": `${TAB_SPACE + LAST_CARD * STACK_STEP}px`,
+              "--stack-room": "calc(100svh - var(--card-height, 0px))",
+            } as CSSProperties
+          }
+        >
           {caseStudies.map((work, index) => (
             <div
               key={work.slug}
-              className="sticky top-0"
+              className="sticky"
               style={{
-                top: `${index * 32}px`,
+                top: `calc(min(0px, var(--stack-room)) + ${index} * clamp(0px, var(--stack-room) / ${LAST_CARD}, ${STACK_STEP}px))`,
                 zIndex: index + 1,
               }}
             >
               <Link href={`/work/${work.slug}`} className="group block pt-12 relative">
                 {/* Folder Tab */}
                 <div
-                  className="absolute top-[16px] z-10 select-none pointer-events-none transition-transform duration-300 group-hover:-translate-y-1"
-                  style={{ left: `${48 + index * 48}px`, width: TAB_WIDTH, height: TAB_HEIGHT }}
+                  className="absolute top-[16px] left-[var(--tab-left-narrow)] min-[992px]:left-[var(--tab-left)] z-10 select-none pointer-events-none transition-transform duration-300 group-hover:-translate-y-1"
+                  style={
+                    {
+                      "--tab-left": `${48 + index * 48}px`,
+                      "--tab-left-narrow": `${24 + index * 16}px`,
+                      width: TAB_WIDTH,
+                      height: TAB_HEIGHT,
+                    } as CSSProperties
+                  }
                 >
                   {/* Clipped background with blur, lit from the top edge */}
                   <div
@@ -81,61 +115,58 @@ export function SelectedWorks() {
                   </div>
                 </div>
 
-                <article className="group relative overflow-hidden rounded-2xl md:rounded-3xl border border-border transition-all duration-300 hover:shadow-lg group-hover:-translate-y-1">
-                  {/* Image container */}
-                  <div className="relative aspect-[1.2/1] md:aspect-[2/1] overflow-hidden bg-secondary">
+                <article className="group relative flex h-[max(24rem,min(100svh_-_var(--stack-depth),36rem))] min-h-fit flex-col min-[992px]:block min-[992px]:h-auto overflow-hidden rounded-2xl md:rounded-3xl border border-border transition-all duration-300 hover:shadow-lg group-hover:-translate-y-1">
+                  {/* Image container: below 992px it takes all the height the words leave */}
+                  <div className="relative min-h-40 flex-1 min-[992px]:aspect-[2/1] overflow-hidden bg-secondary">
                     <Image
                       src={work.image}
                       alt={work.title}
                       fill
+                      // The card spans the column: 1280px less its padding (px-6, md:px-12)
+                      sizes="(min-width: 1280px) 1184px, (min-width: 768px) calc(100vw - 96px), calc(100vw - 48px)"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                  </div>
 
-                    {/* Floating Content */}
-                    <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:right-8 md:left-auto md:w-[460px] lg:w-[520px] p-6 lg:p-7 rounded-2xl bg-background/80 backdrop-blur-xl border border-border shadow-2xl transition-all duration-500 group-hover:bg-background/90">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <div
-                            className="flex items-center gap-2 text-[10.5px] font-mono uppercase tracking-[0.16em]"
-                            style={{ color: ACCENT }}
-                          >
-                            <span>{work.discipline}</span>
-                            <span aria-hidden className="opacity-40">
-                              ·
-                            </span>
-                            <span>{work.year}</span>
-                          </div>
-                          <h3 className="mt-3 text-xl md:text-2xl font-semibold text-foreground tracking-tight">
-                            {work.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{work.description}</p>
-                        </div>
-                        <div className="p-2.5 rounded-full bg-secondary/80 border border-border transition-colors group-hover:bg-secondary shrink-0">
-                          <ArrowUpRight
-                            className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                            style={{ color: ACCENT }}
-                          />
-                        </div>
-                      </div>
+                  {/* Content: sits under the image below 992px, floats over it from there up */}
+                  <div className="relative shrink-0 min-[992px]:absolute min-[992px]:bottom-8 min-[992px]:right-8 min-[992px]:w-[460px] lg:w-[520px] p-6 pt-1 min-[992px]:pt-6 lg:p-7 min-[992px]:rounded-2xl bg-background min-[992px]:bg-background/80 min-[992px]:backdrop-blur-xl min-[992px]:border border-border min-[992px]:shadow-2xl transition-all duration-500 min-[992px]:group-hover:bg-background/90">
+                    <div
+                      aria-hidden
+                      className={`absolute inset-x-0 bottom-full h-24 pointer-events-none min-[992px]:hidden ${FADE}`}
+                    />
 
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-2 mt-6">
-                        {work.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-3.5 py-1.5 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full border border-border/50"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
+                          {work.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{work.description}</p>
                       </div>
+                      <div className="p-2.5 rounded-full bg-secondary/80 border border-border transition-colors group-hover:bg-secondary shrink-0">
+                        <ArrowUpRight
+                          className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          style={{ color: ACCENT }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mt-4 min-[992px]:mt-6">
+                      {work.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3.5 py-1.5 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full border border-border/50"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </article>
               </Link>
             </div>
           ))}
-        </div>
+        </TileStack>
 
         {/* Mobile View All */}
         <div className="md:hidden mt-8 text-center">

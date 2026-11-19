@@ -32,7 +32,7 @@ export const RESPONSE_TIME = "Usually within a day"
  * file behind it rather than renaming it. The name is what downloads save as.
  */
 export const RESUME_PATH = "/muhammed-saheer-resume.pdf"
-export const RESUME_FILENAME = "Muhammed Saheer Resume Front End Developer.pdf"
+export const RESUME_FILENAME = "Muhammed Saheer Resume Front-End Developer.pdf"
 
 export type Social = { label: string; href: string }
 

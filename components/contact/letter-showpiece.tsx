@@ -341,7 +341,7 @@ function Letterhead() {
           right. The date only - a clock ticking through a letter is unsettling. */}
       <div className="mt-2.5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <p className="text-[0.7rem] uppercase tracking-[0.16em]" style={{ color: INK_MUTED }}>
-          Frontend developer
+          Front-end developer
         </p>
 
         <p className="text-[0.7rem] uppercase tracking-[0.16em]" style={{ color: INK_MUTED }}>

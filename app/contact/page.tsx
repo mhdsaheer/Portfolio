@@ -18,10 +18,10 @@ import {
 
 export const metadata: Metadata = {
   title: "Contact | Muhammed Saheer",
-  description: "Get in touch about frontend development, interface design or a project you are planning.",
+  description: "Get in touch about front-end development, interface design or a project you are planning.",
   openGraph: {
     title: "Contact | Muhammed Saheer",
-    description: "Get in touch about frontend development, interface design or a project you are planning.",
+    description: "Get in touch about front-end development, interface design or a project you are planning.",
     type: "website",
   },
 }

@@ -11,11 +11,11 @@ import { SITE_URL } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Work | Muhammed Saheer - Interfaces built with care",
   description:
-    "Selected projects in frontend development, interface design and product UI — each written up end to end, from the problem to what changed once it shipped.",
+    "Selected projects in front-end development, interface design and product UI — each written up end to end, from the problem to what changed once it shipped.",
   openGraph: {
     title: "Work | Muhammed Saheer - Interfaces built with care",
     description:
-      "Selected projects in frontend development, interface design and product UI, written up end to end.",
+      "Selected projects in front-end development, interface design and product UI, written up end to end.",
     type: "website",
   },
 }

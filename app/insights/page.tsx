@@ -9,16 +9,52 @@ import { AccentStar } from "@/components/about/accent-star"
 import { InsightCover } from "@/components/insights/insight-cover"
 import { COVER_ACTION, COVER_ACTION_ROUND, COVER_LABEL } from "@/components/insights/cover-styles"
 import { NoteTile } from "@/components/insights/note-tile"
-import { insights } from "@/lib/insights"
+import { AUTHOR, insightUrl, insights, modifiedAt, publishedAt } from "@/lib/insights"
+import { SITE_URL } from "@/lib/site"
+
+const TITLE = "Insights: UI/UX Design & Front-End Development Articles"
+const DESCRIPTION =
+  "Articles on UI/UX design, React, Figma-to-code workflows and the future of front-end development, by Muhammed Saheer, a front-end developer in Kerala, India."
 
 export const metadata: Metadata = {
-  title: "Insights | Muhammed Saheer",
-  description: "Notes on frontend development, interface design and the craft of shipping product UI.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/insights" },
   openGraph: {
-    title: "Insights | Muhammed Saheer",
-    description: "Notes on frontend development, interface design and the craft of shipping product UI.",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
+    url: "/insights",
+    siteName: AUTHOR.name,
+    images: insights[0] ? [{ url: insights[0].image, alt: insights[0].imageAlt }] : undefined,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+}
+
+/** Structured data mirrors the visible list, as the Work page does for its projects. */
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": `${SITE_URL}/insights#blog`,
+  name: "Insights",
+  description: DESCRIPTION,
+  url: `${SITE_URL}/insights`,
+  inLanguage: "en",
+  author: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: AUTHOR.name, url: `${SITE_URL}${AUTHOR.path}` },
+  blogPost: insights.map((insight) => ({
+    "@type": "BlogPosting",
+    headline: insight.title,
+    description: insight.description,
+    url: insightUrl(insight.slug),
+    image: `${SITE_URL}${insight.image}`,
+    datePublished: publishedAt(insight),
+    dateModified: modifiedAt(insight),
+    author: { "@id": `${SITE_URL}/#person` },
+  })),
 }
 
 /**
@@ -93,6 +129,11 @@ export default function InsightsPage() {
       </main>
 
       <Footer />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema).replace(/</g, "\\u003c") }}
+      />
     </>
   )
 }

@@ -10,7 +10,7 @@ import {
   ACCENT_GLOW,
   CTA_GRADIENT,
   CTA_SHADOW,
-  FLUID,
+  FOOTER_FLUID,
   HAIRLINE,
   INK,
   MUTED,
@@ -57,9 +57,9 @@ const headingLines = [
  */
 export function Footer({ invite = true }: { invite?: boolean }) {
   return (
-    <footer style={{ fontSize: FLUID }}>
+    <footer style={{ fontSize: FOOTER_FLUID }}>
       {invite && (
-        <div className="border-t px-[2.5em] py-[4.5em] lg:py-[6em]" style={{ borderColor: HAIRLINE }}>
+        <div className="border-t px-[var(--footer-gutter)] py-[4.5em] lg:py-[6em]" style={{ borderColor: HAIRLINE }}>
           <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-start gap-[3em] lg:grid-cols-12 lg:gap-[2em]">
             <div className="flex flex-col gap-[1.25em] lg:col-span-7">
               <div className="flex items-center gap-[0.25em]" style={{ color: ACCENT }}>
@@ -68,7 +68,7 @@ export function Footer({ invite = true }: { invite?: boolean }) {
               </div>
 
               <h2
-                className="text-[2em] font-medium leading-[1.1] tracking-[-0.03em] md:text-[2.5em] lg:text-[3.25em]"
+                className="text-balance text-[2em] font-medium leading-[1.1] tracking-[-0.03em] md:text-[2.5em] lg:text-[3.25em]"
                 style={{ color: INK }}
               >
                 <Lines lines={headingLines} />
@@ -100,8 +100,10 @@ export function Footer({ invite = true }: { invite?: boolean }) {
               </div>
             </div>
 
-            {/* The direct routes, for anyone who would rather not use the letter */}
-            <dl className="grid grid-cols-1 gap-x-[2em] gap-y-[1.5em] sm:grid-cols-3 lg:col-span-4 lg:col-start-9 lg:grid-cols-1">
+            {/* The direct routes, for anyone who would rather not use the letter.
+                Auto tracks in the row: the email is far longer than the other two
+                and overruns an equal third, so each column sizes to its content. */}
+            <dl className="grid grid-cols-1 gap-x-[2em] gap-y-[1.5em] md:grid-cols-[repeat(3,auto)] lg:col-span-4 lg:col-start-9 lg:grid-cols-1">
               <Particular label="Email">
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
@@ -128,8 +130,8 @@ export function Footer({ invite = true }: { invite?: boolean }) {
 
       {/* Set in the mono, uppercase and tracked: the one place on the page that
           reads as machine-stamped rather than written. */}
-      <div className="border-t px-[2.5em] py-[2.25em]" style={{ borderColor: HAIRLINE }}>
-        <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-[1.5em] font-mono text-[0.875em] leading-none tracking-[0.12em] sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t px-[var(--footer-gutter)] py-[2.25em]" style={{ borderColor: HAIRLINE }}>
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-[1.5em] font-mono text-[0.875em] leading-none tracking-[0.12em] md:flex-row md:items-center md:justify-between">
           <p style={{ color: MUTED }}>© {new Date().getFullYear()} Muhammed Saheer</p>
 
           <div className="flex flex-wrap items-center gap-x-[3.5em] gap-y-[1em]">

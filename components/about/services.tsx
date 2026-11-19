@@ -315,48 +315,127 @@ function ProgressSegment({ progress, start, end }: { progress: MotionValue<numbe
   )
 }
 
-/** Below the pin's breakpoint the four services simply stack, skills and all. */
+/** How much narrower a tile ends up for each tile that lands on top of it. */
+const TILE_RECEDE = 0.03
+/**
+ * About how far through the list's scroll each tile lands after the one before:
+ * a tile's height, less the step it stops short by, over the whole list.
+ */
+const TILE_SLICE = 0.18
+/** Thrown upward, so a tile's edge reads against the white tile it slides over. */
+const TILE_SHADOW = "0 -0.5em 1.5em rgba(0, 0, 0, 0.08)"
+/**
+ * The section's scale with a ceiling on it, as the pinned panel has in
+ * globals.css. A pinned tile's foot can never scroll into view, so the deck has
+ * to fit the screen: the top gap, three steps and a tile come to about 32em,
+ * which makes 3.1svh the most an em can be on a short or wide window.
+ */
+const DECK_FLUID = `min(${FLUID}, 3.1svh)`
+
+/**
+ * Below the pin's breakpoint the four services become a deck: each tile pins a
+ * step lower than the last, leaving that one's title on show, and the next
+ * slides up over it.
+ *
+ * The blend stays on the whole sheet, never the tiles. Inside it they are plain
+ * opaque layers, so a tile covers the one beneath; blended one by one, a tile's
+ * black text would show the white tile under it and vanish.
+ */
 function ServicesStacked() {
+  const listRef = useRef<HTMLOListElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start start", "end start"] })
+
   return (
-    <div className="py-[4em] min-[992px]:hidden" style={SHEET_STYLE}>
+    <div className="py-[4em] min-[992px]:hidden" style={{ ...SHEET_STYLE, fontSize: DECK_FLUID }}>
       <div className="px-[2.5em]">
         <Eyebrow>My services</Eyebrow>
+      </div>
 
-        <ol className="mt-[2.5em] flex flex-col gap-[3.75em]">
-          {services.map((service) => (
-            <li key={service.number}>
-              <div className="flex items-start justify-between gap-[1em]">
-                <h3
-                  className="text-[1.875em] font-medium leading-[1.2] tracking-[-0.03em] md:text-[2.625em]"
-                  style={{ color: CUT }}
-                >
-                  {service.title}
-                </h3>
-                <div className="flex shrink-0 items-start gap-[0.25em]" style={{ color: CUT_DIM }}>
-                  <span className="text-[1.5em] font-medium italic uppercase leading-none">{service.number}</span>
-                  <AccentStar className="mt-[0.25em] h-[0.5em] w-[0.5em]" />
-                </div>
-              </div>
+      {/* The step is a tile's padding plus one line of title, so a title that
+          wraps shows only its first line. The room after the tiles is what lets
+          the last one pin at all - the list would otherwise end at its foot -
+          and gives the finished deck a moment at rest. */}
+      <ol
+        ref={listRef}
+        className="mt-[2.5em] flex flex-col gap-[1em] px-[1em] [--tile-step:3.75em] after:h-[8em] deck-wide:[--tile-step:4.65em]"
+      >
+        {services.map((service, index) => (
+          <ServiceTile
+            key={service.number}
+            service={service}
+            index={index}
+            progress={scrollYProgress}
+            still={Boolean(reduceMotion)}
+          />
+        ))}
+      </ol>
+    </div>
+  )
+}
 
-              <ul className="mt-[1.5em] grid grid-cols-2 gap-x-[1.5em] gap-y-[1em] md:grid-cols-3">
-                {service.skills.map((skill, index) => (
-                  <li key={skill} className="border-t pt-[0.75em]" style={{ borderColor: CUT_HAIRLINE }}>
-                    <span
-                      className="block text-[0.875em] font-medium italic uppercase leading-none"
-                      style={{ color: CUT_DIM }}
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="mt-[0.4em] block text-[1.0625em] font-medium leading-[1.25]" style={{ color: CUT }}>
-                      {skill}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+function ServiceTile({
+  service,
+  index,
+  progress,
+  still,
+}: {
+  service: (typeof services)[number]
+  index: number
+  progress: MotionValue<number>
+  still: boolean
+}) {
+  const last = services.length - 1
+  // Recedes from its own arrival until the last tile lands
+  const scale = useTransform(
+    progress,
+    [index * TILE_SLICE, last * TILE_SLICE],
+    [1, still ? 1 : 1 - (last - index) * TILE_RECEDE],
+  )
+
+  return (
+    <li className="sticky" style={{ top: `calc(1em + var(--tile-step) * ${index})`, zIndex: index + 1 }}>
+      {/* One min-height, or a shorter tile would leave the foot of a taller one
+          showing beneath it */}
+      <motion.div
+        className="flex min-h-[22em] flex-col rounded-[1.25em] border px-[1.5em] pt-[1.5em] pb-[1.75em] deck-wide:min-h-[17em]"
+        style={{
+          scale,
+          originY: 0,
+          backgroundColor: SHEET,
+          borderColor: CUT_HAIRLINE,
+          boxShadow: TILE_SHADOW,
+        }}
+      >
+        <div className="flex items-start justify-between gap-[1em]">
+          <h3
+            className="text-[1.875em] font-medium leading-[1.2] tracking-[-0.03em] deck-wide:text-[2.625em]"
+            style={{ color: CUT }}
+          >
+            {service.title}
+          </h3>
+          <div className="flex shrink-0 items-start gap-[0.25em]" style={{ color: CUT_DIM }}>
+            <span className="text-[1.5em] font-medium italic uppercase leading-none">{service.number}</span>
+            <AccentStar className="mt-[0.25em] h-[0.5em] w-[0.5em]" />
+          </div>
+        </div>
+
+        <ul className="mt-auto grid grid-cols-2 gap-x-[1.5em] gap-y-[1em] pt-[1.5em] deck-wide:grid-cols-3">
+          {service.skills.map((skill, skillIndex) => (
+            <li key={skill} className="border-t pt-[0.75em]" style={{ borderColor: CUT_HAIRLINE }}>
+              <span
+                className="block text-[0.875em] font-medium italic uppercase leading-none"
+                style={{ color: CUT_DIM }}
+              >
+                {String(skillIndex + 1).padStart(2, "0")}
+              </span>
+              <span className="mt-[0.4em] block text-[1.0625em] font-medium leading-[1.25]" style={{ color: CUT }}>
+                {skill}
+              </span>
             </li>
           ))}
-        </ol>
-      </div>
-    </div>
+        </ul>
+      </motion.div>
+    </li>
   )
 }

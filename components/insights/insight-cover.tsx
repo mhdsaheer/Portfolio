@@ -9,6 +9,23 @@ import { cn } from "@/lib/utils"
 const LIFT = "[text-shadow:0_2px_28px_rgba(7,17,28,0.45)]"
 
 /**
+ * The longer the title, the smaller it is set, so a long headline keeps to
+ * about three lines instead of filling the screen and burying the art.
+ */
+function titleSize(title: string) {
+  if (title.length > 60) return "text-[2.125rem] leading-[1.05] md:text-5xl xl:text-[3.75rem]"
+  if (title.length > 40) return "text-[2.375rem] leading-[1.03] md:text-6xl xl:text-[4.25rem]"
+  return "text-5xl leading-[0.98] md:text-7xl xl:text-[5.5rem]"
+}
+
+/**
+ * The art is cropped to fill the cover, so on a screen taller than 16:9 it is
+ * drawn by the cover's height, wider than the screen - ask for an image that
+ * wide, or a phone gets one a third of the size it shows and blurs it.
+ */
+const COVER_SIZES = "(max-aspect-ratio: 16/9) 178vh, 100vw"
+
+/**
  * An article's art as the page's opening screen, its title set large over the
  * foot - laid out like the home hero. The index opens on its newest article
  * this way, and every article opens on its own.
@@ -16,6 +33,9 @@ const LIFT = "[text-shadow:0_2px_28px_rgba(7,17,28,0.45)]"
  * The title is the article page's main heading; on the index the page's own
  * heading is the label, so there it steps down to an h2. The label and the
  * way on come from the page, styled with `cover-styles`.
+ *
+ * On the article the art is the featured image and is described; on the index
+ * it only dresses a link whose title says it all, so it stays decorative.
  */
 export function InsightCover({
   insight,
@@ -30,11 +50,23 @@ export function InsightCover({
   action: ReactNode
   titleAs?: "h1" | "h2"
 }) {
+  const isArticle = Title === "h1"
+
   return (
     <section className="relative isolate flex h-[100svh] max-h-[60rem] min-h-[38rem] flex-col overflow-hidden">
       {/* The art fades into the page's own mesh at the foot, rather than ending on a hard edge */}
-      <div aria-hidden className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]">
-        <Image src={insight.image} alt="" fill priority sizes="100vw" className="object-cover" />
+      <div
+        aria-hidden={isArticle ? undefined : true}
+        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
+      >
+        <Image
+          src={insight.image}
+          alt={isArticle ? insight.imageAlt : ""}
+          fill
+          preload
+          sizes={COVER_SIZES}
+          className="object-cover"
+        />
       </div>
       {/* Shade where the words sit - the head for the nav, the lower half for the title -
           and clear again at the very foot, so the section ends on the mesh with no seam */}
@@ -63,7 +95,8 @@ export function InsightCover({
             </p>
             <Title
               className={cn(
-                "mt-5 text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-white md:text-7xl xl:text-[5.5rem]",
+                "mt-5 text-balance font-semibold tracking-[-0.045em] text-white",
+                titleSize(insight.title),
                 LIFT,
               )}
             >

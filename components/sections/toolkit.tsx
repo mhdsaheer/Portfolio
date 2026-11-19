@@ -6,6 +6,7 @@ const toolkit = [
   "React",
   "Next.js",
   "JavaScript",
+  "TypeScript",
   "HTML5",
   "CSS3",
   "Tailwind CSS",
