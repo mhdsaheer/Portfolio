@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
  *
  * Without JavaScript the links are plain anchors and still work.
  */
-function goTo(event: MouseEvent<HTMLAnchorElement>, id: string) {
+export function goTo(event: MouseEvent<HTMLAnchorElement>, id: string) {
   const target = document.getElementById(id)
   if (!target) return
   event.preventDefault()
@@ -39,7 +39,7 @@ function goTo(event: MouseEvent<HTMLAnchorElement>, id: string) {
  * The heading most recently scrolled past a line a third of the way down the
  * screen - the section being read. Before the first heading, none is.
  */
-function useActiveHeading(items: TocItem[]) {
+export function useActiveHeading(items: TocItem[]) {
   const [active, setActive] = useState<string | null>(null)
 
   useEffect(() => {

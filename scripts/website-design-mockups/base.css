@@ -1,0 +1,130 @@
+/*
+ * Shared frame for the website design mockups. Each mockup is a 1600 x 1000
+ * stage - a soft coloured ground with one or more browser windows or devices
+ * on it - rendered at 2x by render.mjs. Everything on the stage is fictional.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 1600px;
+  height: 1000px;
+  overflow: hidden;
+}
+
+body {
+  position: relative;
+  background: var(--stage, #f7f8fc);
+  color: #20212a;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+img,
+svg {
+  display: block;
+}
+
+/* A desktop browser window: traffic lights, an address bar, then the page */
+.browser {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(32, 33, 42, 0.07),
+    0 2px 6px rgba(32, 33, 42, 0.05),
+    0 48px 90px -36px rgba(32, 33, 42, 0.38);
+}
+
+.chrome {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(32, 33, 42, 0.07);
+  background: #f4f5f9;
+}
+
+.chrome i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff5f57;
+}
+
+.chrome i:nth-child(2) {
+  background: #febc2e;
+}
+
+.chrome i:nth-child(3) {
+  background: #28c840;
+}
+
+.chrome .url {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 420px;
+  height: 26px;
+  margin: 0 auto;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(32, 33, 42, 0.06);
+  color: #707484;
+  font: 500 12px/1 "Inter", system-ui, sans-serif;
+}
+
+.chrome .url::before {
+  content: "";
+  width: 9px;
+  height: 11px;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 50% 0, transparent 3px, #9a9daa 3px 4.5px, transparent 4.5px) 0 -1px / 9px 6px no-repeat,
+    linear-gradient(#9a9daa, #9a9daa) 0 100% / 9px 6px no-repeat;
+}
+
+/* Balances the traffic lights so the address bar sits in the true centre */
+.chrome::after {
+  content: "";
+  width: 52px;
+}
+
+.chrome.dark {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  background: #1b1c22;
+}
+
+.chrome.dark .url {
+  background: #26272f;
+  box-shadow: none;
+  color: #8e909c;
+}
+
+.page {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Soft shadow for anything floating over the stage */
+.float {
+  position: absolute;
+  box-shadow:
+    0 0 0 1px rgba(32, 33, 42, 0.06),
+    0 30px 60px -24px rgba(32, 33, 42, 0.35);
+}

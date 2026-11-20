@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dark mode website design - Vectra (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: linear-gradient(150deg, #f7f8fc 0%, #f1ecff 100%); background: var(--stage); font-family: "Geist", "Inter", sans-serif; }
+  :root { --bg: #111217; --s1: #17181e; --s2: #1e2028; --s3: #262833; --line: rgba(255,255,255,0.08); --text: #ececf1; --muted: #9a9cab; --accent: #8b5cf6; --accent2: #5b7cfa; }
+
+  /* The same page in its light theme, behind the dark one: the switch between them */
+  .light { left: 820px; top: 46px; width: 720px; height: 470px; opacity: 1; }
+  .light .page { background: #fff; color: #1b1c22; }
+  .light nav { display: flex; align-items: center; gap: 22px; padding: 18px 26px; border-bottom: 1px solid #eceef3; font: 500 13px "Geist"; color: #6b6e7c; }
+  .light nav .logo { margin-right: auto; font-size: 17px; color: #1b1c22; }
+  .light .sw { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #f1f1f6; }
+  .light .sw span { display: grid; place-items: center; width: 26px; height: 22px; border-radius: 999px; font-size: 13px; }
+  .light .sw span.on { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.12); color: #1b1c22; }
+  .light .side { position: absolute; left: 500px; top: 90px; width: 196px; }
+  .light .kpi { padding: 12px; border-radius: 12px; background: #f6f5fd; border: 1px solid #ebeaf5; margin-bottom: 10px; font-size: 12px; color: #6b6e7c; }
+  .light .kpi b { display: block; margin-top: 4px; font-size: 20px; color: #1b1c22; font-weight: 600; }
+  .light .kpi svg { width: 100%; height: 40px; margin-top: 6px; }
+  .browser.dark { left: 60px; top: 150px; width: 1240px; height: 800px; box-shadow: 0 0 0 1px rgba(17,18,23,0.4), 0 60px 100px -40px rgba(17,18,23,0.6); }
+  .dark .page { background: radial-gradient(700px 360px at 85% -10%, rgba(139,92,246,0.22), transparent 70%), var(--bg); color: var(--text); }
+
+  nav { display: flex; align-items: center; gap: 30px; padding: 22px 44px; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+  .logo { display: flex; gap: 10px; align-items: center; margin-right: 16px; font-size: 19px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+  .logo i { width: 24px; height: 24px; border-radius: 7px; background: linear-gradient(135deg, var(--accent), var(--accent2)); transform: rotate(45deg) scale(0.8); }
+  .right { margin-left: auto; display: flex; gap: 16px; align-items: center; }
+  .switch { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--s2); border: 1px solid var(--line); }
+  .switch span { display: grid; place-items: center; width: 30px; height: 26px; border-radius: 999px; font-size: 14px; }
+  .switch span.on { background: var(--s3); color: var(--text); }
+  .btn { padding: 10px 16px; border-radius: 10px; background: var(--text); color: var(--bg); font-weight: 600; }
+
+  .hero { display: grid; grid-template-columns: 430px 1fr; gap: 40px; padding: 44px 44px 0; }
+  .tag { display: inline-flex; gap: 8px; align-items: center; padding: 6px 12px; border-radius: 999px; background: rgba(139,92,246,0.14); color: #c4b5fd; font-size: 13px; font-weight: 500; }
+  h1 { margin-top: 20px; font-size: 56px; line-height: 1.02; font-weight: 600; letter-spacing: -0.045em; }
+  h1 span { background: linear-gradient(90deg, #c4b5fd, #93a8ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lede { margin-top: 18px; font-size: 17px; line-height: 1.6; color: var(--muted); }
+  .ctas { display: flex; gap: 12px; margin-top: 28px; font-size: 15px; font-weight: 600; }
+  .ctas span { padding: 14px 20px; border-radius: 12px; }
+  .ctas .primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 10px 30px -10px rgba(139,92,246,0.7); }
+  .ctas .ghost { border: 1px solid var(--line); background: var(--s1); color: var(--text); }
+  .note { margin-top: 26px; font-size: 13px; color: #6f7181; }
+
+  .dash { border-radius: 16px; background: var(--s1); border: 1px solid var(--line); padding: 18px; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .kpi { padding: 14px; border-radius: 12px; background: var(--s2); border: 1px solid var(--line); }
+  .kpi small { font-size: 12px; color: var(--muted); }
+  .kpi b { display: block; margin-top: 6px; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .kpi em { font-style: normal; font-size: 12px; color: #6ee7b7; }
+  .kpi em.down { color: #fda4af; }
+  .chart { margin-top: 12px; padding: 14px; border-radius: 12px; background: var(--s2); border: 1px solid var(--line); }
+  .chart .head { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .chart .head b { color: var(--text); font-weight: 600; }
+  .legend i { display: inline-block; width: 8px; height: 8px; margin: 0 6px 0 14px; border-radius: 50%; }
+  .chart svg { width: 100%; height: 170px; margin-top: 10px; }
+  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .list { padding: 12px 14px; border-radius: 12px; background: var(--s2); border: 1px solid var(--line); font-size: 13px; }
+  .list p { display: flex; justify-content: space-between; padding: 6px 0; color: var(--muted); }
+  .list p b { color: var(--text); font-weight: 500; }
+  .bars { display: flex; align-items: end; gap: 7px; height: 76px; }
+  .bars i { flex: 1; border-radius: 4px 4px 0 0; background: var(--s3); }
+  .bars i.hi { background: linear-gradient(var(--accent), var(--accent2)); }
+
+  .toggle-note { left: 1330px; top: 600px; width: 220px; padding: 18px; border-radius: 18px; background: #fff; font: 500 14px/1.45 "Inter"; color: #4b4e5c; }
+  .toggle-note b { display: block; margin-bottom: 4px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #20212a; }
+  .toggle-note .pill { display: flex; gap: 4px; width: fit-content; margin-top: 12px; padding: 4px; border-radius: 999px; background: #f1f1f6; }
+  .toggle-note .pill span { padding: 6px 12px; border-radius: 999px; font-size: 13px; }
+  .toggle-note .pill span.on { background: #17181e; color: #fff; }
+</style>
+</head>
+<body>
+  <div class="browser light">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">vectra.io</div></div>
+    <div class="page">
+      <nav><span class="logo" style="display:flex;gap:8px;align-items:center;font-weight:700"><i style="width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,#8b5cf6,#5b7cfa);transform:rotate(45deg) scale(0.8)"></i>vectra</span><span>Product</span><span>Docs</span><span>Pricing</span><span class="sw"><span class="on">&#9788;</span><span>&#9790;</span></span></nav>
+      <div class="side">
+        <div class="kpi">Visitors<b>48.2k</b></div>
+        <div class="kpi">Conversion<b>3.4%</b></div>
+        <div class="kpi">Sessions<svg viewBox="0 0 160 40" preserveAspectRatio="none"><path d="M0 34 C 20 30, 30 32, 48 26 S 80 26, 96 18 S 130 12, 160 4" fill="none" stroke="#8b5cf6" stroke-width="2.5"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="browser dark">
+    <div class="chrome dark"><i></i><i></i><i></i><div class="url">vectra.io</div></div>
+    <div class="page">
+      <nav>
+        <span class="logo"><i></i>vectra</span>
+        <span>Product</span><span>Docs</span><span>Pricing</span><span>Changelog</span>
+        <span class="right"><span class="switch"><span>&#9788;</span><span class="on">&#9790;</span></span><span>Sign in</span><span class="btn">Get started</span></span>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <span class="tag">&#9679; v4.0 &mdash; Real-time funnels</span>
+          <h1>Analytics that stay <span>out of your way.</span></h1>
+          <p class="lede">Privacy-friendly product analytics with dashboards your whole team can read at a glance.</p>
+          <div class="ctas"><span class="primary">Start for free</span><span class="ghost">Live demo &rarr;</span></div>
+          <p class="note">Free up to 10k events a month &middot; No cookies needed</p>
+        </div>
+
+        <div class="dash">
+          <div class="kpis">
+            <div class="kpi"><small>Visitors</small><b>48.2k</b><em>&#9650; 12.4%</em></div>
+            <div class="kpi"><small>Conversion</small><b>3.4%</b><em>&#9650; 0.6 pts</em></div>
+            <div class="kpi"><small>Bounce rate</small><b>41%</b><em class="down">&#9660; 2.1%</em></div>
+          </div>
+          <div class="chart">
+            <div class="head"><b>Sessions, last 30 days</b><span class="legend"><i style="background:#8b5cf6"></i>This period<i style="background:#4b4e5f"></i>Previous</span></div>
+            <svg viewBox="0 0 600 170" preserveAspectRatio="none">
+              <defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity="0.35"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs>
+              <g stroke="rgba(255,255,255,0.06)"><line x1="0" y1="42" x2="600" y2="42"/><line x1="0" y1="85" x2="600" y2="85"/><line x1="0" y1="128" x2="600" y2="128"/></g>
+              <path d="M0 130 C 50 120, 80 126, 120 112 S 190 120, 230 100 S 300 104, 340 86 S 420 92, 460 66 S 540 50, 600 34" fill="none" stroke="#4b4e5f" stroke-width="2.5" stroke-dasharray="6 6" transform="translate(0,22)"/>
+              <path d="M0 126 C 50 116, 80 120, 120 100 S 190 106, 230 84 S 300 86, 340 64 S 420 70, 460 44 S 540 28, 600 16 L 600 170 L 0 170 Z" fill="url(#fill)"/>
+              <path d="M0 126 C 50 116, 80 120, 120 100 S 190 106, 230 84 S 300 86, 340 64 S 420 70, 460 44 S 540 28, 600 16" fill="none" stroke="#a78bfa" stroke-width="3"/>
+              <circle cx="460" cy="44" r="6" fill="#111217" stroke="#c4b5fd" stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="rows">
+            <div class="list"><p><b>/pricing</b>12.8k</p><p><b>/docs/quick-start</b>9.1k</p><p><b>/blog/funnels</b>6.4k</p></div>
+            <div class="list"><div class="bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i class="hi" style="height:88%"></i><i style="height:70%"></i><i style="height:56%"></i><i style="height:76%"></i></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="float toggle-note"><b>Theme switch</b>Follows the system setting with <code>prefers-color-scheme</code>, or the reader&rsquo;s choice.<div class="pill"><span>Light</span><span class="on">Dark</span><span>Auto</span></div></div>
+</body>
+</html>

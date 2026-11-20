@@ -31,7 +31,7 @@ export function AuthorByline() {
 
 /**
  * The author, after the article: who wrote it and why it is worth trusting,
- * then one quiet invitation. The footer below carries the louder one.
+ * then where to see more. The footer below makes the invitation to get in touch.
  */
 export function AuthorCard() {
   return (
@@ -52,24 +52,8 @@ export function AuthorCard() {
           </h2>
           <p className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-white">{AUTHOR.name}</p>
           <p className="mt-3 text-pretty text-base leading-relaxed text-white/85">{AUTHOR.bio}</p>
-          <p className="mt-4 text-pretty text-base leading-relaxed text-white/85">
-            Interested in working together or discussing a digital product?{" "}
-            <Link href="/" className={TEXT_LINK}>
-              Explore my portfolio
-            </Link>{" "}
-            and{" "}
-            <Link href="/contact" className={TEXT_LINK}>
-              let’s connect
-            </Link>
-            .
-          </p>
 
-          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-[0.14em]">
-            <li>
-              <Link href={AUTHOR.path} className="text-white/75 transition-colors hover:text-white">
-                About me
-              </Link>
-            </li>
+          <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-[0.14em]">
             <li>
               <Link href="/work" className="text-white/75 transition-colors hover:text-white">
                 Selected work

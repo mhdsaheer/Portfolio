@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>One-page website design - Little Fern (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=Instrument+Serif:ital@1&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: linear-gradient(150deg, #effaf4 0%, #f7f8fc 60%, #fff7e6 100%); background: var(--stage); font-family: "Sora", sans-serif; }
+  :root { --green: #2f7d57; --sage: #dcefe3; --clay: #e9835e; --cream: #fbf6ee; --ink: #1d2a22; }
+  .browser { left: 60px; top: 60px; width: 1000px; height: 880px; }
+  .page { background: var(--cream); color: var(--ink); }
+
+  /* The bar stays put while the page scrolls under it, and marks where you are */
+  nav { position: absolute; left: 24px; right: 24px; top: 18px; z-index: 4; display: flex; align-items: center; gap: 26px; padding: 12px 12px 12px 22px; border-radius: 18px; background: rgba(255,255,255,0.86); backdrop-filter: blur(10px); box-shadow: 0 10px 30px -18px rgba(29,42,34,0.4); font: 500 14px "Inter"; color: #55625a; }
+  .logo { margin-right: auto; font-weight: 800; font-size: 18px; color: var(--ink); letter-spacing: -0.02em; }
+  nav .on { position: relative; color: var(--ink); font-weight: 600; }
+  nav .on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 3px; border-radius: 3px; background: var(--clay); }
+  nav .book { padding: 10px 16px; border-radius: 12px; background: var(--green); color: #fff; font-weight: 600; }
+
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 30px; align-items: center; height: 560px; padding: 90px 60px 0; }
+  .hero small { font: 600 12px "Inter"; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay); }
+  .hero h1 { margin-top: 14px; font-size: 64px; line-height: 1; font-weight: 800; letter-spacing: -0.045em; }
+  .hero h1 em { font: italic 400 72px/0.9 "Instrument Serif"; color: var(--green); }
+  .hero p { margin-top: 18px; font: 400 16px/1.6 "Inter"; color: #55625a; }
+  .ctas { display: flex; gap: 12px; margin-top: 26px; font: 600 14px "Inter"; }
+  .ctas span { padding: 13px 18px; border-radius: 12px; }
+  .ctas .a { background: var(--ink); color: #fff; }
+  .ctas .b { box-shadow: inset 0 0 0 1.5px #c8d3cb; }
+  .art { position: relative; height: 380px; border-radius: 28px; background: var(--sage); overflow: hidden; }
+  .art .blob { position: absolute; right: -40px; top: -40px; width: 220px; height: 220px; border-radius: 50%; background: #f5c9b5; }
+  .cup { position: absolute; left: 80px; top: 120px; width: 200px; height: 150px; border-radius: 0 0 90px 90px; background: #fff; box-shadow: inset -20px -10px 0 rgba(29,42,34,0.06); }
+  .cup::before { content: ""; position: absolute; left: 14px; right: 14px; top: 0; height: 26px; border-radius: 50%; background: #8a5a3c; box-shadow: inset 0 4px 0 #6d432b; }
+  .cup::after { content: ""; position: absolute; right: -46px; top: 30px; width: 56px; height: 58px; border: 14px solid #fff; border-left: 0; border-radius: 0 40px 40px 0; }
+  .saucer { position: absolute; left: 40px; top: 262px; width: 280px; height: 34px; border-radius: 50%; background: #fff; box-shadow: 0 16px 20px -12px rgba(29,42,34,0.25); }
+  .steam { position: absolute; top: 40px; width: 18px; height: 70px; border: 4px solid rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.9) transparent transparent transparent; border-radius: 50%; transform: rotate(80deg); }
+
+  .menu { padding: 26px 60px; background: #fff; border-radius: 30px 30px 0 0; height: 300px; }
+  .menu .head { display: flex; justify-content: space-between; align-items: end; }
+  .menu small { font: 600 12px "Inter"; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay); }
+  .menu h2 { margin-top: 6px; font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
+  .tabs { display: flex; gap: 6px; padding: 4px; border-radius: 12px; background: var(--cream); font: 600 13px "Inter"; }
+  .tabs span { padding: 8px 14px; border-radius: 9px; color: #6a7770; }
+  .tabs span.on { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .items { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 50px; margin-top: 18px; font: 500 15px "Inter"; }
+  .items p { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px dashed #d9e2dc; }
+  .items p span { flex: 1; }
+  .items p b { font-weight: 600; }
+
+  .dots { position: absolute; right: 18px; top: 330px; z-index: 4; display: flex; flex-direction: column; gap: 12px; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(29,42,34,0.2); }
+  .dots i.on { height: 26px; border-radius: 6px; background: var(--green); }
+
+  /* The whole page at a glance, with the anchor each section answers to */
+  .map { position: absolute; left: 1110px; top: 40px; width: 430px; height: 920px; padding: 22px 24px; border-radius: 22px; background: #fff; }
+  .map h4 { font: 700 13px "Inter"; letter-spacing: 0.14em; text-transform: uppercase; color: #20212a; }
+  .map h4 small { display: block; margin-top: 6px; font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; color: #6b6e7c; }
+  .mini { position: relative; margin: 26px 0 0 112px; width: 270px; border-radius: 12px; box-shadow: 0 0 0 1px #e7e9ef; }
+  .mini .sec:first-child { border-radius: 12px 12px 0 0; }
+  .mini .sec:nth-last-child(2) { border-radius: 0 0 12px 12px; }
+  .sec { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 0 16px; }
+  .sec i { display: block; height: 6px; border-radius: 4px; background: rgba(29,42,34,0.18); }
+  .anchor { position: absolute; left: -108px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 8px; font: 600 12px "Geist Mono", ui-monospace, monospace; color: #20212a; white-space: nowrap; }
+  .anchor::after { content: ""; width: 14px; height: 1.5px; background: #b0b4c0; }
+  .view { position: absolute; left: -6px; right: -6px; top: -4px; height: 118px; border: 2.5px solid #e9835e; border-radius: 10px; }
+  .view span { position: absolute; right: 8px; top: -11px; padding: 2px 8px; border-radius: 999px; background: #e9835e; color: #fff; font: 600 11px "Inter"; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">littlefern.cafe/#home</div></div>
+    <div class="page">
+      <nav><span class="logo">Little Fern</span><span class="on">Home</span><span>Menu</span><span>Story</span><span>Gallery</span><span>Visit</span><span class="book">Book a table</span></nav>
+      <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+
+      <section class="hero">
+        <div>
+          <small>Open daily &middot; 7am&ndash;4pm</small>
+          <h1>Slow coffee, <em>good mornings.</em></h1>
+          <p>A small neighbourhood caf&eacute; with single-origin coffee, fresh bakes and a garden at the back.</p>
+          <div class="ctas"><span class="a">See the menu &darr;</span><span class="b">Find us</span></div>
+        </div>
+        <div class="art"><span class="blob"></span><span class="steam" style="left:140px"></span><span class="steam" style="left:180px;top:30px"></span><span class="saucer"></span><span class="cup"></span></div>
+      </section>
+
+      <section class="menu">
+        <div class="head"><div><small>#menu</small><h2>On the counter today</h2></div><div class="tabs"><span class="on">Coffee</span><span>Bakes</span><span>Brunch</span></div></div>
+        <div class="items">
+          <p><span>Flat white</span><b>&pound;3.40</b></p><p><span>Cardamom bun</span><b>&pound;3.20</b></p>
+          <p><span>Filter, Ethiopia</span><b>&pound;3.60</b></p><p><span>Sourdough toast</span><b>&pound;4.50</b></p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <aside class="map float">
+    <h4>One page, six sections<small>Every link in the menu jumps to an anchor further down the same page.</small></h4>
+    <div class="mini">
+      <div class="sec" style="height:110px;background:#fbf6ee"><span class="anchor">#home</span><i style="width:60%;height:10px;background:#1d2a22;opacity:0.8"></i><i style="width:45%"></i><i style="width:30%;background:#2f7d57;opacity:0.7"></i></div>
+      <div class="sec" style="height:120px;background:#fff"><span class="anchor">#menu</span><i style="width:50%;height:9px;background:#1d2a22;opacity:0.7"></i><i style="width:90%"></i><i style="width:90%"></i><i style="width:90%"></i></div>
+      <div class="sec" style="height:130px;background:#dcefe3"><span class="anchor">#story</span><i style="width:55%;height:9px;background:#1d2a22;opacity:0.7"></i><i style="width:80%"></i><i style="width:70%"></i></div>
+      <div class="sec" style="height:130px;background:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:16px"><span class="anchor">#gallery</span><i style="height:auto;background:#f5c9b5"></i><i style="height:auto;background:#dcefe3"></i><i style="height:auto;background:#e9835e;opacity:0.6"></i></div>
+      <div class="sec" style="height:120px;background:#fbf6ee"><span class="anchor">#reviews</span><i style="width:85%"></i><i style="width:70%"></i><i style="width:40%;background:#e9835e;opacity:0.7"></i></div>
+      <div class="sec" style="height:150px;background:#1d2a22"><span class="anchor">#visit</span><i style="width:60%;height:9px;background:#fff;opacity:0.85"></i><i style="width:80%;background:rgba(255,255,255,0.3)"></i><i style="width:40%;background:#2f7d57"></i></div>
+      <div class="view"><span>In view</span></div>
+    </div>
+  </aside>
+</body>
+</html>

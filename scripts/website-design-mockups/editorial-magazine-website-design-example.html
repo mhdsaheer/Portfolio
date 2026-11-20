@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Editorial website design - The Meridian (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: linear-gradient(160deg, #fff7e6 0%, #fff2dc 100%); background: var(--stage); }
+  .browser { left: 70px; top: 50px; width: 1460px; height: 900px; }
+  .page { background: #fcfbf7; color: #16161a; padding: 0 56px; }
+  .serif { font-family: "Playfair Display", serif; }
+
+  .topline { display: flex; justify-content: space-between; align-items: center; padding: 16px 0 0; font: 500 12px "Inter"; color: #6b6a70; }
+  .topline .sub { padding: 8px 14px; border-radius: 4px; background: #c8102e; color: #fff; font-weight: 700; letter-spacing: 0.02em; }
+  .masthead { margin-top: 2px; text-align: center; font: 900 70px/1 "Playfair Display"; letter-spacing: -0.02em; }
+  .sections { display: flex; justify-content: center; gap: 34px; margin-top: 16px; padding: 12px 0; border-top: 3px double #16161a; border-bottom: 1px solid #16161a; font: 700 12px "Inter"; letter-spacing: 0.12em; text-transform: uppercase; }
+  .sections .on { color: #c8102e; }
+
+  .lead { display: grid; grid-template-columns: 1.55fr 1fr; gap: 36px; padding: 26px 0; border-bottom: 1px solid #d9d6cf; }
+  .photo { position: relative; height: 420px; overflow: hidden; }
+  .photo svg { width: 100%; height: 100%; }
+  .credit { position: absolute; right: 10px; bottom: 8px; font: 500 10px "Inter"; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; }
+  .kicker { font: 700 12px "Inter"; letter-spacing: 0.14em; text-transform: uppercase; color: #c8102e; }
+  .lead h2 { margin-top: 14px; font: 800 46px/1.04 "Playfair Display"; letter-spacing: -0.02em; }
+  .stand { margin-top: 16px; font: italic 400 20px/1.5 "Source Serif 4"; color: #3d3c42; }
+  .by { margin-top: 18px; font: 600 13px "Inter"; color: #16161a; }
+  .by span { font-weight: 400; color: #6b6a70; }
+  .pull { margin-top: 22px; padding-top: 18px; border-top: 1px solid #d9d6cf; font: 400 15px/1.65 "Source Serif 4"; color: #3d3c42; columns: 2; column-gap: 24px; }
+  .pull::first-letter { float: left; margin: 4px 8px 0 0; font: 900 52px/0.8 "Playfair Display"; color: #16161a; }
+
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-top: 22px; }
+  .story { padding: 0 22px; border-left: 1px solid #d9d6cf; }
+  .story:first-child { padding-left: 0; border-left: 0; }
+  .story .thumb { height: 120px; margin-bottom: 14px; }
+  .story h3 { margin-top: 8px; font: 700 21px/1.18 "Playfair Display"; letter-spacing: -0.01em; }
+  .story p { margin-top: 8px; font: 400 14px/1.5 "Source Serif 4"; color: #55545a; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">themeridian.co</div></div>
+    <div class="page">
+      <div class="topline"><span>Thursday 19 November &nbsp;&middot;&nbsp; Issue 214</span><span>Sign in &nbsp;&nbsp; <span class="sub">Subscribe</span></span></div>
+      <div class="masthead">The Meridian</div>
+      <nav class="sections"><span>World</span><span>Culture</span><span>Design</span><span>Science</span><span class="on">Travel</span><span>Ideas</span><span>Food</span><span>Long reads</span></nav>
+
+      <section class="lead">
+        <figure class="photo">
+          <svg viewBox="0 0 900 420" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6c7a1"/><stop offset="0.55" stop-color="#f9dcc0"/><stop offset="1" stop-color="#fbe9d6"/></linearGradient>
+              <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fb3c9"/><stop offset="1" stop-color="#3f6f8f"/></linearGradient>
+            </defs>
+            <rect width="900" height="420" fill="url(#sky)"/>
+            <circle cx="640" cy="190" r="56" fill="#fff4e3" opacity="0.95"/>
+            <path d="M0 230 Q 200 214 420 228 T 900 222 L 900 420 L 0 420 Z" fill="url(#sea)"/>
+            <g fill="#fff" opacity="0.35"><rect x="560" y="240" width="160" height="3" rx="1.5"/><rect x="600" y="256" width="90" height="3" rx="1.5"/><rect x="580" y="272" width="120" height="2" rx="1"/></g>
+            <path d="M0 150 C 80 140, 120 170, 190 180 C 260 190, 300 240, 330 300 L 360 420 L 0 420 Z" fill="#b6765a"/>
+            <path d="M0 196 C 70 190, 130 214, 190 236 C 240 254, 268 300, 280 420 L 0 420 Z" fill="#8f5641"/>
+            <path d="M900 170 C 840 168, 800 190, 770 230 C 750 260, 740 320, 744 420 L 900 420 Z" fill="#a8684e"/>
+            <path d="M900 230 C 860 236, 830 270, 820 330 L 816 420 L 900 420 Z" fill="#7d4836"/>
+            <path d="M0 380 Q 300 350 520 372 T 900 360 L 900 420 L 0 420 Z" fill="#e8d2b4"/>
+            <g fill="#2a2a33"><circle cx="455" cy="356" r="5"/><rect x="451" y="361" width="8" height="18" rx="3"/></g>
+          </svg>
+          <span class="credit">PHOTOGRAPH: ANA RIBEIRO</span>
+        </figure>
+        <div>
+          <p class="kicker">Travel &middot; The long read</p>
+          <h2>The quiet coast: a slow journey along Portugal&rsquo;s forgotten shore</h2>
+          <p class="stand">Fishing villages, clifftop paths and the art of travelling without an itinerary.</p>
+          <p class="by">By Ana Ribeiro <span>&nbsp;&middot;&nbsp; 14 min read</span></p>
+          <div class="pull">On the third morning the fog lifted early, and the village below the lighthouse came into view one roof at a time. Nobody here is in a hurry, and after a while neither are you.</div>
+        </div>
+      </section>
+
+      <section class="row">
+        <article class="story"><div class="thumb" style="background:linear-gradient(135deg,#2f5d50,#9cc5a8)"></div><p class="kicker">Design</p><h3>Why every new museum seems to be made of light</h3><p>Architects explain the glass boom.</p></article>
+        <article class="story"><div class="thumb" style="background:linear-gradient(135deg,#f0b84a,#e0663a)"></div><p class="kicker">Food</p><h3>The bakers keeping sourdough weird</h3><p>A loaf, a starter and a small rebellion.</p></article>
+        <article class="story"><div class="thumb" style="background:linear-gradient(135deg,#3b3f8f,#8b8fd8)"></div><p class="kicker">Science</p><h3>What the night sky looked like before streetlights</h3><p>Dark-sky towns are fighting back.</p></article>
+        <article class="story"><div class="thumb" style="background:linear-gradient(135deg,#c8102e,#f39aa8)"></div><p class="kicker">Ideas</p><h3>In praise of the unfinished notebook</h3><p>An essay on the value of half-ideas.</p></article>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>E-commerce website design - Hue Market (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: linear-gradient(145deg, #fff0f6 0%, #fff6ef 100%); background: var(--stage); font-family: "DM Sans", sans-serif; }
+  .browser { left: 50px; top: 60px; width: 1160px; height: 880px; }
+  .page { background: #fff; color: #20212a; }
+
+  .promo { padding: 9px; background: #20212a; color: #fff; text-align: center; font-size: 12px; letter-spacing: 0.02em; }
+  header { display: flex; align-items: center; gap: 28px; padding: 18px 36px 14px; }
+  .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.04em; }
+  .logo span { color: #f472b6; }
+  .search { flex: 1; display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px; border-radius: 12px; background: #f4f4f7; color: #8a8d99; font-size: 14px; }
+  .search::before { content: ""; width: 13px; height: 13px; border: 2px solid #8a8d99; border-radius: 50%; }
+  .icons { display: flex; gap: 18px; }
+  .icons span { position: relative; width: 22px; height: 22px; border: 2px solid #20212a; border-radius: 6px; }
+  .icons span:first-child { border-radius: 50% 50% 50% 0; transform: rotate(-45deg) scale(0.85); }
+  .icons span:nth-child(2) { border-radius: 50%; }
+  .icons span:last-child::after { content: "2"; position: absolute; right: -10px; top: -10px; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #fb923c; color: #fff; font-size: 11px; font-weight: 700; }
+  .cats { display: flex; gap: 28px; padding: 0 36px 14px; border-bottom: 1px solid #efeff3; font-size: 14px; font-weight: 500; color: #4b4e5a; }
+  .cats .sale { color: #e5484d; font-weight: 700; }
+
+  .banner { position: relative; display: flex; align-items: center; margin: 18px 36px 0; height: 170px; padding: 0 40px; border-radius: 20px; overflow: hidden; background: linear-gradient(110deg, #fb923c 0%, #f472b6 60%, #c084fc 100%); color: #fff; }
+  .banner small { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.9; }
+  .banner h2 { margin-top: 8px; font-size: 38px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .banner .cta { display: inline-block; margin-top: 16px; padding: 10px 18px; border-radius: 999px; background: #fff; color: #20212a; font-size: 14px; font-weight: 700; }
+  .banner svg { position: absolute; right: 70px; top: 6px; width: 290px; transform: rotate(-12deg); filter: drop-shadow(0 18px 18px rgba(80,20,60,0.25)); }
+  .banner::after { content: "-30%"; position: absolute; right: 340px; top: 26px; display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; background: #fde047; color: #20212a; font-weight: 800; font-size: 19px; transform: rotate(-10deg); }
+
+  .shop { display: grid; grid-template-columns: 190px 1fr; gap: 30px; padding: 22px 36px; }
+  aside h4 { font-size: 15px; font-weight: 700; display: flex; justify-content: space-between; }
+  aside h4 small { font-weight: 500; color: #f472b6; font-size: 12px; }
+  .group { margin-top: 18px; padding-top: 16px; border-top: 1px solid #efeff3; font-size: 13px; color: #4b4e5a; }
+  .group b { display: block; margin-bottom: 10px; font-size: 13px; color: #20212a; }
+  .check { display: flex; align-items: center; gap: 9px; margin-top: 8px; }
+  .check i { width: 16px; height: 16px; border-radius: 5px; border: 1.6px solid #c9cbd4; }
+  .check.on i { background: #20212a; border-color: #20212a; position: relative; }
+  .check.on i::after { content: ""; position: absolute; left: 4px; top: 1px; width: 4px; height: 8px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .range { position: relative; height: 4px; margin: 14px 4px 10px; border-radius: 4px; background: #e6e6ec; }
+  .range::before { content: ""; position: absolute; left: 12%; right: 30%; height: 100%; background: #20212a; }
+  .range i { position: absolute; top: -6px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid #20212a; }
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .swatches i { width: 22px; height: 22px; border-radius: 50%; }
+  .swatches i.on { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #20212a; }
+
+  .toolbar { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #6b6e7a; }
+  .chips { display: flex; gap: 8px; }
+  .chips span { padding: 6px 12px; border-radius: 999px; background: #f4f4f7; color: #20212a; font-weight: 500; }
+  .sort { padding: 7px 14px; border-radius: 10px; border: 1px solid #e6e6ec; color: #20212a; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+  .product .img { position: relative; height: 190px; border-radius: 16px; display: grid; place-items: center; }
+  .product .img svg { width: 78%; }
+  .product .heart { position: absolute; right: 10px; top: 10px; width: 30px; height: 30px; border-radius: 50%; background: #fff; }
+  .product .heart::after { content: "\2661"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 16px; color: #20212a; }
+  .product .tag { position: absolute; left: 10px; top: 10px; padding: 4px 9px; border-radius: 999px; background: #20212a; color: #fff; font-size: 11px; font-weight: 700; }
+  .product h5 { margin-top: 12px; font-size: 15px; font-weight: 700; }
+  .product p { margin-top: 2px; font-size: 13px; color: #8a8d99; }
+  .row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .price { font-size: 16px; font-weight: 800; }
+  .price s { margin-left: 6px; color: #a3a6b1; font-weight: 500; font-size: 13px; }
+  .add { width: 32px; height: 32px; border-radius: 10px; background: #20212a; color: #fff; display: grid; place-items: center; font-size: 19px; font-weight: 500; }
+  .stars { color: #f5a524; font-size: 12px; letter-spacing: 1px; }
+
+  /* The product page on a phone */
+  .phone { position: absolute; left: 1186px; top: 150px; width: 352px; height: 740px; padding: 12px; border-radius: 52px; background: #17181d; box-shadow: 0 50px 90px -40px rgba(32,33,42,0.55); }
+  .screen { position: relative; height: 100%; border-radius: 41px; overflow: hidden; background: #fff; font-family: "DM Sans"; }
+  .island { position: absolute; left: 50%; top: 11px; width: 96px; height: 28px; transform: translateX(-50%); border-radius: 20px; background: #17181d; z-index: 2; }
+  .p-img { position: relative; height: 340px; background: linear-gradient(160deg, #ffe4cf, #ffd0e4); display: grid; place-items: center; }
+  .p-img svg { width: 86%; transform: rotate(-8deg); filter: drop-shadow(0 16px 14px rgba(120,50,30,0.22)); }
+  .p-top { position: absolute; top: 54px; left: 18px; right: 18px; display: flex; justify-content: space-between; }
+  .p-top span { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.85); }
+  .dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(32,33,42,0.25); }
+  .dots i:first-child { width: 18px; border-radius: 4px; background: #20212a; }
+  .p-body { padding: 18px 22px; }
+  .p-body small { color: #f472b6; font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .p-body h3 { margin-top: 6px; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+  .p-body .row { margin-top: 6px; }
+  .p-body .price { font-size: 22px; }
+  .label { margin-top: 16px; font-size: 13px; font-weight: 700; }
+  .sizes { display: flex; gap: 7px; margin-top: 8px; }
+  .sizes span { display: grid; place-items: center; width: 44px; height: 38px; border-radius: 10px; border: 1.5px solid #e6e6ec; font-size: 13px; font-weight: 600; }
+  .sizes span.on { border-color: #20212a; background: #20212a; color: #fff; }
+  .sizes span.out { color: #c3c5cd; text-decoration: line-through; }
+  .bag { display: block; margin-top: 18px; padding: 15px; border-radius: 14px; background: #20212a; color: #fff; text-align: center; font-weight: 700; font-size: 15px; }
+  .deliver { margin-top: 12px; font-size: 12px; color: #6b6e7a; text-align: center; }
+  .deliver b { color: #34b779; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <symbol id="shoe" viewBox="0 0 220 110">
+        <path d="M14 78 C 12 92, 22 98, 40 98 L 196 98 C 210 98, 214 90, 210 80 Z" fill="#fff" stroke="#e6dcd6" stroke-width="2"/>
+        <path d="M18 80 C 18 54, 40 34, 70 30 C 82 29, 92 34, 100 44 L 118 60 C 140 66, 176 64, 202 72 C 210 75, 211 80, 210 82 Z" fill="currentColor"/>
+        <path d="M70 30 C 80 44, 82 58, 78 80" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M120 62 C 132 72, 160 76, 196 76" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="5" stroke-linecap="round"/>
+        <g stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M96 42 l 10 -6"/><path d="M104 50 l 10 -6"/><path d="M112 57 l 10 -6"/></g>
+        <path d="M14 86 L 210 86" stroke="#f1e7e2" stroke-width="3"/>
+      </symbol>
+      <symbol id="phones" viewBox="0 0 160 160">
+        <path d="M30 92 C 30 40, 130 40, 130 92" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+        <rect x="14" y="82" width="34" height="56" rx="16" fill="currentColor"/>
+        <rect x="112" y="82" width="34" height="56" rx="16" fill="currentColor"/>
+        <rect x="22" y="92" width="18" height="36" rx="9" fill="rgba(255,255,255,0.35)"/>
+        <rect x="120" y="92" width="18" height="36" rx="9" fill="rgba(255,255,255,0.35)"/>
+      </symbol>
+      <symbol id="bottle" viewBox="0 0 120 200">
+        <rect x="44" y="10" width="32" height="22" rx="6" fill="#20212a"/>
+        <rect x="30" y="30" width="60" height="160" rx="24" fill="currentColor"/>
+        <rect x="40" y="56" width="10" height="100" rx="5" fill="rgba(255,255,255,0.4)"/>
+        <rect x="30" y="100" width="60" height="26" fill="rgba(0,0,0,0.12)"/>
+      </symbol>
+      <symbol id="lamp" viewBox="0 0 160 200">
+        <path d="M40 20 L 120 20 L 140 86 L 20 86 Z" fill="currentColor"/>
+        <rect x="76" y="86" width="8" height="84" fill="#20212a"/>
+        <ellipse cx="80" cy="176" rx="40" ry="10" fill="#20212a"/>
+        <path d="M40 20 L 120 20 L 124 34 L 36 34 Z" fill="rgba(255,255,255,0.3)"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">huemarket.store/shoes</div></div>
+    <div class="page">
+      <div class="promo">Free delivery over &pound;50 &nbsp;&middot;&nbsp; Easy 30-day returns</div>
+      <header>
+        <span class="logo">hue<span>.</span></span>
+        <span class="search">Search shoes, audio, home and more</span>
+        <span class="icons"><span></span><span></span><span></span></span>
+      </header>
+      <nav class="cats"><span>New in</span><span>Shoes</span><span>Audio</span><span>Home</span><span>Bags</span><span>Gifts</span><span class="sale">Sale</span></nav>
+
+      <div class="banner">
+        <div><small>Summer colour drop</small><h2>Brighter steps,<br>up to 30% off</h2><span class="cta">Shop the sale</span></div>
+        <svg viewBox="0 0 220 110" style="color:#fde047"><use href="#shoe"/></svg>
+      </div>
+
+      <div class="shop">
+        <aside>
+          <h4>Filters <small>Clear all</small></h4>
+          <div class="group"><b>Category</b>
+            <div class="check on"><i></i>Running</div><div class="check"><i></i>Lifestyle</div><div class="check on"><i></i>Trail</div><div class="check"><i></i>Sandals</div>
+          </div>
+          <div class="group"><b>Price</b><div class="range"><i style="left:8%"></i><i style="left:64%"></i></div>&pound;20 &ndash; &pound;140</div>
+          <div class="group"><b>Colour</b>
+            <div class="swatches"><i class="on" style="background:#fb923c"></i><i style="background:#f472b6"></i><i style="background:#8b5cf6"></i><i style="background:#4263eb"></i><i style="background:#34b779"></i><i style="background:#20212a"></i></div>
+          </div>
+        </aside>
+
+        <div>
+          <div class="toolbar">
+            <div class="chips"><span>Running &times;</span><span>Trail &times;</span><span>Orange &times;</span></div>
+            <span>128 results &nbsp; <span class="sort">Sort: Popular &#9662;</span></span>
+          </div>
+          <div class="grid">
+            <div class="product"><div class="img" style="background:#ffe9d6;color:#fb923c"><span class="tag">New</span><span class="heart"></span><svg viewBox="0 0 220 110"><use href="#shoe"/></svg></div><h5>Cloudstep Runner</h5><p>Running &middot; 6 colours</p><div class="row"><span class="price">&pound;89</span><span class="add">+</span></div></div>
+            <div class="product"><div class="img" style="background:#ede6ff;color:#8b5cf6"><span class="heart"></span><svg viewBox="0 0 160 160" style="width:58%"><use href="#phones"/></svg></div><h5>Halo Headphones</h5><p><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 412</p><div class="row"><span class="price">&pound;129<s>&pound;159</s></span><span class="add">+</span></div></div>
+            <div class="product"><div class="img" style="background:#dcf5e9;color:#34b779"><span class="heart"></span><svg viewBox="0 0 120 200" style="width:34%"><use href="#bottle"/></svg></div><h5>Trail Bottle 750</h5><p>Insulated &middot; 4 colours</p><div class="row"><span class="price">&pound;24</span><span class="add">+</span></div></div>
+            <div class="product"><div class="img" style="background:#ffe1ef;color:#f472b6"><span class="tag">-20%</span><span class="heart"></span><svg viewBox="0 0 160 200" style="width:46%"><use href="#lamp"/></svg></div><h5>Petal Desk Lamp</h5><p>Home &middot; Dimmable</p><div class="row"><span class="price">&pound;56<s>&pound;70</s></span><span class="add">+</span></div></div>
+            <div class="product"><div class="img" style="background:#e3ebff;color:#4263eb"><span class="heart"></span><svg viewBox="0 0 220 110"><use href="#shoe"/></svg></div><h5>Cloudstep Trail</h5><p>Trail &middot; 3 colours</p></div>
+            <div class="product"><div class="img" style="background:#fff1d6;color:#fb923c"><span class="heart"></span><svg viewBox="0 0 120 200" style="width:34%"><use href="#bottle"/></svg></div><h5>Trail Bottle 500</h5><p>Insulated</p></div>
+            <div class="product"><div class="img" style="background:#ffe1ef;color:#20212a"><span class="tag">Low stock</span><span class="heart"></span><svg viewBox="0 0 160 160" style="width:58%"><use href="#phones"/></svg></div><h5>Halo Mini</h5><p>Audio</p></div>
+            <div class="product"><div class="img" style="background:#dcf5e9;color:#34b779"><span class="heart"></span><svg viewBox="0 0 160 200" style="width:46%"><use href="#lamp"/></svg></div><h5>Petal Floor Lamp</h5><p>Home</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <span class="island"></span>
+      <div class="p-img" style="color:#fb923c"><div class="p-top"><span></span><span></span></div><svg viewBox="0 0 220 110"><use href="#shoe"/></svg><div class="dots"><i></i><i></i><i></i><i></i></div></div>
+      <div class="p-body">
+        <small>Running &middot; New</small>
+        <h3>Cloudstep Runner</h3>
+        <div class="row"><span class="price">&pound;89</span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734; <span style="color:#6b6e7a">(238)</span></span></div>
+        <p class="label">Colour &middot; Sunset orange</p>
+        <div class="swatches" style="margin-top:8px"><i class="on" style="background:#fb923c"></i><i style="background:#f472b6"></i><i style="background:#4263eb"></i><i style="background:#20212a"></i></div>
+        <p class="label">Size (UK)</p>
+        <div class="sizes"><span>6</span><span class="on">7</span><span>8</span><span class="out">9</span><span>10</span></div>
+        <span class="bag">Add to bag &nbsp;&middot;&nbsp; &pound;89</span>
+        <p class="deliver"><b>In stock.</b> Free delivery by Friday</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

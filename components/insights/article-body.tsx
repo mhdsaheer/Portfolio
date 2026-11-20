@@ -80,5 +80,9 @@ function BlockView({ block }: { block: Block }) {
           </blockquote>
         </figure>
       )
+
+    // Design types, comparisons, cards and callouts belong to the guide layout, which renders them itself
+    default:
+      return null
   }
 }

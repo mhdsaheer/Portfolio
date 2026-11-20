@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Minimalist website design - Aera (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: linear-gradient(160deg, #f7f8fc 0%, #f1f1ee 100%); background: var(--stage); }
+  .browser { left: 120px; top: 70px; width: 1360px; height: 860px; }
+  .page { background: #fdfdfb; color: #1d1d1f; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 34px 72px; font-size: 14px; color: #3a3a3c; }
+  .logo { font: 600 17px/1 "Inter"; letter-spacing: 0.32em; text-transform: lowercase; color: #1d1d1f; }
+  nav ul { display: flex; gap: 44px; list-style: none; }
+  nav .bag { display: flex; gap: 8px; align-items: center; }
+  nav .bag span { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #1d1d1f; color: #fff; font-size: 11px; }
+
+  .hero { position: absolute; left: 72px; right: 72px; top: 150px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: #8b8b8f; }
+  h1 { margin-top: 26px; font: 400 116px/0.95 "Instrument Serif"; letter-spacing: -0.02em; color: #1d1d1f; }
+  h1 em { color: #a1795a; }
+  .lede { margin-top: 30px; max-width: 360px; font-size: 18px; line-height: 1.6; color: #6e6e73; }
+  .actions { display: flex; align-items: center; gap: 30px; margin-top: 44px; }
+  .btn { padding: 17px 30px; border-radius: 999px; background: #1d1d1f; color: #fff; font-size: 15px; font-weight: 500; }
+  .link { font-size: 15px; color: #1d1d1f; border-bottom: 1px solid #1d1d1f; padding-bottom: 3px; }
+
+  .product { position: relative; height: 560px; display: grid; place-items: center; }
+  .halo { position: absolute; width: 470px; height: 470px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #f4efe8, #ebe4da 70%); }
+  .speaker { position: relative; width: 210px; height: 380px; border-radius: 105px / 46px; background:
+      radial-gradient(circle, rgba(0,0,0,0.13) 1.1px, transparent 1.6px) 0 0 / 7px 7px,
+      linear-gradient(90deg, #b9aea2 0%, #d8cfc4 30%, #e6ded4 48%, #cfc5b9 70%, #a69a8d 100%);
+    box-shadow: inset 0 -30px 40px rgba(0,0,0,0.08); }
+  .speaker::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 92px; border-radius: 50%; background: linear-gradient(180deg, #efe9e1, #d7cdc1); box-shadow: inset 0 -6px 10px rgba(0,0,0,0.06); }
+  .speaker::after { content: ""; position: absolute; left: 50%; top: 30px; width: 58px; height: 22px; transform: translateX(-50%); border-radius: 50%; border: 2px solid rgba(161,121,90,0.55); }
+  .shadow { position: absolute; bottom: 70px; width: 300px; height: 34px; border-radius: 50%; background: radial-gradient(closest-side, rgba(60,45,30,0.28), transparent); }
+
+  .specs { position: absolute; left: 72px; right: 72px; bottom: 44px; display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 40px; padding-top: 22px; border-top: 1px solid #e8e6e1; font-size: 13px; color: #8b8b8f; }
+  .specs b { display: block; margin-bottom: 4px; font-weight: 500; color: #1d1d1f; font-size: 14px; }
+  .specs .count { align-self: end; letter-spacing: 0.12em; color: #1d1d1f; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">aera.audio</div></div>
+    <div class="page">
+      <nav>
+        <span class="logo">aera</span>
+        <ul><li>Speakers</li><li>Lighting</li><li>Journal</li><li>Support</li></ul>
+        <span class="bag">Bag <span>0</span></span>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">New &mdash; Aera One</p>
+          <h1>Sound,<br><em>simplified.</em></h1>
+          <p class="lede">One speaker that fills the room and quietly disappears into it.</p>
+          <div class="actions">
+            <span class="btn">Shop Aera One &nbsp;&middot;&nbsp; &pound;249</span>
+            <span class="link">Watch the film</span>
+          </div>
+        </div>
+        <div class="product">
+          <div class="halo"></div>
+          <div class="shadow"></div>
+          <div class="speaker"></div>
+        </div>
+      </section>
+
+      <div class="specs">
+        <span><b>360&deg; sound</b>Even from the corner</span>
+        <span><b>12-hour battery</b>Moves room to room</span>
+        <span><b>Recycled aluminium</b>Made to last</span>
+        <span class="count">01 / 03</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
