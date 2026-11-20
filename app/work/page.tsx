@@ -7,6 +7,7 @@ import { WorkIndex } from "@/components/work/work-index"
 import type { CaseStudy } from "@/lib/case-studies"
 import { getCaseStudies, getWorkFiles } from "@/lib/projects-data"
 import { ARCHIVE_PDF } from "@/lib/work-files"
+import { getWorkPage } from "@/lib/settings-data"
 import { SITE_URL, absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = {
@@ -48,14 +49,14 @@ function collectionSchema(caseStudies: CaseStudy[]) {
 }
 
 export default async function WorkPage() {
-  const [caseStudies, workFiles] = await Promise.all([getCaseStudies(), getWorkFiles()])
+  const [caseStudies, workFiles, content] = await Promise.all([getCaseStudies(), getWorkFiles(), getWorkPage()])
 
   return (
     <>
       <Header />
 
       <main>
-        <WorkHero archive={ARCHIVE_PDF} />
+        <WorkHero archive={ARCHIVE_PDF} intro={content.intro} />
         <WorkIndex studies={caseStudies} files={workFiles} archive={ARCHIVE_PDF} />
       </main>
 

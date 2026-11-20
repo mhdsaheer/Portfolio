@@ -3,11 +3,11 @@ import Link from "next/link"
 import { ArrowUpRight, Download } from "lucide-react"
 
 import { Lines } from "@/components/about/lines"
+import { AccentText } from "@/components/ui/accent-text"
 import { AccentStar } from "@/components/about/accent-star"
 import { BackToTop } from "@/components/layout/back-to-top"
 import {
   ACCENT,
-  ACCENT_GLOW,
   CTA_GRADIENT,
   CTA_SHADOW,
   FOOTER_FLUID,
@@ -24,25 +24,11 @@ import {
   RESUME_PATH,
   socials,
 } from "@/lib/contact"
+import { getFooter } from "@/lib/settings-data"
 
 /** Only socials that have been filled in - no placeholder links ship. */
 const activeSocials = socials.filter((social) => social.href)
 
-/**
- * Written as explicit lines so each rises from its own mask, the way the About
- * page sets its statements. Keyed, because the list crosses from this server
- * component into the client-side `Lines`, and React checks its keys on the way.
- */
-const headingLines = [
-  <Fragment key="ask">Have something in mind?</Fragment>,
-  <Fragment key="invite">
-    Write me a{" "}
-    <em className="font-serif text-[1.06em] font-normal italic" style={{ color: ACCENT, textShadow: ACCENT_GLOW }}>
-      letter
-    </em>
-    .
-  </Fragment>,
-]
 
 /**
  * The page's close: one invitation, then the particulars.
@@ -55,7 +41,21 @@ const headingLines = [
  * `invite` is turned off on the contact page, where asking someone to get in
  * touch is asking them to do what they are already doing.
  */
-export function Footer({ invite = true }: { invite?: boolean }) {
+export async function Footer({ invite = true }: { invite?: boolean }) {
+  /*
+   * Written as explicit lines so each rises from its own mask, the way the About
+   * page sets its statements - edited in the admin, under Pages → Footer. Keyed,
+   * because the list crosses from this server component into the client-side
+   * `Lines`, and React checks its keys on the way.
+   */
+  const headingLines = invite
+    ? (await getFooter()).heading.map((line, index) => (
+        <Fragment key={index}>
+          <AccentText text={line} />
+        </Fragment>
+      ))
+    : []
+
   return (
     <footer style={{ fontSize: FOOTER_FLUID }}>
       {invite && (
@@ -132,7 +132,7 @@ export function Footer({ invite = true }: { invite?: boolean }) {
           reads as machine-stamped rather than written. */}
       <div className="border-t px-[var(--footer-gutter)] py-[2.25em]" style={{ borderColor: HAIRLINE }}>
         <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-[1.5em] font-mono text-[0.875em] leading-none tracking-[0.12em] md:flex-row md:items-center md:justify-between">
-          <p style={{ color: MUTED }}>© {new Date().getFullYear()} Muhammed Saheer</p>
+          <p style={{ color: MUTED }}>© <span className="font-sans">{new Date().getFullYear()}</span> Muhammed Saheer</p>
 
           <div className="flex flex-wrap items-center gap-x-[3.5em] gap-y-[1em]">
             {/* The socials group tightly; the control keeps its distance so it

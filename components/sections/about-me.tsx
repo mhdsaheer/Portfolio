@@ -2,35 +2,36 @@ import type React from "react"
 
 import { Download } from "lucide-react"
 
-import { ACCENT, ACCENT_GLOW } from "@/components/about/tokens"
+import { ACCENT } from "@/components/about/tokens"
+import { AccentText } from "@/components/ui/accent-text"
 import { AVAILABILITY, LOCATION, RESUME_FILENAME, RESUME_PATH } from "@/lib/contact"
+import type { HomePage } from "@/lib/page-content"
 import { cn } from "@/lib/utils"
 
-const facts = [
-  { label: "Currently", value: "Front-End Developer at Febno Technologies" },
-  { label: "Based in", value: `${LOCATION} · ${AVAILABILITY}` },
-  { label: "Focus", value: "Design systems, motion & interactive UI" },
-]
+/** Edited in the admin, under Pages → Home. */
+type Intro = HomePage["intro"]
+
+/** "Based in" follows the contact details, so it is never typed twice. */
+function factsOf(intro: Intro) {
+  return [
+    { label: "Currently", value: intro.currently },
+    { label: "Based in", value: `${LOCATION} · ${AVAILABILITY}` },
+    { label: "Focus", value: intro.focus },
+  ]
+}
 
 /** Beat one: who I am. */
-export function AboutIntro() {
+export function AboutIntro({ intro }: { intro: Intro }) {
   return (
     <div className="w-full">
       {/* Display lede - the hero's sans/serif-italic pairing, one statement only */}
       <p className="font-sans font-semibold tracking-tight text-[1.75rem] lg:text-[2rem] xl:text-[2.5rem] leading-[1.12] text-white text-balance">
-        I&apos;m Muhammed Saheer, a front-end developer with{" "}
-        <em
-          className="font-serif italic font-normal text-[1.06em]"
-          style={{ color: ACCENT, textShadow: ACCENT_GLOW }}
-        >
-          a designer&apos;s eye.
-        </em>
+        <AccentText text={intro.lede} />
       </p>
 
       {/* Supporting line, set the way the hero sets its sub-paragraph */}
       <p className="mt-5 max-w-[32rem] text-base xl:text-lg leading-relaxed text-white/65 text-pretty">
-        I bridge the gap between how things look and how they work — turning Figma frames into fast, responsive web
-        experiences.
+        {intro.supporting}
       </p>
     </div>
   )
@@ -42,7 +43,9 @@ export function AboutIntro() {
  * The rules are real elements rather than borders so they can draw themselves
  * in from the right, one after the next, when `active` turns true.
  */
-export function AboutFacts({ active = true }: { active?: boolean }) {
+export function AboutFacts({ intro, active = true }: { intro: Intro; active?: boolean }) {
+  const facts = factsOf(intro)
+
   return (
     // The shadow carries legibility where the photograph is bright, so the
     // frame needs no heavy scrim behind it
@@ -128,14 +131,14 @@ function Rule({ active, delay, atBottom = false }: { active: boolean; delay: num
 }
 
 /** Both beats stacked, for viewports too narrow to pin the photograph. */
-export function AboutMe() {
+export function AboutMe({ intro }: { intro: Intro }) {
   return (
     <section id="about-me" className="lg:hidden py-16 md:py-24">
       <div className="max-w-[1280px] mx-auto px-6 md:px-12">
         <div className="max-w-[42rem]">
-          <AboutIntro />
+          <AboutIntro intro={intro} />
           <div className="mt-8">
-            <AboutFacts />
+            <AboutFacts intro={intro} />
           </div>
         </div>
       </div>

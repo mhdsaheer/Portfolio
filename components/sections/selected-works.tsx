@@ -111,7 +111,7 @@ export async function SelectedWorks() {
 
                   {/* Tab Label */}
                   <div className="absolute inset-0 z-10 flex items-center gap-2.5 pl-4 pt-0.5 font-mono text-[10.5px] uppercase tracking-[0.14em]">
-                    <span className="font-semibold" style={{ color: ACCENT }}>
+                    <span className="font-sans font-semibold tabular-nums" style={{ color: ACCENT }}>
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span aria-hidden className="h-3 w-px bg-white/25" />

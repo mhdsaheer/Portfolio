@@ -54,7 +54,7 @@ export function GuideToc({ items }: { items: TocItem[] }) {
           {item.number && (
             <span
               aria-hidden
-              className={cn("w-5 shrink-0 font-mono text-[11px] leading-[1.75]", isActive ? "text-[#3451D1]" : "text-[#5F6373]")}
+              className={cn("w-5 shrink-0 text-[11px] leading-[1.75] tabular-nums", isActive ? "text-[#3451D1]" : "text-[#5F6373]")}
             >
               {item.number}
             </span>
@@ -77,7 +77,7 @@ export function GuideToc({ items }: { items: TocItem[] }) {
           {numbered.length > 0 && (
             <li className="pt-3">
               <p className="px-3 pb-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-[#5F6373]">
-                The {numbered.length} types
+                The <span className="font-sans">{numbered.length}</span> types
               </p>
               <ol className="space-y-0.5 border-l border-[#20212A]/10 pl-1">{numbered.map(entry)}</ol>
             </li>
@@ -127,7 +127,7 @@ export function GuideTocDisclosure({ items }: { items: TocItem[] }) {
                   FOCUS,
                 )}
               >
-                <span aria-hidden className="w-5 shrink-0 font-mono text-xs leading-[1.6] text-[#3451D1]">
+                <span aria-hidden className="w-5 shrink-0 text-xs leading-[1.6] tabular-nums text-[#3451D1]">
                   {item.number ?? "·"}
                 </span>
                 {item.text}

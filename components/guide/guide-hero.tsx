@@ -5,11 +5,12 @@ import { ChevronRight } from "lucide-react"
 import { BODY, FOCUS, INK, MUTED } from "@/components/guide/tokens"
 import { ShareLinks } from "@/components/insights/share-links"
 import { AUTHOR, publishedAt, type Insight } from "@/lib/insights"
+import type { Profile } from "@/lib/settings-content"
 import { cn } from "@/lib/utils"
 
 export const GUIDE_TITLE_ID = "guide-title"
 
-/** The portrait is square, the face in its upper half. */
+/** The portrait is square, the face in its upper half. It is set in the admin, under Photo & resume. */
 const PORTRAIT = "shrink-0 rounded-full object-cover object-[50%_28%] ring-2 ring-white"
 
 /**
@@ -72,7 +73,17 @@ function Breadcrumbs({ title }: { title: string }) {
  * wrote it and when, then the cover as the featured image. The cover is the
  * page's largest element, so it is preloaded.
  */
-export function GuideHero({ insight, url, shortTitle }: { insight: Insight; url: string; shortTitle: string }) {
+export function GuideHero({
+  insight,
+  url,
+  shortTitle,
+  portrait,
+}: {
+  insight: Insight
+  url: string
+  shortTitle: string
+  portrait: Profile["portrait"]
+}) {
   const published = publishedAt(insight)
 
   return (
@@ -108,7 +119,7 @@ export function GuideHero({ insight, url, shortTitle }: { insight: Insight; url:
 
       <div className="mt-10 flex flex-wrap items-end justify-between gap-6 border-t border-[#20212A]/10 pt-6">
         <div className="flex items-center gap-4">
-          <Image src={AUTHOR.image} alt="" width={52} height={52} sizes="52px" className={cn("size-[52px]", PORTRAIT)} />
+          <Image src={portrait.src} alt="" width={52} height={52} sizes="52px" className={cn("size-[52px]", PORTRAIT)} />
           <div className="text-sm leading-snug">
             <p className={MUTED}>
               Written by{" "}

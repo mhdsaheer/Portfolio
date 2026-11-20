@@ -38,7 +38,7 @@ export const AUTHOR = {
   location: LOCATION,
   /** The page that identifies the author, as search engines ask for. */
   path: "/about",
-  image: "/images/saheer_portrait.png",
+  // The portrait is set in the admin, under Photo & resume - getProfile() in lib/settings-data.ts
   bio: "I’m a front-end developer and UI/UX designer in Kerala, India, with a degree in multimedia from the University of Calicut. I design in Figma and build in React and Next.js, with a focus on fast, accessible interfaces.",
   /** Profiles that are the author's own - the WhatsApp link is a way to reach him, not a profile. */
   profiles: socials.filter((social) => social.label === "LinkedIn" || social.label === "GitHub"),

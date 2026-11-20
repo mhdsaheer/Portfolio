@@ -54,7 +54,7 @@ function BlockView({ block }: { block: Block }) {
         <List
           className={`${PROSE} space-y-3 pl-6 ${
             block.ordered
-              ? "list-decimal marker:font-mono marker:text-[0.85em] marker:text-accent"
+              ? "list-decimal marker:text-[0.85em] marker:text-accent"
               : "list-disc marker:text-accent"
           }`}
         >

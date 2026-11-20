@@ -26,6 +26,8 @@ import {
   type Insight,
 } from "@/lib/insights"
 import { getInsight, getInsights } from "@/lib/insights-data"
+import type { Profile } from "@/lib/settings-content"
+import { getProfile } from "@/lib/settings-data"
 import { SITE_URL, absoluteUrl } from "@/lib/site"
 
 type PageProps = {
@@ -96,7 +98,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * The FAQ is deliberately left out of the markup. Google retired FAQ rich
  * results in May 2026, so the questions stay on the page for readers only.
  */
-function structuredData(insight: Insight) {
+function structuredData(insight: Insight, portrait: Profile["portrait"]) {
   const url = insightUrl(insight.slug)
   const personId = `${SITE_URL}/#person`
   const authorUrl = `${SITE_URL}${AUTHOR.path}`
@@ -132,7 +134,7 @@ function structuredData(insight: Insight) {
         "@id": personId,
         name: AUTHOR.name,
         url: authorUrl,
-        image: `${SITE_URL}${AUTHOR.image}`,
+        image: absoluteUrl(portrait.src),
         jobTitle: AUTHOR.jobTitle,
         sameAs: AUTHOR.profiles.map((profile) => profile.href),
       },
@@ -157,13 +159,14 @@ export default async function InsightPage({ params }: PageProps) {
   }
 
   const url = insightUrl(insight.slug)
-  const related = getRelatedInsights(insight, await getInsights())
+  const [insights, { portrait }] = await Promise.all([getInsights(), getProfile()])
+  const related = getRelatedInsights(insight, insights)
 
   // `<` escaped so nothing in the data can close the script tag early
   const jsonLd = (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(insight)).replace(/</g, "\\u003c") }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(insight, portrait)).replace(/</g, "\\u003c") }}
     />
   )
 
@@ -172,7 +175,7 @@ export default async function InsightPage({ params }: PageProps) {
     return (
       <>
         <Header />
-        <GuideArticle insight={insight} url={url} related={related} />
+        <GuideArticle insight={insight} url={url} related={related} portrait={portrait} />
         <Footer />
         {jsonLd}
       </>
@@ -229,7 +232,7 @@ export default async function InsightPage({ params }: PageProps) {
                 {/* About 70 characters a line: seven columns of twelve, eight below xl */}
                 <div className="min-w-0 lg:col-span-8 lg:col-start-5 xl:col-span-7">
                   <div className="flex flex-wrap items-end justify-between gap-6 border-b border-white/15 pb-8">
-                    <AuthorByline />
+                    <AuthorByline portrait={portrait} />
                     <ShareLinks
                       id="share-top"
                       url={url}
@@ -288,7 +291,7 @@ export default async function InsightPage({ params }: PageProps) {
                     <ShareLinks id="share-end" url={url} title={insight.title} />
                   </div>
 
-                  <AuthorCard />
+                  <AuthorCard portrait={portrait} />
                 </div>
               </div>
             </div>

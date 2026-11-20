@@ -7,7 +7,9 @@ const SECTIONS = [
   { href: "/admin", label: "Insights", matches: (path: string) => path === "/admin" || path.startsWith("/admin/insights") },
   { href: "/admin/case-studies", label: "Case studies", matches: (path: string) => path.startsWith("/admin/case-studies") },
   { href: "/admin/work-files", label: "Work files", matches: (path: string) => path.startsWith("/admin/work-files") },
+  { href: "/admin/pages", label: "Pages", matches: (path: string) => path.startsWith("/admin/pages") },
   { href: "/admin/services", label: "Services", matches: (path: string) => path.startsWith("/admin/services") },
+  { href: "/admin/profile", label: "Photo & resume", matches: (path: string) => path.startsWith("/admin/profile") },
 ]
 
 export function AdminNav() {

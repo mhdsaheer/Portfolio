@@ -7,6 +7,7 @@ import { ArrowDown } from "lucide-react"
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 
 import { useIntroDone } from "@/hooks/use-intro-done"
+import type { HomePage } from "@/lib/page-content"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -16,7 +17,8 @@ const HEADER_OFFSET = 80
 /** How far each line travels sideways by the time the hero has scrolled away. */
 const DRIFT = "36vw"
 
-export function Hero() {
+/** `content` is edited in the admin, under Pages → Home. */
+export function Hero({ content }: { content: HomePage["hero"] }) {
   const sectionRef = useRef<HTMLElement>(null)
   const introDone = useIntroDone()
   const reduceMotion = useReducedMotion()
@@ -30,8 +32,8 @@ export function Hero() {
   const driftRight = useTransform(scrollYProgress, [0, 1], ["0vw", DRIFT])
 
   const lines = [
-    { text: "Designer.", x: driftLeft },
-    { text: "Developer.", x: driftRight },
+    { text: content.lines[0], x: driftLeft },
+    { text: content.lines[1], x: driftRight },
   ]
 
   const rise = (delay: number) => ({
@@ -81,7 +83,7 @@ export function Hero() {
             <h1 className="font-sans text-[length:min(22.4cqi,46cqh)] font-extrabold leading-none tracking-[-0.06em] text-white">
               {lines.map((line, index) => (
                 <motion.span
-                  key={line.text}
+                  key={index}
                   // Each line is its own mask. The padding lets descenders show, the negative
                   // margin gives the space back; the nudge left sits the D's stem on the column edge.
                   className="-mb-[0.1em] -ml-[0.03em] block w-max overflow-hidden pb-[0.1em]"
@@ -108,12 +110,11 @@ export function Hero() {
               From lg the row is three columns sized by their contents, so the paragraph
               lands near the centre and "View Works" never wraps. */}
           <motion.div className="md:col-span-2 lg:col-span-1" {...rise(0.45)}>
-            <p className="font-serif text-4xl italic leading-[1.1] text-white md:text-5xl lg:text-4xl xl:text-5xl">who removes friction</p>
+            <p className="font-serif text-4xl italic leading-[1.1] text-white md:text-5xl lg:text-4xl xl:text-5xl">{content.tagline}</p>
           </motion.div>
 
           <motion.p className="max-w-[23.5rem] text-pretty text-[15px] leading-relaxed text-white/75" {...rise(0.55)}>
-            I design in Figma and build fast, responsive websites in React and Next.js, with Strapi CMS so you can
-            update content yourself, and branding to match. Let&apos;s build yours.
+            {content.intro}
           </motion.p>
 
           <motion.div className="md:justify-self-end" {...rise(0.65)}>

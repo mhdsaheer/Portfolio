@@ -76,7 +76,7 @@ export function ExampleLightbox({ examples, children }: { examples: Example[]; c
                 <div className="flex items-center justify-between gap-4 px-4 pt-4 md:px-8 md:pt-6">
                   <div className="min-w-0">
                     <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#5F6373]">
-                      Example {pad(index + 1)} of {pad(examples.length)}
+                      Example <span className="font-sans">{pad(index + 1)}</span> of <span className="font-sans">{pad(examples.length)}</span>
                     </p>
                     <Dialog.Title className="mt-1 truncate text-lg font-semibold tracking-[-0.01em] text-[#20212A] md:text-xl">
                       {example.title}

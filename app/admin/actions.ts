@@ -87,7 +87,7 @@ export async function deleteInsight(slug: string) {
 }
 
 /** The Cloudinary folders uploads may land in, one per kind of content. */
-const UPLOAD_FOLDERS = ["insights", "case-studies", "work-files"] as const
+const UPLOAD_FOLDERS = ["insights", "case-studies", "work-files", "profile"] as const
 export type UploadFolder = (typeof UPLOAD_FOLDERS)[number]
 
 /**

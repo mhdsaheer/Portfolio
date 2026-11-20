@@ -87,7 +87,7 @@ export function DesignTypeSection({
       </ExampleTrigger>
       <figcaption className={cn("mt-4 flex gap-3 text-pretty text-sm leading-relaxed", MUTED)}>
         <span className={cn("shrink-0 pt-px font-mono text-[11px] uppercase tracking-[0.14em]", kind.text)}>
-          Fig. {pad(block.number)}
+          Fig. <span className="font-sans">{pad(block.number)}</span>
         </span>
         <span>{block.image.caption}</span>
       </figcaption>
@@ -160,7 +160,7 @@ export function DesignTypeSection({
       )}
     >
       <div className="flex flex-wrap items-center gap-2.5">
-        <span className={cn("rounded-full bg-[#20212A] px-3 py-1 font-mono text-xs text-white")}>
+        <span className={cn("rounded-full bg-[#20212A] px-3 py-1 text-xs tabular-nums text-white")}>
           {pad(block.number)}
           <span className="text-white/60"> / {pad(total)}</span>
         </span>

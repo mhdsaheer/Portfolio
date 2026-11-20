@@ -175,7 +175,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20">
               <div className="lg:col-span-4">
                 <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-                  01 The problem
+                  <span className="font-sans">01</span> The problem
                 </span>
                 <SectionTitle className="mt-4 text-3xl md:text-4xl font-semibold tracking-tight text-balance">
                   {study.challenge.title}
@@ -213,7 +213,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-              02 The approach
+              <span className="font-sans">02</span> The approach
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
               How it came together
@@ -224,7 +224,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <Reveal as="li" key={item.step} delay={i * 60} className="border-b border-border">
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-12 py-8 md:py-10 group">
                     <div className="md:col-span-2">
-                      <span className="text-sm font-mono text-muted-foreground transition-colors group-hover:text-accent">
+                      <span className="text-sm tabular-nums text-muted-foreground transition-colors group-hover:text-accent">
                         {item.step}
                       </span>
                     </div>
@@ -256,7 +256,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-              {outcomeNumber} The outcome
+              <span className="font-sans">{outcomeNumber}</span> The outcome
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
               {study.outcomeHeading ?? "What changed"}

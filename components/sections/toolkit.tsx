@@ -1,33 +1,4 @@
-/**
- * The stack, as a continuous band. Named tools only - skills like "Responsive
- * Design" belong with the services on the About page, not in a row of logos.
- */
-const toolkit = [
-  "React",
-  "Next.js",
-  "JavaScript",
-  "TypeScript",
-  "HTML5",
-  "CSS3",
-  "Tailwind CSS",
-  "Bootstrap",
-  "Node.js",
-  "Express",
-  "MongoDB",
-  "Strapi",
-  "Moodle",
-  "Figma",
-  "Adobe XD",
-  "Photoshop",
-  "Illustrator",
-  "InDesign",
-  "Canva",
-  "Git",
-  "GitHub",
-  "GitLab",
-  "VS Code",
-  "Notion",
-]
+import type { HomePage } from "@/lib/page-content"
 
 /**
  * The track holds two copies so translating it -50% loops seamlessly. Duration
@@ -36,11 +7,18 @@ const toolkit = [
  */
 const SECONDS_PER_ITEM = 3
 
-export function Toolkit() {
+/**
+ * The stack, as a continuous band. Named tools only - skills like "Responsive
+ * Design" belong with the services on the About page, not in a row of logos.
+ * `content` is edited in the admin, under Pages → Home.
+ */
+export function Toolkit({ content }: { content: HomePage["toolkit"] }) {
+  const toolkit = content.tools
+
   return (
     <section aria-label="Tools and technologies" className="py-16 border-border overflow-hidden md:py-10 border-t-[0]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 mb-8">
-        <p className="text-sm text-muted-foreground text-center">What I work with</p>
+        <p className="text-sm text-muted-foreground text-center">{content.label}</p>
       </div>
 
       <div className="relative">

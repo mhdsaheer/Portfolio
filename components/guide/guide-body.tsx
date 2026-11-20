@@ -69,7 +69,7 @@ function BlockView({
           className={cn(
             GUIDE_PROSE,
             "space-y-3 pl-6",
-            block.ordered ? "list-decimal marker:font-mono marker:text-[0.85em] marker:text-[#3451D1]" : "list-disc marker:text-[#8B5CF6]",
+            block.ordered ? "list-decimal marker:text-[0.85em] marker:text-[#3451D1]" : "list-disc marker:text-[#8B5CF6]",
           )}
         >
           {block.items.map((item) => (
@@ -159,7 +159,7 @@ function KindMap({ kinds, types }: { kinds: { kind: DesignKind; question: string
                       FOCUS,
                     )}
                   >
-                    <span aria-hidden className="font-mono text-[11px] opacity-80">
+                    <span aria-hidden className="text-[11px] tabular-nums opacity-80">
                       {pad(type.number)}
                     </span>
                     {type.name.replace(/ website design$| design$/, "")}
@@ -237,7 +237,7 @@ function ComparisonTable({
                       href={`#${type.id}`}
                       className={cn("flex gap-2.5 rounded underline-offset-4 hover:underline", INK, FOCUS)}
                     >
-                      <span aria-hidden className={cn("font-mono text-xs leading-[1.6]", style.text)}>
+                      <span aria-hidden className={cn("text-xs leading-[1.6] tabular-nums", style.text)}>
                         {pad(type.number)}
                       </span>
                       <span className="w-40">{type.name.replace(/ website design$| design$/, "")}</span>
@@ -284,7 +284,7 @@ function Cards({ style, items }: { style: "steps" | "trends" | "mistakes"; items
             )}
           >
             {style === "steps" && (
-              <span aria-hidden className={cn("font-mono text-sm", accent.text)}>
+              <span aria-hidden className={cn("text-sm tabular-nums", accent.text)}>
                 Step {pad(i + 1)}
               </span>
             )}

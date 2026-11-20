@@ -4,14 +4,16 @@ import { ArrowUpRight } from "lucide-react"
 import { BackToTopButton } from "@/components/guide/back-to-top-button"
 import { ExampleLightbox, type Example } from "@/components/guide/example-lightbox"
 import { GuideBody } from "@/components/guide/guide-body"
-import { GuideAuthorCard, GuideFaq } from "@/components/guide/guide-end"
+import { GuideFaq } from "@/components/guide/guide-end"
 import { GUIDE_TITLE_ID, GuideHero } from "@/components/guide/guide-hero"
 import { GuideToc, GuideTocDisclosure } from "@/components/guide/guide-toc"
 import { BODY, FOCUS, INK, MEASURE, MUTED } from "@/components/guide/tokens"
+import { AuthorCard } from "@/components/insights/author"
 import { InlineText } from "@/components/insights/inline-text"
 import { InsightCard } from "@/components/insights/insight-card"
 import { ShareLinks } from "@/components/insights/share-links"
 import type { Insight } from "@/lib/insights"
+import type { Profile } from "@/lib/settings-content"
 import { cn } from "@/lib/utils"
 
 /**
@@ -23,7 +25,17 @@ import { cn } from "@/lib/utils"
  * sticky column beside the body on wide screens. Related reading closes it
  * on a grey band.
  */
-export function GuideArticle({ insight, url, related }: { insight: Insight; url: string; related: Insight[] }) {
+export function GuideArticle({
+  insight,
+  url,
+  related,
+  portrait,
+}: {
+  insight: Insight
+  url: string
+  related: Insight[]
+  portrait: Profile["portrait"]
+}) {
   const examples: Example[] = insight.body.flatMap((block) =>
     block.type === "designType" ? [{ ...block.image, title: block.name }] : [],
   )
@@ -34,7 +46,7 @@ export function GuideArticle({ insight, url, related }: { insight: Insight; url:
     <main className="px-2 pb-16 pt-[4.5rem] sm:px-3 md:pb-24 md:pt-[5.75rem] lg:px-4">
       <ExampleLightbox examples={examples}>
         <article className="mx-auto max-w-[1480px] overflow-clip rounded-[1.75rem] bg-white text-[#20212A] shadow-[0_40px_120px_-40px_rgba(4,10,18,0.55)] md:rounded-[2.5rem]">
-          <GuideHero insight={insight} url={url} shortTitle={shortTitle} />
+          <GuideHero insight={insight} url={url} shortTitle={shortTitle} portrait={portrait} />
 
           <div className="px-5 pb-20 pt-12 sm:px-8 md:pb-28 md:pt-16 lg:px-12 xl:px-16">
             <div className="lg:grid lg:grid-cols-[13.5rem_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-16">
@@ -90,7 +102,7 @@ export function GuideArticle({ insight, url, related }: { insight: Insight; url:
                   <ShareLinks id="share-end" url={url} title={insight.title} tone="light" />
                 </div>
 
-                <GuideAuthorCard />
+                <AuthorCard portrait={portrait} tone="light" />
               </div>
             </div>
           </div>

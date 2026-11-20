@@ -139,7 +139,7 @@ export function ArticleTocDisclosure({ items }: { items: TocItem[] }) {
                 }}
                 className="flex gap-3 py-2 text-[15px] leading-snug text-white/85 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
-                <span aria-hidden className="w-5 shrink-0 font-mono text-xs leading-[1.6] text-accent">
+                <span aria-hidden className="w-5 shrink-0 text-xs leading-[1.6] tabular-nums text-accent">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 {item.text}

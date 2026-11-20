@@ -7,8 +7,10 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { Lines } from "@/components/about/lines"
 import { ACCENT, FLUID, INK, SURFACE } from "@/components/about/tokens"
 import { LOCATION, TIME_ZONE } from "@/lib/contact"
+import type { Profile } from "@/lib/settings-content"
 
-export function AboutHero() {
+/** `photo` is set in the admin, under Photo & resume. */
+export function AboutHero({ photo }: { photo: Profile["photo"] }) {
   const frameRef = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
 
@@ -29,8 +31,8 @@ export function AboutHero() {
         >
           <div className="relative h-[120%] w-full">
             <Image
-              src="/images/designer.png"
-              alt="Muhammed Saheer at work"
+              src={photo.src}
+              alt={photo.alt}
               fill
               priority
               sizes="100vw"

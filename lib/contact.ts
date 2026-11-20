@@ -16,11 +16,11 @@ export const CONTACT_PHONE_DISPLAY = "+91 97473 43117"
 export const WHATSAPP_URL = `https://wa.me/${CONTACT_PHONE.replace(/\D/g, "")}`
 
 /**
- * A form endpoint - Formspree, Web3Forms, or your own API route. Left empty,
- * the form composes the message in the visitor's mail client instead, so the
- * page works either way rather than shipping a button that does nothing.
+ * Where the contact form posts. app/api/contact sends it over SMTP (the
+ * SMTP_* values in .env.example). Set this to "" and the form composes the
+ * message in the visitor's own mail client instead.
  */
-export const CONTACT_ENDPOINT: string = ""
+export const CONTACT_ENDPOINT: string = "/api/contact"
 
 export const LOCATION = "Kerala, India"
 export const AVAILABILITY = "Open to remote & relocation"
