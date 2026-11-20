@@ -4,11 +4,11 @@ import { ArrowUpRight } from "lucide-react"
 import { ACCENT } from "@/components/about/tokens"
 import { SectionTitle } from "@/components/ui/section-title"
 import { InsightCard } from "@/components/insights/insight-card"
-import { insights } from "@/lib/insights"
+import { getInsights } from "@/lib/insights-data"
 
 /** The teaser: the three newest, with the rest a click away at /insights. */
-export function Insights() {
-  const latest = insights.slice(0, 3)
+export async function Insights() {
+  const latest = (await getInsights()).slice(0, 3)
 
   return (
     <section id="insights" className="py-20 md:py-32 border-border border-t-0">

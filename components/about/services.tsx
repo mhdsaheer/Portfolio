@@ -22,40 +22,31 @@ import {
   FLUID,
   SHEET,
 } from "@/components/about/tokens"
+import type { Service } from "@/lib/settings-content"
 
-/**
- * Named for what someone would actually hire him for, and every skill listed is
- * one he claims - nothing inferred. Counts run five to seven, which the row
- * padding absorbs so the column beside the titles stays near their height.
+/*
+ * The services themselves are edited in the admin and stored in Supabase
+ * (lib/settings-data.ts); their limits - six services, six skills each - are
+ * in lib/settings-content.ts. Every skill listed is one he claims, nothing
+ * inferred.
  */
-const services = [
-  {
-    number: "01",
-    title: "Front-End Development",
-    skills: ["React.js", "Next.js", "JavaScript (ES6+)", "HTML5 & CSS3", "Tailwind CSS", "Bootstrap"],
-  },
-  {
-    number: "02",
-    title: "Back-End & CMS",
-    skills: ["Node.js", "Express", "MongoDB", "REST APIs", "Strapi CMS", "Moodle"],
-  },
-  {
-    number: "03",
-    title: "UI/UX Design",
-    skills: ["Figma", "Adobe XD", "Responsive Design", "Cross-Browser Compatibility", "Canva","Notion"],
-  },
-  {
-    number: "04",
-    title: "Branding & Identity",
-    skills: ["Logo Design", "Brand Identity", "Photoshop", "Illustrator", "InDesign"],
-  },
-]
 
 /**
  * Where each service takes over, as a fraction of the pin's scroll. Deliberately
- * uneven - the first card is brief and the rest get room to be read.
+ * uneven - the first and last bands are brief, and the ones between get room to
+ * be read: weights of 2 at the ends and 3 between, so four services land on
+ * 0, 0.2, 0.5 and 0.8.
  */
-const STEP_TRIGGERS = [0, 0.2, 0.5, 0.8]
+function stepTriggers(count: number) {
+  const weights = Array.from({ length: count }, (_, index) => (index === 0 || index === count - 1 ? 2 : 3))
+  const total = weights.reduce((sum, weight) => sum + weight, 0)
+  let passed = 0
+  return weights.map((weight) => {
+    const start = passed / total
+    passed += weight
+    return start
+  })
+}
 
 /**
  * The white sheet both layouts sit on. Screen keeps the white and lets the
@@ -65,13 +56,13 @@ const STEP_TRIGGERS = [0, 0.2, 0.5, 0.8]
  */
 const SHEET_STYLE = { backgroundColor: SHEET, mixBlendMode: "screen" } as const
 
-export function Services() {
+export function Services({ services }: { services: Service[] }) {
   return (
     // No z-index here, unlike every other section: one would seal the panel's
     // blend off from the background behind the page (see app/about/page.tsx)
     <section id="services" aria-label="Services" style={{ fontSize: FLUID, zIndex: "auto" }}>
-      <ServicesPinned />
-      <ServicesStacked />
+      <ServicesPinned services={services} />
+      <ServicesStacked services={services} />
     </section>
   )
 }
@@ -82,18 +73,19 @@ export function Services() {
  * spacers so the slack is shared above and beneath instead of pooling in one
  * hole beside the titles.
  */
-function ServicesPinned() {
+function ServicesPinned({ services }: { services: Service[] }) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
   const reduceMotion = useReducedMotion()
+  const triggers = stepTriggers(services.length)
 
-  // 400vh of section behind a 100dvh sticky pane leaves exactly 300vh of travel
+  // A screen of section per service behind a 100dvh sticky pane: four leave exactly 300vh of travel
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] })
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     let next = 0
-    for (let i = STEP_TRIGGERS.length - 1; i >= 0; i--) {
-      if (value >= STEP_TRIGGERS[i]) {
+    for (let i = triggers.length - 1; i >= 0; i--) {
+      if (value >= triggers[i]) {
         next = i
         break
       }
@@ -101,15 +93,16 @@ function ServicesPinned() {
     setActive((current) => (current === next ? current : next))
   })
 
-  const current = services[active]
+  // A list that shrinks while someone is on the page can leave `active` past its end
+  const current = services[Math.min(active, services.length - 1)]
   const still = Boolean(reduceMotion)
 
   return (
-    <div ref={sectionRef} className="relative hidden h-[400vh] min-[992px]:block">
+    <div ref={sectionRef} className="relative hidden min-[992px]:block" style={{ height: `${services.length * 100}vh` }}>
       <div className="sticky top-0 flex h-[100dvh] w-full overflow-hidden" style={SHEET_STYLE}>
         <div className="flex flex-1 flex-col px-[2.5em] pt-[1.5em] pb-[2.5em]">
           <div className="flex items-start justify-between gap-[4em]">
-            <Eyebrow>My services</Eyebrow>
+            <Eyebrow count={services.length}>My services</Eyebrow>
 
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -139,7 +132,7 @@ function ServicesPinned() {
                 <li key={service.number}>
                   <motion.button
                     type="button"
-                    onClick={() => scrollToStep(sectionRef.current, index)}
+                    onClick={() => scrollToStep(sectionRef.current, triggers, index)}
                     aria-current={index === active ? "true" : undefined}
                     className="block w-full text-left text-[3.2em] font-medium leading-[1.3] tracking-[-0.03em]"
                     style={{ color: CUT }}
@@ -167,15 +160,16 @@ function ServicesPinned() {
           <div className="flex-[2]" />
         </div>
 
-        {/* Four stacked segments, one per service, filling as you scroll it */}
+        {/* Stacked segments, one per service, filling as you scroll it */}
         <div className="flex shrink-0 pt-[1.5em] pb-[2.5em] pr-[2.5em]">
           <div className="flex h-full w-px flex-col">
             {services.map((service, index) => (
               <ProgressSegment
                 key={service.number}
                 progress={scrollYProgress}
-                start={STEP_TRIGGERS[index]}
-                end={STEP_TRIGGERS[index + 1] ?? 1}
+                start={triggers[index]}
+                end={triggers[index + 1] ?? 1}
+                share={1 / services.length}
               />
             ))}
           </div>
@@ -193,7 +187,7 @@ function ServicesPinned() {
  */
 const MAX_ROWS = 6
 
-function SkillColumn({ service, still }: { service: (typeof services)[number]; still: boolean }) {
+function SkillColumn({ service, still }: { service: Service; still: boolean }) {
   const columns = Math.max(1, Math.ceil(service.skills.length / MAX_ROWS))
   const rows = Math.ceil(service.skills.length / columns)
   // Narrower columns need smaller type, or the longer names wrap
@@ -248,7 +242,7 @@ function SkillColumn({ service, still }: { service: (typeof services)[number]; s
  * The section label, with the total beside it so it reads against the counter
  * across the top row - "(04)" here, "02" there.
  */
-function Eyebrow({ children }: { children: React.ReactNode }) {
+function Eyebrow({ children, count }: { children: React.ReactNode; count: number }) {
   return (
     <span
       className="inline-flex items-center gap-[0.5em] text-[0.875em] font-medium italic uppercase leading-none tracking-[0.04em]"
@@ -257,7 +251,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
       <AccentStar className="h-[0.75em] w-[0.75em] shrink-0" />
       {children}
       <span className="tabular-nums" style={{ color: CUT_DIM }}>
-        ({String(services.length).padStart(2, "0")})
+        ({String(count).padStart(2, "0")})
       </span>
     </span>
   )
@@ -290,11 +284,11 @@ const itemVariants = (still: boolean) => ({
  * section is positioned, so `offsetTop` is measured from the services section
  * itself and reads as zero. Lenis owns the scroll, so it is asked first.
  */
-function scrollToStep(section: HTMLDivElement | null, index: number) {
+function scrollToStep(section: HTMLDivElement | null, triggers: number[], index: number) {
   if (!section) return
   const travel = section.offsetHeight - window.innerHeight
-  const start = STEP_TRIGGERS[index]
-  const end = STEP_TRIGGERS[index + 1] ?? 1
+  const start = triggers[index]
+  const end = triggers[index + 1] ?? 1
   const top = section.getBoundingClientRect().top + window.scrollY + travel * ((start + end) / 2)
 
   if (window.__lenis) {
@@ -304,12 +298,23 @@ function scrollToStep(section: HTMLDivElement | null, index: number) {
   window.scrollTo({ top, behavior: "smooth" })
 }
 
-/** One quarter of the track, filling across its own slice of the scroll. */
-function ProgressSegment({ progress, start, end }: { progress: MotionValue<number>; start: number; end: number }) {
+/** One service's share of the track, filling across its own slice of the scroll. */
+function ProgressSegment({
+  progress,
+  start,
+  end,
+  share,
+}: {
+  progress: MotionValue<number>
+  start: number
+  end: number
+  /** The fraction of the track this segment takes: a quarter, with four services. */
+  share: number
+}) {
   const height = useTransform(progress, [start, end], ["0%", "100%"], { clamp: true })
 
   return (
-    <div className="h-1/4 w-px overflow-hidden" style={{ backgroundColor: CUT_HAIRLINE }}>
+    <div className="w-px overflow-hidden" style={{ height: `${share * 100}%`, backgroundColor: CUT_HAIRLINE }}>
       <motion.div className="w-px" style={{ height, backgroundColor: CUT }} />
     </div>
   )
@@ -333,7 +338,7 @@ const TILE_SHADOW = "0 -0.5em 1.5em rgba(0, 0, 0, 0.08)"
 const DECK_FLUID = `min(${FLUID}, 3.1svh)`
 
 /**
- * Below the pin's breakpoint the four services become a deck: each tile pins a
+ * Below the pin's breakpoint the services become a deck: each tile pins a
  * step lower than the last, leaving that one's title on show, and the next
  * slides up over it.
  *
@@ -341,7 +346,7 @@ const DECK_FLUID = `min(${FLUID}, 3.1svh)`
  * opaque layers, so a tile covers the one beneath; blended one by one, a tile's
  * black text would show the white tile under it and vanish.
  */
-function ServicesStacked() {
+function ServicesStacked({ services }: { services: Service[] }) {
   const listRef = useRef<HTMLOListElement>(null)
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: listRef, offset: ["start start", "end start"] })
@@ -349,7 +354,7 @@ function ServicesStacked() {
   return (
     <div className="py-[4em] min-[992px]:hidden" style={{ ...SHEET_STYLE, fontSize: DECK_FLUID }}>
       <div className="px-[2.5em]">
-        <Eyebrow>My services</Eyebrow>
+        <Eyebrow count={services.length}>My services</Eyebrow>
       </div>
 
       {/* The step is a tile's padding plus one line of title, so a title that
@@ -365,6 +370,7 @@ function ServicesStacked() {
             key={service.number}
             service={service}
             index={index}
+            last={services.length - 1}
             progress={scrollYProgress}
             still={Boolean(reduceMotion)}
           />
@@ -377,15 +383,17 @@ function ServicesStacked() {
 function ServiceTile({
   service,
   index,
+  last,
   progress,
   still,
 }: {
-  service: (typeof services)[number]
+  service: Service
   index: number
+  /** The index of the last tile. */
+  last: number
   progress: MotionValue<number>
   still: boolean
 }) {
-  const last = services.length - 1
   // Recedes from its own arrival until the last tile lands
   const scale = useTransform(
     progress,

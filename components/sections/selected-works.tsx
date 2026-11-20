@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react"
 import { ACCENT } from "@/components/about/tokens"
 import { TileStack } from "@/components/sections/tile-stack"
 import { SectionTitle } from "@/components/ui/section-title"
-import { caseStudies } from "@/lib/case-studies"
+import { getCaseStudies } from "@/lib/projects-data"
 
 /** The folder tab's outline. Wide enough for the number and the category. */
 const TAB_WIDTH = 212
@@ -16,7 +16,6 @@ const TAB_PATH = `M 0,${TAB_HEIGHT} L 0,12 A 12,12 0 0,1 12,0 L ${TAB_WIDTH - 36
 const STACK_STEP = 32
 /** The space above a card that its folder tab sits in: the Link's pt-12. */
 const TAB_SPACE = 48
-const LAST_CARD = caseStudies.length - 1
 
 /**
  * The panel's colour running up into the image, masked along an S-curve. A straight
@@ -25,7 +24,12 @@ const LAST_CARD = caseStudies.length - 1
 const FADE =
   "bg-background [mask-image:linear-gradient(to_top,#000,rgb(0_0_0/0.9)_20%,rgb(0_0_0/0.65)_40%,rgb(0_0_0/0.35)_60%,rgb(0_0_0/0.1)_80%,transparent)]"
 
-export function SelectedWorks() {
+export async function SelectedWorks() {
+  const caseStudies = await getCaseStudies()
+  const LAST_CARD = caseStudies.length - 1
+  // The stack's step is shared between the cards after the first; one card alone has none to share
+  const STEPS = Math.max(LAST_CARD, 1)
+
   return (
     <section id="works" className="py-20 md:py-10 md:pt-32 pb-4">
       {/* SVG clipPath definition for the folder tabs */}
@@ -71,7 +75,7 @@ export function SelectedWorks() {
               key={work.slug}
               className="sticky"
               style={{
-                top: `calc(min(0px, var(--stack-room)) + ${index} * clamp(0px, var(--stack-room) / ${LAST_CARD}, ${STACK_STEP}px))`,
+                top: `calc(min(0px, var(--stack-room)) + ${index} * clamp(0px, var(--stack-room) / ${STEPS}, ${STACK_STEP}px))`,
                 zIndex: index + 1,
               }}
             >

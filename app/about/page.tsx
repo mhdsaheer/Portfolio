@@ -6,6 +6,7 @@ import { AboutHero } from "@/components/about/about-hero"
 import { WhatIDo } from "@/components/about/what-i-do"
 import { Services } from "@/components/about/services"
 import { Approach } from "@/components/about/approach"
+import { getServices } from "@/lib/settings-data"
 
 export const metadata: Metadata = {
   title: "About | Muhammed Saheer - Front-End Developer",
@@ -20,7 +21,9 @@ export const metadata: Metadata = {
   },
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const services = await getServices()
+
   return (
     <>
       <Header />
@@ -32,7 +35,7 @@ export default function AboutPage() {
       <main style={{ zIndex: "auto" }}>
         <AboutHero />
         <WhatIDo />
-        <Services />
+        <Services services={services} />
         <Approach />
       </main>
 

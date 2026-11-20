@@ -1,6 +1,6 @@
-import { code, h2, h3, ol, p, quote, ul, type InsightSource } from "@/lib/insight-content"
+import { code, h2, h3, ol, p, quote, ul, type InsightFile } from "@/lib/insight-content"
 
-export const article: InsightSource = {
+export const article: InsightFile = {
   slug: "figma-to-react-workflow",
   title: "From Figma to Functional Website: My Approach to Turning Designs into Code",
   seoTitle: "Figma to React: My Workflow for Turning Designs into Code",

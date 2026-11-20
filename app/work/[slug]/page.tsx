@@ -11,19 +11,21 @@ import { Reveal } from "@/components/case-study/reveal"
 import { DesignSystem } from "@/components/case-study/design-system"
 import { Gallery } from "@/components/case-study/gallery"
 import { ACCENT } from "@/components/about/tokens"
-import { caseStudies, getCaseStudy, getNextCaseStudy } from "@/lib/case-studies"
+import { nextCaseStudy } from "@/lib/case-studies"
+import { getCaseStudies, getCaseStudy } from "@/lib/projects-data"
 
 type PageProps = {
   params: Promise<{ slug: string }>
 }
 
-export function generateStaticParams() {
-  return caseStudies.map((study) => ({ slug: study.slug }))
+/** Studies added later in the admin render on their first visit and are kept from then on. */
+export async function generateStaticParams() {
+  return (await getCaseStudies()).map((study) => ({ slug: study.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const study = getCaseStudy(slug)
+  const study = await getCaseStudy(slug)
 
   if (!study) {
     return { title: "Case study not found | Muhammed Saheer" }
@@ -43,13 +45,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params
-  const study = getCaseStudy(slug)
+  const study = await getCaseStudy(slug)
 
   if (!study) {
     notFound()
   }
 
-  const next = getNextCaseStudy(study.slug)
+  const next = nextCaseStudy(await getCaseStudies(), study.slug)
   // The design system, where a study has one, takes 03 and pushes the outcome to 04
   const outcomeNumber = study.designSystem ? "04" : "03"
 

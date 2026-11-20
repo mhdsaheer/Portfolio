@@ -1,6 +1,6 @@
-import { code, h2, h3, ol, p, quote, ul, type InsightSource } from "@/lib/insight-content"
+import { code, h2, h3, ol, p, quote, ul, type InsightFile } from "@/lib/insight-content"
 
-export const article: InsightSource = {
+export const article: InsightFile = {
   slug: "ui-ux-design-and-front-end-development",
   title: "UI/UX Design Meets Front-End Development: Why Both Matter",
   seoTitle: "UI/UX Design and Front-End Development: Why Both Matter",
