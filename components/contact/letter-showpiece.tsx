@@ -53,6 +53,8 @@ const LOOKS_LIKE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 export function LetterShowpiece() {
   const [fields, setFields] = useState<Fields>(EMPTY)
   const [status, setStatus] = useState<Status>("idle")
+  // True when the letter went to the visitor's own mail client, not the server
+  const [viaMailClient, setViaMailClient] = useState(false)
   // Set once the address has been left alone, so nobody is told they are wrong mid-word
   const [emailTouched, setEmailTouched] = useState(false)
   const reduceMotion = useReducedMotion()
@@ -99,29 +101,37 @@ export function LetterShowpiece() {
     // click during the seal's animation would send it twice
     if (!ready || status === "pressing" || status === "sending") return
 
+    // Read before the first await: React empties currentTarget once the event
+    // has been handled, so after the seal's pause it would be null
+    const website = new FormData(event.currentTarget).get("website") ?? ""
+
     // Let the seal finish pressing before anything else happens
     setStatus("pressing")
     if (!reduceMotion) await new Promise((resolve) => setTimeout(resolve, 420))
 
     const message = compose()
 
-    // No endpoint configured yet - hand the finished letter to the visitor's
-    // own mail client. A mailto does not navigate, so the page stays put and
-    // the confirmation has to say plainly what just happened.
-    if (!CONTACT_ENDPOINT) {
+    // Hand the finished letter to the visitor's own mail client. A mailto does
+    // not navigate, so the page stays put and the confirmation has to say
+    // plainly what just happened.
+    const openMailClient = () => {
       const subject = encodeURIComponent(`Portfolio enquiry from ${fields.name}`)
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${encodeURIComponent(message)}`
+      setViaMailClient(true)
       setStatus("sent")
-      return
     }
+
+    if (!CONTACT_ENDPOINT) return openMailClient()
 
     setStatus("sending")
     try {
       const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...fields, message }),
+        body: JSON.stringify({ ...fields, website }),
       })
+      // 503: the server has no SMTP settings yet, so fall back rather than fail
+      if (response.status === 503) return openMailClient()
       if (!response.ok) throw new Error(String(response.status))
       setStatus("sent")
     } catch {
@@ -154,7 +164,7 @@ export function LetterShowpiece() {
   return (
     <AnimatePresence mode="wait" initial={false}>
       {sent ? (
-        <Confirmation key="confirmation" name={fields.name} posted={!CONTACT_ENDPOINT} />
+        <Confirmation key="confirmation" name={fields.name} posted={viaMailClient} />
       ) : (
         <motion.div
           key="sheet"
@@ -163,6 +173,15 @@ export function LetterShowpiece() {
         >
           <LetterDesk>
             <form onSubmit={handleSubmit}>
+              {/* A trap for bots, which fill in every field they find. Moved off
+                  screen rather than display:none, which some bots know to skip. */}
+              <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                <label>
+                  Leave this empty
+                  <input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+                </label>
+              </div>
+
               <Letterhead />
 
               <div

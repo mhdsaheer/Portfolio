@@ -16,8 +16,10 @@ import { useIntroDone } from "@/hooks/use-intro-done"
  * The headline is sized off its own column. "Built, designed" sets 6.17em wide
  * at weight 800 and -0.055em, so 16cqi holds it on one line from tablets up.
  * Phones take it in three lines, the widest "& branded." at 4.34em - 22.5cqi.
+ * Being sized to those exact words, the headline stays here; `intro` is edited
+ * in the admin, under Pages → Work.
  */
-export function WorkHero({ archive }: { archive: string }) {
+export function WorkHero({ archive, intro }: { archive: string; intro: string }) {
   const introDone = useIntroDone()
   const still = useHydratedReducedMotion()
 
@@ -66,8 +68,7 @@ export function WorkHero({ archive }: { archive: string }) {
 
         <motion.div className="flex flex-col items-start gap-6 lg:col-span-4 lg:pb-4" {...rise(0.5)}>
           <p className="max-w-sm text-pretty text-[15px] leading-relaxed text-white/75">
-            Development, UI/UX and branding in one place. The bigger projects are written up as case studies; everything
-            else opens right here.
+            {intro}
           </p>
 
           <a

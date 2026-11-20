@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Responsive website design - Ember Roasters (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;700;800&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: linear-gradient(150deg, #fff7e6 0%, #fff0f6 60%, #f1ecff 100%); background: var(--stage); }
+
+  /*
+   * One site, three screens. Each screen renders the same markup at a real
+   * device width and is scaled down to fit the stage; container queries,
+   * not separate designs, decide how the layout adapts at each width.
+   */
+  .screen { position: absolute; overflow: hidden; background: #fffaf4; }
+  .site { container-type: inline-size; transform-origin: top left; background: #fffaf4; color: #2a1c14; font-family: "Inter", sans-serif; }
+  .site nav { display: flex; align-items: center; gap: 30px; padding: 26px 56px; font-size: 16px; font-weight: 500; color: #6d5a4d; }
+  .site .logo { margin-right: auto; font: 800 26px "Manrope"; letter-spacing: -0.03em; color: #2a1c14; }
+  .site .logo span { color: #e2562c; }
+  .site .cart { padding: 12px 20px; border-radius: 999px; background: #2a1c14; color: #fff; font-weight: 600; }
+  .site .burger { display: none; width: 44px; height: 44px; border-radius: 12px; background: #f3e6da; position: relative; }
+  .site .burger::after { content: ""; position: absolute; left: 13px; right: 13px; top: 15px; height: 2.5px; background: #2a1c14; box-shadow: 0 6px 0 #2a1c14, 0 12px 0 #2a1c14; }
+
+  .site .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; padding: 30px 56px 50px; }
+  .site h1 { font: 800 76px/1 "Manrope"; letter-spacing: -0.045em; }
+  .site h1 em { font-style: normal; color: #e2562c; }
+  .site .hero p { margin-top: 20px; font-size: 19px; line-height: 1.6; color: #6d5a4d; }
+  .site .btn { display: inline-block; margin-top: 26px; padding: 18px 28px; border-radius: 14px; background: #e2562c; color: #fff; font-weight: 700; font-size: 17px; }
+  .site .photo { height: 400px; border-radius: 28px; background: radial-gradient(circle at 70% 30%, #f8c58c, #e2562c 70%); position: relative; overflow: hidden; }
+  .site .photo::before { content: ""; position: absolute; left: 50%; top: 52%; width: 190px; height: 240px; transform: translate(-50%, -50%); border-radius: 30px 30px 22px 22px; background: #2a1c14; box-shadow: 0 30px 40px -20px rgba(0,0,0,0.5); }
+  .site .photo::after { content: "EMBER"; position: absolute; left: 50%; top: 56%; transform: translate(-50%, -50%); padding: 10px 18px; border-radius: 8px; background: #fffaf4; font: 800 20px "Manrope"; letter-spacing: 0.12em; color: #2a1c14; }
+
+  .site h2 { padding: 0 56px; font: 800 32px "Manrope"; letter-spacing: -0.03em; }
+  .site .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 22px 56px 56px; }
+  .site .item { border-radius: 22px; background: #fff; box-shadow: 0 0 0 1px #f0e2d4; overflow: hidden; }
+  .site .item .img { height: 200px; }
+  .site .item div:last-child { padding: 18px 20px; }
+  .site .item b { display: block; font: 700 19px "Manrope"; }
+  .site .item span { display: flex; justify-content: space-between; margin-top: 6px; color: #6d5a4d; font-size: 15px; }
+
+  @container (max-width: 900px) {
+    .site nav { padding: 24px 36px; }
+    .site nav .link { display: none; }
+    .site .burger { display: block; }
+    .site .hero { grid-template-columns: 1fr; padding: 16px 36px 36px; gap: 30px; }
+    .site h1 { font-size: 64px; }
+    .site .photo { height: 330px; }
+    .site h2 { padding: 0 36px; }
+    .site .grid { grid-template-columns: repeat(2, 1fr); padding: 20px 36px; }
+  }
+  @container (max-width: 480px) {
+    .site nav { padding: 20px 22px; }
+    .site .cart { display: none; }
+    .site .hero { padding: 6px 22px 28px; gap: 22px; }
+    .site h1 { font-size: 46px; }
+    .site .hero p { font-size: 17px; }
+    .site .btn { display: block; text-align: center; }
+    .site .photo { height: 260px; border-radius: 22px; }
+    .site h2 { padding: 0 22px; font-size: 26px; }
+    .site .grid { grid-template-columns: 1fr; padding: 18px 22px; }
+  }
+
+  /* Device frames */
+  .monitor { position: absolute; left: 70px; top: 80px; width: 1000px; height: 640px; padding: 18px; border-radius: 22px; background: #1d1e24; box-shadow: 0 50px 80px -40px rgba(32,33,42,0.55); }
+  .monitor .screen { inset: 18px; border-radius: 8px; }
+  .stand { position: absolute; left: 470px; top: 720px; width: 200px; height: 90px; background: linear-gradient(#c9cbd3, #b5b8c2); clip-path: polygon(30% 0, 70% 0, 82% 100%, 18% 100%); }
+  .base { position: absolute; left: 400px; top: 806px; width: 340px; height: 16px; border-radius: 10px; background: #c3c6cf; box-shadow: 0 16px 20px -10px rgba(32,33,42,0.3); }
+  .tablet { position: absolute; left: 960px; top: 260px; width: 400px; height: 560px; padding: 16px; border-radius: 34px; background: #1d1e24; box-shadow: 0 50px 80px -36px rgba(32,33,42,0.6); }
+  .tablet .screen { inset: 16px; border-radius: 20px; }
+  .phone { position: absolute; left: 1290px; top: 420px; width: 230px; height: 470px; padding: 10px; border-radius: 40px; background: #1d1e24; box-shadow: 0 50px 80px -30px rgba(32,33,42,0.65); }
+  .phone .screen { inset: 10px; border-radius: 31px; }
+  .phone .island { position: absolute; left: 50%; top: 18px; width: 64px; height: 18px; margin-left: -32px; border-radius: 12px; background: #1d1e24; z-index: 3; }
+
+  .caption { position: absolute; font: 600 14px "Inter"; color: #20212a; }
+  .caption span { display: block; margin-top: 3px; font-weight: 500; font-size: 13px; color: #6b6e7c; }
+</style>
+</head>
+<body>
+  <template id="site">
+    <div class="site">
+      <nav><span class="logo">ember<span>.</span></span><span class="link">Coffee</span><span class="link">Equipment</span><span class="link">Subscriptions</span><span class="link">Caf&eacute;s</span><span class="cart">Basket (2)</span><span class="burger"></span></nav>
+      <section class="hero">
+        <div><h1>Roasted on Monday. <em>At your door by Wednesday.</em></h1><p>Small-batch coffee from farms we know by name, roasted fresh every week.</p><span class="btn">Shop the coffee</span></div>
+        <div class="photo"></div>
+      </section>
+      <h2>This week&rsquo;s roasts</h2>
+      <div class="grid">
+        <div class="item"><div class="img" style="background:#f8d9bd"></div><div><b>Huila, Colombia</b><span>Caramel &middot; Red apple <b>&pound;11</b></span></div></div>
+        <div class="item"><div class="img" style="background:#e8d1f5"></div><div><b>Guji, Ethiopia</b><span>Jasmine &middot; Peach <b>&pound;13</b></span></div></div>
+        <div class="item"><div class="img" style="background:#cfe8da"></div><div><b>Ember House</b><span>Chocolate &middot; Hazelnut <b>&pound;10</b></span></div></div>
+      </div>
+    </div>
+  </template>
+
+  <div class="monitor"><div class="screen" data-width="1440"></div></div>
+  <div class="stand"></div><div class="base"></div>
+  <div class="tablet"><div class="screen" data-width="768"></div></div>
+  <div class="phone"><span class="island"></span><div class="screen" data-width="390"></div></div>
+
+  <p class="caption" style="left:70px;top:850px">Desktop &middot; 1440px<span>Full navigation, two-column hero, three products per row</span></p>
+  <p class="caption" style="left:960px;top:840px">Tablet &middot; 768px<span>Menu button, stacked hero, two per row</span></p>
+  <p class="caption" style="left:1300px;top:905px">Mobile &middot; 390px<span>One column</span></p>
+
+  <script>
+    // Each screen gets the same site, laid out at its device's real width and scaled to fit
+    const template = document.getElementById("site")
+    for (const screen of document.querySelectorAll(".screen")) {
+      const width = Number(screen.dataset.width)
+      const site = template.content.firstElementChild.cloneNode(true)
+      site.style.width = width + "px"
+      site.style.transform = "scale(" + screen.clientWidth / width + ")"
+      screen.appendChild(site)
+    }
+  </script>
+</body>
+</html>

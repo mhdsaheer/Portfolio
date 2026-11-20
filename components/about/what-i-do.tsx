@@ -3,9 +3,9 @@ import Link from "next/link"
 
 import { Lines } from "@/components/about/lines"
 import { AccentStar } from "@/components/about/accent-star"
+import { AccentText } from "@/components/ui/accent-text"
 import {
   ACCENT,
-  ACCENT_GLOW,
   CTA_GRADIENT,
   CTA_SHADOW,
   FLUID,
@@ -14,34 +14,22 @@ import {
   MUTED,
   SURFACE,
 } from "@/components/about/tokens"
+import type { AboutPage } from "@/lib/page-content"
 
-/**
- * Written as explicit lines so each one can rise from its own mask. Roughly
- * forty characters is what the nine-column measure holds at this size - longer
- * lines wrap and break the stagger into an uneven stack. Keyed, because the list
- * crosses into the client-side `Lines`, and React checks its keys on the way.
- */
-const headingLines = [
-  <Fragment key="hello">
-    Hi, I&apos;m Muhammed &ndash; also just{" "}
-    <em
-      className="font-serif italic font-normal text-[1.06em]"
-      style={{ color: ACCENT, textShadow: ACCENT_GLOW }}
-    >
-      Saheer
-    </em>
-    .
-  </Fragment>,
-  <Fragment key="build">I design and build interfaces that</Fragment>,
-  <Fragment key="perform">stand out and perform in production.</Fragment>,
-]
+/** `content` is edited in the admin, under Pages → About. */
+export function WhatIDo({ content }: { content: AboutPage["whatIDo"] }) {
+  /*
+   * Written as explicit lines so each one can rise from its own mask. Roughly
+   * forty characters is what the nine-column measure holds at this size - longer
+   * lines wrap and break the stagger into an uneven stack. Keyed, because the list
+   * crosses into the client-side `Lines`, and React checks its keys on the way.
+   */
+  const headingLines = content.heading.map((line, index) => (
+    <Fragment key={index}>
+      <AccentText text={line} />
+    </Fragment>
+  ))
 
-const paragraphs = [
-  "With a background in design and real mileage in React and Next.js, I have the knowledge to both make a design that holds together and bring it to life with the right animations.",
-  "I only ship work I would put my own name on, and I keep going until you are completely happy with it. Whatever your vision is, together we get it built and live.",
-]
-
-export function WhatIDo() {
   return (
     <section className="px-[2.5em] pt-[3em] pb-[4em]" style={{ backgroundColor: SURFACE, fontSize: FLUID }}>
       <div className="w-full">
@@ -78,8 +66,8 @@ export function WhatIDo() {
           </div>
 
           <div className="grid grid-cols-1 gap-[1.5em] md:col-span-4 md:grid-cols-2 min-[992px]:col-span-1">
-            {paragraphs.map((copy) => (
-              <p key={copy} className="text-[1.0625em] leading-[1.45]" style={{ color: MUTED }}>
+            {content.paragraphs.map((copy, index) => (
+              <p key={index} className="text-[1.0625em] leading-[1.45]" style={{ color: MUTED }}>
                 <Lines lines={[copy]} />
               </p>
             ))}

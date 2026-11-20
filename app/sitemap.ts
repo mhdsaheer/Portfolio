@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next"
 
-import { caseStudies } from "@/lib/case-studies"
-import { insightUrl, insights, modifiedAt } from "@/lib/insights"
-import { SITE_URL } from "@/lib/site"
+import { imagesOf, insightUrl, modifiedAt } from "@/lib/insights"
+import { getInsights } from "@/lib/insights-data"
+import { getCaseStudies } from "@/lib/projects-data"
+import { SITE_URL, absoluteUrl } from "@/lib/site"
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [insights, caseStudies] = await Promise.all([getInsights(), getCaseStudies()])
+
   /** The index changes whenever an article does. */
   const latestArticle = insights.map(modifiedAt).sort().at(-1)
 
@@ -22,13 +25,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  // Each article lists its cover too, so the art can be found through image search
+  // Each article lists its cover and any example images too, so they can be found through image search
   const articles: MetadataRoute.Sitemap = insights.map((insight) => ({
     url: insightUrl(insight.slug),
     lastModified: modifiedAt(insight),
     changeFrequency: "yearly",
     priority: 0.5,
-    images: [`${SITE_URL}${insight.image}`],
+    images: imagesOf(insight).map(absoluteUrl),
   }))
 
   return [...pages, ...studies, ...articles]

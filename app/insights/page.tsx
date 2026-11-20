@@ -9,52 +9,59 @@ import { AccentStar } from "@/components/about/accent-star"
 import { InsightCover } from "@/components/insights/insight-cover"
 import { COVER_ACTION, COVER_ACTION_ROUND, COVER_LABEL } from "@/components/insights/cover-styles"
 import { NoteTile } from "@/components/insights/note-tile"
-import { AUTHOR, insightUrl, insights, modifiedAt, publishedAt } from "@/lib/insights"
-import { SITE_URL } from "@/lib/site"
+import { AUTHOR, insightUrl, modifiedAt, publishedAt, type Insight } from "@/lib/insights"
+import { getInsights } from "@/lib/insights-data"
+import { SITE_URL, absoluteUrl } from "@/lib/site"
 
 const TITLE = "Insights: UI/UX Design & Front-End Development Articles"
 const DESCRIPTION =
   "Articles on UI/UX design, React, Figma-to-code workflows and the future of front-end development, by Muhammed Saheer, a front-end developer in Kerala, India."
 
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  alternates: { canonical: "/insights" },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const [latest] = await getInsights()
+
+  return {
     title: TITLE,
     description: DESCRIPTION,
-    type: "website",
-    url: "/insights",
-    siteName: AUTHOR.name,
-    images: insights[0] ? [{ url: insights[0].image, alt: insights[0].imageAlt }] : undefined,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-  },
+    alternates: { canonical: "/insights" },
+    openGraph: {
+      title: TITLE,
+      description: DESCRIPTION,
+      type: "website",
+      url: "/insights",
+      siteName: AUTHOR.name,
+      images: latest ? [{ url: latest.image, alt: latest.imageAlt }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: TITLE,
+      description: DESCRIPTION,
+    },
+  }
 }
 
 /** Structured data mirrors the visible list, as the Work page does for its projects. */
-const blogSchema = {
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "@id": `${SITE_URL}/insights#blog`,
-  name: "Insights",
-  description: DESCRIPTION,
-  url: `${SITE_URL}/insights`,
-  inLanguage: "en",
-  author: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: AUTHOR.name, url: `${SITE_URL}${AUTHOR.path}` },
-  blogPost: insights.map((insight) => ({
-    "@type": "BlogPosting",
-    headline: insight.title,
-    description: insight.description,
-    url: insightUrl(insight.slug),
-    image: `${SITE_URL}${insight.image}`,
-    datePublished: publishedAt(insight),
-    dateModified: modifiedAt(insight),
-    author: { "@id": `${SITE_URL}/#person` },
-  })),
+function blogSchema(insights: Insight[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${SITE_URL}/insights#blog`,
+    name: "Insights",
+    description: DESCRIPTION,
+    url: `${SITE_URL}/insights`,
+    inLanguage: "en",
+    author: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: AUTHOR.name, url: `${SITE_URL}${AUTHOR.path}` },
+    blogPost: insights.map((insight) => ({
+      "@type": "BlogPosting",
+      headline: insight.title,
+      description: insight.description,
+      url: insightUrl(insight.slug),
+      image: absoluteUrl(insight.image),
+      datePublished: publishedAt(insight),
+      dateModified: modifiedAt(insight),
+      author: { "@id": `${SITE_URL}/#person` },
+    })),
+  }
 }
 
 /**
@@ -62,7 +69,8 @@ const blogSchema = {
  * full-bleed, its title set large over it - and the rest follow as tiles in
  * the Work page's manner. Each article opens on the same cover.
  */
-export default function InsightsPage() {
+export default async function InsightsPage() {
+  const insights = await getInsights()
   const [latest, ...rest] = insights
 
   return (
@@ -132,7 +140,7 @@ export default function InsightsPage() {
 
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema(insights)).replace(/</g, "\\u003c") }}
       />
     </>
   )

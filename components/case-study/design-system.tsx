@@ -38,7 +38,7 @@ export function DesignSystem({ system, number }: DesignSystemProps) {
     <section className="py-12 md:py-20">
       <div className="max-w-[1280px] mx-auto px-6 md:px-12">
         <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-          {number} {system.label ?? "The design system"}
+          <span className="font-sans">{number}</span> {system.label ?? "The design system"}
         </span>
         <SectionTitle className="mt-4 max-w-4xl text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-balance">
           {system.title}

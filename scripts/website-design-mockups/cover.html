@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cover - Types of website design</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  /* The cover is 16:9; render.mjs captures it at 1600 x 900 */
+  html, body { width: 1600px; height: 900px; }
+  body {
+    background:
+      radial-gradient(900px 600px at 10% 0%, #f1ecff 0%, rgba(241,236,255,0) 70%),
+      radial-gradient(800px 600px at 100% 20%, #ffe9f3 0%, rgba(255,233,243,0) 70%),
+      radial-gradient(900px 700px at 60% 110%, #e3edff 0%, rgba(227,237,255,0) 70%),
+      #fbfbfe;
+  }
+
+  /* All fifteen examples on one tilted sheet, running off every edge */
+  .sheet {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    grid-template-columns: repeat(5, 420px);
+    gap: 30px;
+    transform: translate(-50%, -50%) perspective(3000px) rotateX(34deg) rotateZ(-22deg) scale(1.02);
+  }
+  .sheet img {
+    width: 420px;
+    height: 262.5px;
+    border-radius: 18px;
+    object-fit: cover;
+    box-shadow: 0 0 0 1px rgba(32,33,42,0.06), 0 30px 50px -24px rgba(32,33,42,0.45);
+  }
+  .sheet img:nth-child(odd) { transform: translateY(-18px); }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <img src="../../public/images/insights/types-of-website-design/glassmorphism-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/editorial-magazine-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/neumorphism-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/landing-page-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/grid-based-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/one-page-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/brutalist-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/minimalist-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/ecommerce-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/dark-mode-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/corporate-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/parallax-scrolling-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/portfolio-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/responsive-website-design-example.webp" alt="">
+    <img src="../../public/images/insights/types-of-website-design/asymmetrical-website-design-example.webp" alt="">
+  </div>
+</body>
+</html>

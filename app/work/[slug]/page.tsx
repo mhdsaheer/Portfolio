@@ -11,19 +11,21 @@ import { Reveal } from "@/components/case-study/reveal"
 import { DesignSystem } from "@/components/case-study/design-system"
 import { Gallery } from "@/components/case-study/gallery"
 import { ACCENT } from "@/components/about/tokens"
-import { caseStudies, getCaseStudy, getNextCaseStudy } from "@/lib/case-studies"
+import { nextCaseStudy } from "@/lib/case-studies"
+import { getCaseStudies, getCaseStudy } from "@/lib/projects-data"
 
 type PageProps = {
   params: Promise<{ slug: string }>
 }
 
-export function generateStaticParams() {
-  return caseStudies.map((study) => ({ slug: study.slug }))
+/** Studies added later in the admin render on their first visit and are kept from then on. */
+export async function generateStaticParams() {
+  return (await getCaseStudies()).map((study) => ({ slug: study.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const study = getCaseStudy(slug)
+  const study = await getCaseStudy(slug)
 
   if (!study) {
     return { title: "Case study not found | Muhammed Saheer" }
@@ -43,13 +45,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params
-  const study = getCaseStudy(slug)
+  const study = await getCaseStudy(slug)
 
   if (!study) {
     notFound()
   }
 
-  const next = getNextCaseStudy(study.slug)
+  const next = nextCaseStudy(await getCaseStudies(), study.slug)
   // The design system, where a study has one, takes 03 and pushes the outcome to 04
   const outcomeNumber = study.designSystem ? "04" : "03"
 
@@ -173,7 +175,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20">
               <div className="lg:col-span-4">
                 <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-                  01 The problem
+                  <span className="font-sans">01</span> The problem
                 </span>
                 <SectionTitle className="mt-4 text-3xl md:text-4xl font-semibold tracking-tight text-balance">
                   {study.challenge.title}
@@ -211,7 +213,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-              02 The approach
+              <span className="font-sans">02</span> The approach
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
               How it came together
@@ -222,7 +224,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <Reveal as="li" key={item.step} delay={i * 60} className="border-b border-border">
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-12 py-8 md:py-10 group">
                     <div className="md:col-span-2">
-                      <span className="text-sm font-mono text-muted-foreground transition-colors group-hover:text-accent">
+                      <span className="text-sm tabular-nums text-muted-foreground transition-colors group-hover:text-accent">
                         {item.step}
                       </span>
                     </div>
@@ -254,7 +256,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <section className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-6 md:px-12">
             <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-              {outcomeNumber} The outcome
+              <span className="font-sans">{outcomeNumber}</span> The outcome
             </span>
             <SectionTitle className="mt-4 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
               {study.outcomeHeading ?? "What changed"}

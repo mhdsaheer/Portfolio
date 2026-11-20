@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Glassmorphism website design - Orbit (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: linear-gradient(140deg, #f1ecff 0%, #eaf2ff 100%); background: var(--stage); font-family: "Outfit", sans-serif; }
+  .browser { left: 110px; top: 60px; width: 1380px; height: 880px; }
+  .page { color: #fff; background: #3b2a8c; }
+
+  /* The colourful world behind the glass */
+  .blob { position: absolute; border-radius: 50%; filter: blur(8px); }
+  .b1 { left: -120px; top: -160px; width: 620px; height: 620px; background: radial-gradient(circle at 35% 35%, #f472b6, #c026d3 60%, transparent 72%); }
+  .b2 { right: -140px; top: -80px; width: 640px; height: 640px; background: radial-gradient(circle at 50% 50%, #fb923c, #f43f5e 58%, transparent 72%); }
+  .b3 { left: 360px; bottom: -330px; width: 760px; height: 760px; background: radial-gradient(circle at 50% 40%, #60a5fa, #4263eb 55%, transparent 72%); }
+  .b4 { right: 300px; bottom: -120px; width: 360px; height: 360px; background: radial-gradient(circle, #34d399, #0ea5e9 60%, transparent 72%); }
+  .sphere { position: absolute; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0%, #fbcfe8 18%, #a78bfa 55%, #5b21b6 100%); box-shadow: 0 30px 60px -20px rgba(40,10,90,0.6); }
+
+  .glass { position: absolute; border-radius: 24px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.45); backdrop-filter: blur(22px) saturate(140%); -webkit-backdrop-filter: blur(22px) saturate(140%); box-shadow: 0 24px 50px -24px rgba(20,8,60,0.55), inset 0 1px 0 rgba(255,255,255,0.5); }
+
+  nav.glass { left: 40px; right: 40px; top: 24px; height: 64px; border-radius: 20px; display: flex; align-items: center; gap: 34px; padding: 0 12px 0 26px; font-size: 15px; font-weight: 500; }
+  .logo { display: flex; gap: 10px; align-items: center; margin-right: auto; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .logo i { width: 26px; height: 26px; border-radius: 50%; border: 3px solid #fff; position: relative; }
+  .logo i::after { content: ""; position: absolute; right: -7px; top: -4px; width: 9px; height: 9px; border-radius: 50%; background: #fde047; }
+  .open { padding: 11px 20px; border-radius: 14px; background: #fff; color: #3b2a8c; font-weight: 600; }
+
+  .copy { position: absolute; left: 64px; top: 170px; width: 540px; }
+  .chip { display: inline-flex; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(10px); font-size: 14px; }
+  h1 { margin-top: 22px; font-size: 76px; line-height: 0.98; font-weight: 600; letter-spacing: -0.04em; text-shadow: 0 6px 30px rgba(40,10,90,0.25); }
+  .lede { margin-top: 20px; font-size: 19px; line-height: 1.55; font-weight: 300; color: rgba(255,255,255,0.9); }
+  .ctas { display: flex; gap: 12px; margin-top: 30px; }
+  .ctas span { padding: 16px 26px; border-radius: 16px; font-weight: 600; font-size: 16px; }
+  .ctas .primary { background: #fff; color: #3b2a8c; }
+
+  .balance { left: 690px; top: 140px; width: 380px; padding: 26px; }
+  .balance small { font-size: 14px; color: rgba(255,255,255,0.8); }
+  .balance h2 { margin-top: 6px; font-size: 44px; font-weight: 600; letter-spacing: -0.03em; }
+  .balance h2 span { font-size: 24px; opacity: 0.75; }
+  .up { display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 999px; background: rgba(52,211,153,0.3); font-size: 13px; font-weight: 600; }
+  .balance svg { margin-top: 16px; width: 100%; height: 90px; }
+
+  .card { left: 1000px; top: 330px; width: 320px; height: 196px; padding: 24px; border-radius: 22px; background: linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.08)); }
+  .card .chipcard { width: 44px; height: 32px; border-radius: 7px; background: linear-gradient(135deg, #fde68a, #f59e0b); }
+  .card .num { margin-top: 44px; font-size: 20px; letter-spacing: 0.18em; }
+  .card .row { display: flex; justify-content: space-between; margin-top: 14px; font-size: 13px; opacity: 0.85; }
+
+  .goal { left: 690px; top: 470px; width: 280px; padding: 22px; display: flex; gap: 16px; align-items: center; }
+  .ring { width: 74px; height: 74px; border-radius: 50%; background: conic-gradient(#fff 0 68%, rgba(255,255,255,0.22) 68%); display: grid; place-items: center; }
+  .ring span { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(91,33,182,0.55); font-weight: 600; }
+  .goal b { display: block; font-size: 17px; font-weight: 600; }
+  .goal small { font-size: 13px; opacity: 0.8; }
+
+  .list { left: 1000px; top: 560px; width: 320px; padding: 18px 20px; }
+  .list h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .tx { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.2); font-size: 14px; }
+  .tx i { width: 34px; height: 34px; border-radius: 11px; background: rgba(255,255,255,0.25); }
+  .tx span { flex: 1; }
+  .tx small { display: block; opacity: 0.7; font-size: 12px; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">orbit.money</div></div>
+    <div class="page">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+      <span class="sphere" style="left:600px;top:96px;width:90px;height:90px"></span>
+      <span class="sphere" style="left:1240px;top:250px;width:120px;height:120px"></span>
+      <span class="sphere" style="left:120px;top:640px;width:70px;height:70px"></span>
+
+      <nav class="glass"><span class="logo"><i></i>orbit</span><span>Accounts</span><span>Cards</span><span>Savings</span><span>Pricing</span><span class="open">Open the app</span></nav>
+
+      <div class="copy">
+        <span class="chip">&#10022; Joint accounts are here</span>
+        <h1>Money, in perfect orbit.</h1>
+        <p class="lede">Spend, save and split bills in one calm place, with goals that move as you do.</p>
+        <div class="ctas"><span class="primary">Get started</span><span class="glass" style="position:static">See how it works</span></div>
+      </div>
+
+      <div class="glass balance">
+        <small>Total balance</small>
+        <h2>&pound;24,580<span>.40</span></h2>
+        <span class="up">&#9650; 4.2% this month</span>
+        <svg viewBox="0 0 330 90" preserveAspectRatio="none"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><path d="M0 70 C 40 62, 60 74, 90 58 S 150 30, 190 44 S 260 18, 330 12 L 330 90 L 0 90 Z" fill="url(#a)"/><path d="M0 70 C 40 62, 60 74, 90 58 S 150 30, 190 44 S 260 18, 330 12" fill="none" stroke="#fff" stroke-width="3"/></svg>
+      </div>
+      <div class="glass card"><div class="chipcard"></div><div class="num">&bull;&bull;&bull;&bull; 4821</div><div class="row"><span>ALEX MORGAN</span><span>09/29</span></div></div>
+      <div class="glass goal"><div class="ring"><span>68%</span></div><div><b>Japan trip</b><small>&pound;2,720 of &pound;4,000</small></div></div>
+      <div class="glass list">
+        <h4>Recent</h4>
+        <div class="tx"><i></i><span>Coffee Lab<small>Today, 08:42</small></span>&minus;&pound;3.80</div>
+        <div class="tx"><i></i><span>Salary<small>Yesterday</small></span>+&pound;3,250</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portfolio website design - Mira Okafor (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@1&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { --stage: radial-gradient(circle at 15% 10%, #f8f4ff 0%, #f1ecff 45%, #ffeef6 100%); background: var(--stage); }
+  .browser { left: 110px; top: 78px; width: 1330px; height: 850px; transform: rotate(-1.6deg); }
+  .page { background: #fbfaf6; color: #17161c; font-family: "Bricolage Grotesque", sans-serif; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; font: 500 15px "Inter"; }
+  .logo { font: 800 22px "Bricolage Grotesque"; letter-spacing: -0.03em; }
+  .logo sup { font-size: 12px; margin-left: 2px; }
+  nav ul { display: flex; gap: 34px; list-style: none; color: #4a4954; }
+  .avail { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: #17161c; color: #fff; font-size: 13px; }
+  .avail i { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgba(74,222,128,0.25); }
+
+  .intro { display: grid; grid-template-columns: 1fr 290px; gap: 40px; align-items: end; padding: 20px 56px 0; }
+  h1 { font-size: 90px; line-height: 0.94; font-weight: 800; letter-spacing: -0.055em; }
+  h1 em { font: italic 400 98px/0.9 "Instrument Serif"; letter-spacing: -0.02em; color: #8b5cf6; }
+  h1 .blob { display: inline-block; width: 120px; height: 74px; margin: 0 6px; border-radius: 999px; vertical-align: -6px; background: linear-gradient(120deg, #fb923c, #f472b6); }
+  .bio { font: 400 15px/1.6 "Inter"; color: #5e5d68; }
+  .bio b { display: block; margin-bottom: 10px; font-weight: 600; color: #17161c; }
+  .bio .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .bio .tags span { padding: 5px 10px; border-radius: 999px; border: 1px solid #dedce4; font-size: 12px; color: #17161c; }
+
+  .label { display: flex; justify-content: space-between; margin: 34px 56px 14px; padding-top: 16px; border-top: 1px solid #e6e4ec; font: 500 13px "Inter"; color: #5e5d68; }
+  .work { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 18px; padding: 0 56px; }
+  .project { position: relative; height: 330px; border-radius: 22px; overflow: hidden; }
+  .project .meta { position: absolute; left: 18px; bottom: 16px; right: 18px; display: flex; justify-content: space-between; align-items: end; color: #fff; font: 500 13px "Inter"; }
+  .project .meta b { display: block; font: 700 22px "Bricolage Grotesque"; letter-spacing: -0.02em; }
+  .project .meta span:last-child { padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.22); backdrop-filter: blur(6px); }
+
+  .p1 { background: linear-gradient(150deg, #fb923c, #f97316); }
+  .p1 .phone { position: absolute; width: 150px; height: 300px; border-radius: 28px; background: #fff; box-shadow: 0 30px 40px -20px rgba(120,40,0,0.5); }
+  .p1 .phone::before { content: ""; position: absolute; left: 14px; right: 14px; top: 34px; height: 80px; border-radius: 14px; background: linear-gradient(135deg, #20212a, #4263eb); }
+  .p1 .phone::after { content: ""; position: absolute; left: 14px; right: 14px; top: 128px; height: 140px; background: repeating-linear-gradient(#f1f1f4 0 26px, transparent 26px 34px); border-radius: 8px; }
+  .p2 { background: #8b5cf6; }
+  .p2 .shape { position: absolute; border-radius: 50%; }
+  .p3 { background: #34b779; }
+  .p3 .dash { position: absolute; left: 30px; right: -40px; top: 34px; height: 210px; border-radius: 16px; background: #fff; box-shadow: 0 24px 40px -20px rgba(0,60,30,0.5); }
+  .p3 .dash::before { content: ""; position: absolute; left: 18px; top: 18px; width: 70px; height: 170px; border-radius: 10px; background: #effaf4; }
+  .p3 .dash::after { content: ""; position: absolute; left: 104px; right: 18px; top: 80px; height: 110px; border-radius: 10px; background:
+      linear-gradient(to top, #34b779 0 40%, transparent 40%) 0 100% / 18px 100% no-repeat,
+      linear-gradient(to top, #8fe0b8 0 70%, transparent 70%) 28px 100% / 18px 100% no-repeat,
+      linear-gradient(to top, #34b779 0 55%, transparent 55%) 56px 100% / 18px 100% no-repeat,
+      linear-gradient(to top, #8fe0b8 0 85%, transparent 85%) 84px 100% / 18px 100% no-repeat,
+      #f7fbf9; }
+
+  .cursor { position: absolute; display: flex; align-items: flex-start; font: 600 13px "Inter"; }
+  .cursor svg { width: 22px; height: 22px; }
+  .cursor span { margin: 16px 0 0 -4px; padding: 5px 10px; border-radius: 999px 999px 999px 4px; color: #fff; }
+  .sticker { right: 70px; top: 470px; width: 150px; height: 150px; border-radius: 50%; background: #fde047; transform: rotate(12deg); display: grid; place-items: center; text-align: center; font: 800 19px/1.05 "Bricolage Grotesque"; color: #17161c; }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">miraokafor.design</div></div>
+    <div class="page">
+      <nav>
+        <span class="logo">mira okafor<sup>&copy;</sup></span>
+        <ul><li>Work</li><li>About</li><li>Journal</li><li>Contact</li></ul>
+        <span class="avail"><i></i>Available from March</span>
+      </nav>
+
+      <section class="intro">
+        <h1>Product designer<br>making <span class="blob"></span> calm<br>interfaces for <em>busy people.</em></h1>
+        <p class="bio"><b>Hi, I&rsquo;m Mira.</b>I design apps and websites for fintech, health and education teams, from first sketch to shipped product.<span class="tags"><span>UX research</span><span>UI design</span><span>Design systems</span><span>Prototyping</span></span></p>
+      </section>
+
+      <div class="label"><span>Selected work (2023&ndash;2026)</span><span>View all 12 projects &rarr;</span></div>
+      <section class="work">
+        <div class="project p1"><div class="phone" style="left:60px;top:40px;transform:rotate(-8deg)"></div><div class="phone" style="left:200px;top:70px;transform:rotate(6deg)"></div><div class="meta"><span><b>Fernway</b>Banking app</span><span>2026</span></div></div>
+        <div class="project p2"><span class="shape" style="width:220px;height:220px;left:-40px;top:-30px;background:#f472b6"></span><span class="shape" style="width:160px;height:160px;right:-20px;top:70px;background:#fde047;border-radius:30px;transform:rotate(18deg)"></span><span class="shape" style="width:110px;height:110px;left:90px;top:130px;background:#20212a"></span><div class="meta"><span><b>Sola</b>Brand &amp; website</span><span>2025</span></div></div>
+        <div class="project p3"><div class="dash"></div><div class="meta"><span><b>Tidal Health</b>Clinic dashboard</span><span>2024</span></div></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="float sticker">Case<br>studies<br>inside &darr;</div>
+  <div class="cursor" style="left:1150px;top:262px"><svg viewBox="0 0 24 24"><path d="M3 2 L20 11 L12 13 L9 21 Z" fill="#8b5cf6" stroke="#fff" stroke-width="1.5"/></svg><span style="background:#8b5cf6">Mira</span></div>
+  <div class="cursor" style="left:520px;top:560px"><svg viewBox="0 0 24 24"><path d="M3 2 L20 11 L12 13 L9 21 Z" fill="#fb923c" stroke="#fff" stroke-width="1.5"/></svg><span style="background:#fb923c">Client</span></div>
+</body>
+</html>

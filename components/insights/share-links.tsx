@@ -1,8 +1,19 @@
 import { CopyButton } from "@/components/insights/copy-button"
 import { cn } from "@/lib/utils"
 
-const PILL =
-  "inline-flex items-center rounded-full border border-white/20 px-3 py-1.5 font-mono text-xs text-white/80 transition-colors hover:border-white/50 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+/** The pills on the site's dark pages, and on the light guide layout. */
+const TONES = {
+  dark: {
+    pill: "inline-flex items-center rounded-full border border-white/20 px-3 py-1.5 font-mono text-xs text-white/80 transition-colors hover:border-white/50 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+    label: "text-white/75",
+    copy: "border border-white/20 px-3 hover:border-white/50",
+  },
+  light: {
+    pill: "inline-flex items-center rounded-full border border-[#20212A]/15 bg-white px-3 py-1.5 font-mono text-xs text-[#3F4150] transition-colors hover:border-[#4263EB] hover:bg-[#EAF2FF] hover:text-[#20212A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4263EB]",
+    label: "text-[#5F6373]",
+    copy: "border border-[#20212A]/15 bg-white px-3 text-[#3F4150] hover:border-[#4263EB] hover:bg-[#EAF2FF] hover:text-[#20212A] focus-visible:outline-[#4263EB]",
+  },
+}
 
 /**
  * Plain share links - no third-party scripts, nothing loaded until a reader
@@ -18,6 +29,7 @@ export function ShareLinks({
   title,
   label = "Share this article",
   className,
+  tone = "dark",
 }: {
   /** Names the group; unique per page. */
   id: string
@@ -25,7 +37,9 @@ export function ShareLinks({
   title: string
   label?: string
   className?: string
+  tone?: keyof typeof TONES
 }) {
+  const style = TONES[tone]
   const link = encodeURIComponent(url)
   const text = encodeURIComponent(title)
 
@@ -37,13 +51,13 @@ export function ShareLinks({
 
   return (
     <div role="group" aria-labelledby={id} className={cn("flex flex-col gap-3", className)}>
-      <p id={id} className="font-mono text-xs uppercase tracking-[0.18em] text-white/75">
+      <p id={id} className={cn("font-mono text-xs uppercase tracking-[0.18em]", style.label)}>
         {label}
       </p>
       <ul className="flex flex-wrap gap-2">
         {targets.map((target) => (
           <li key={target.name}>
-            <a href={target.href} target="_blank" rel="noopener noreferrer" className={PILL}>
+            <a href={target.href} target="_blank" rel="noopener noreferrer" className={style.pill}>
               <span className="sr-only">Share on </span>
               {target.name}
               <span className="sr-only"> (opens in a new tab)</span>
@@ -51,17 +65,12 @@ export function ShareLinks({
           </li>
         ))}
         <li>
-          <a href={`mailto:?subject=${text}&body=${link}`} className={PILL}>
+          <a href={`mailto:?subject=${text}&body=${link}`} className={style.pill}>
             <span className="sr-only">Share by </span>Email
           </a>
         </li>
         <li>
-          <CopyButton
-            text={url}
-            label="Copy link"
-            copiedLabel="Link copied"
-            className="border border-white/20 px-3 hover:border-white/50"
-          />
+          <CopyButton text={url} label="Copy link" copiedLabel="Link copied" className={style.copy} />
         </li>
       </ul>
     </div>

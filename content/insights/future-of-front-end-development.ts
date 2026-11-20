@@ -1,6 +1,6 @@
-import { code, h2, ol, p, quote, ul, type InsightSource } from "@/lib/insight-content"
+import { code, h2, ol, p, quote, ul, type InsightFile } from "@/lib/insight-content"
 
-export const article: InsightSource = {
+export const article: InsightFile = {
   slug: "future-of-front-end-development",
   title: "The Future of Front-End Development: AI, Frameworks and the Developer’s Role",
   seoTitle: "The Future of Front-End Development in the Age of AI",

@@ -12,7 +12,7 @@ export default function InsightNotFound() {
       <main className="min-h-[70vh] flex items-center">
         <div className="max-w-[1280px] mx-auto px-6 md:px-12 py-32 text-center">
           <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-            404 // Article
+            <span className="font-sans">404</span> // Article
           </span>
           <h1 className="mt-5 text-4xl md:text-6xl font-semibold tracking-tight text-balance">
             This one isn&apos;t written yet

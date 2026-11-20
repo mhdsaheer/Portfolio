@@ -3,13 +3,9 @@ import type { Metadata, Viewport } from "next"
 import { Inter_Tight, Playfair_Display, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { MagneticCursor } from "@/components/ui/magnetic-cursor"
-import { IntroLoader } from "@/components/ui/intro-loader"
-import { UnicornBackground } from "@/components/ui/unicorn-background"
+import { SiteChrome } from "@/components/site-chrome"
 import { SITE_URL } from "@/lib/site"
 import "./globals.css"
-
-import { SmoothScroll } from "@/components/smooth-scroll"
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -71,14 +67,9 @@ export default function RootLayout({
         <link rel="preload" href="/unicorn/scene.json" as="fetch" crossOrigin="anonymous" />
       </head>
       <body className={`${interTight.className} ${playfairDisplay.variable} ${geistMono.variable} font-sans antialiased`}>
-        <SmoothScroll>
-          <IntroLoader />
-          <UnicornBackground />
-          <MagneticCursor />
-          {children}
-          <Analytics />
-          <SpeedInsights />
-        </SmoothScroll>
+        <SiteChrome>{children}</SiteChrome>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

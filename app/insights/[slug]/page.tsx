@@ -6,9 +6,9 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Reveal } from "@/components/case-study/reveal"
+import { GuideArticle } from "@/components/guide/guide-article"
 import { ArticleBody } from "@/components/insights/article-body"
 import { ArticleFaq } from "@/components/insights/article-faq"
-import { ArticlePager } from "@/components/insights/article-pager"
 import { ArticleToc, ArticleTocDisclosure } from "@/components/insights/article-toc"
 import { AuthorByline, AuthorCard } from "@/components/insights/author"
 import { Breadcrumbs } from "@/components/insights/breadcrumbs"
@@ -18,17 +18,17 @@ import { InsightCover } from "@/components/insights/insight-cover"
 import { ShareLinks } from "@/components/insights/share-links"
 import {
   AUTHOR,
-  getAdjacentInsights,
-  getInsight,
   getRelatedInsights,
   insightPath,
   insightUrl,
-  insights,
   modifiedAt,
   publishedAt,
   type Insight,
 } from "@/lib/insights"
-import { SITE_URL } from "@/lib/site"
+import { getInsight, getInsights } from "@/lib/insights-data"
+import type { Profile } from "@/lib/settings-content"
+import { getProfile } from "@/lib/settings-data"
+import { SITE_URL, absoluteUrl } from "@/lib/site"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -41,13 +41,14 @@ function documentTitle(insight: Insight) {
   return insight.seoTitle.length + BRAND.length <= 60 ? insight.seoTitle + BRAND : insight.seoTitle
 }
 
-export function generateStaticParams() {
-  return insights.map((insight) => ({ slug: insight.slug }))
+/** Articles added later in the admin render on their first visit and are kept from then on. */
+export async function generateStaticParams() {
+  return (await getInsights()).map((insight) => ({ slug: insight.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const insight = getInsight(slug)
+  const insight = await getInsight(slug)
 
   if (!insight) {
     return { title: "Article not found | Muhammed Saheer", robots: { index: false } }
@@ -97,7 +98,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * The FAQ is deliberately left out of the markup. Google retired FAQ rich
  * results in May 2026, so the questions stay on the page for readers only.
  */
-function structuredData(insight: Insight) {
+function structuredData(insight: Insight, portrait: Profile["portrait"]) {
   const url = insightUrl(insight.slug)
   const personId = `${SITE_URL}/#person`
   const authorUrl = `${SITE_URL}${AUTHOR.path}`
@@ -110,7 +111,7 @@ function structuredData(insight: Insight) {
         "@id": `${url}#article`,
         headline: insight.title,
         description: insight.description,
-        image: [insight.image, ...(insight.imageCrops ?? [])].map((path) => `${SITE_URL}${path}`),
+        image: [insight.image, ...(insight.imageCrops ?? [])].map(absoluteUrl),
         datePublished: publishedAt(insight),
         dateModified: modifiedAt(insight),
         author: { "@type": "Person", "@id": personId, name: AUTHOR.name, url: authorUrl },
@@ -133,7 +134,7 @@ function structuredData(insight: Insight) {
         "@id": personId,
         name: AUTHOR.name,
         url: authorUrl,
-        image: `${SITE_URL}${AUTHOR.image}`,
+        image: absoluteUrl(portrait.src),
         jobTitle: AUTHOR.jobTitle,
         sameAs: AUTHOR.profiles.map((profile) => profile.href),
       },
@@ -151,15 +152,35 @@ function structuredData(insight: Insight) {
 
 export default async function InsightPage({ params }: PageProps) {
   const { slug } = await params
-  const insight = getInsight(slug)
+  const insight = await getInsight(slug)
 
   if (!insight) {
     notFound()
   }
 
   const url = insightUrl(insight.slug)
-  const { previous, next } = getAdjacentInsights(insight.slug)
-  const related = getRelatedInsights(insight)
+  const [insights, { portrait }] = await Promise.all([getInsights(), getProfile()])
+  const related = getRelatedInsights(insight, insights)
+
+  // `<` escaped so nothing in the data can close the script tag early
+  const jsonLd = (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(insight, portrait)).replace(/</g, "\\u003c") }}
+    />
+  )
+
+  // Visual guides read on their own light layout; the metadata and structured data are the same
+  if (insight.layout === "guide") {
+    return (
+      <>
+        <Header />
+        <GuideArticle insight={insight} url={url} related={related} portrait={portrait} />
+        <Footer />
+        {jsonLd}
+      </>
+    )
+  }
 
   return (
     <>
@@ -211,7 +232,7 @@ export default async function InsightPage({ params }: PageProps) {
                 {/* About 70 characters a line: seven columns of twelve, eight below xl */}
                 <div className="min-w-0 lg:col-span-8 lg:col-start-5 xl:col-span-7">
                   <div className="flex flex-wrap items-end justify-between gap-6 border-b border-white/15 pb-8">
-                    <AuthorByline />
+                    <AuthorByline portrait={portrait} />
                     <ShareLinks
                       id="share-top"
                       url={url}
@@ -270,7 +291,7 @@ export default async function InsightPage({ params }: PageProps) {
                     <ShareLinks id="share-end" url={url} title={insight.title} />
                   </div>
 
-                  <AuthorCard />
+                  <AuthorCard portrait={portrait} />
                 </div>
               </div>
             </div>
@@ -278,8 +299,6 @@ export default async function InsightPage({ params }: PageProps) {
         </article>
 
         <div className="mx-auto max-w-[1280px] px-6 pb-20 md:px-12 md:pb-28">
-          <ArticlePager previous={previous} next={next} />
-
           {related.length > 0 && (
             <section aria-labelledby="related-heading" className="mt-16 md:mt-24">
               <Reveal className="mb-8 flex flex-wrap items-end justify-between gap-6 md:mb-10">
@@ -309,11 +328,7 @@ export default async function InsightPage({ params }: PageProps) {
 
       <Footer />
 
-      {/* `<` escaped so nothing in the data can close the script tag early */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(insight)).replace(/</g, "\\u003c") }}
-      />
+      {jsonLd}
     </>
   )
 }

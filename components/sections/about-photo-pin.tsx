@@ -5,12 +5,15 @@ import Image from "next/image"
 import { motion, useMotionTemplate, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion"
 
 import { AboutFacts, AboutIntro } from "@/components/sections/about-me"
+import type { HomePage } from "@/lib/page-content"
+import type { Profile } from "@/lib/settings-content"
 
 /**
  * The photograph pins to the viewport while two beats arrive in sequence:
  * the intro on the dark left edge, then the facts over the lower right.
+ * `photo` is set in the admin, under Photo & resume; `intro` under Pages → Home.
  */
-export function AboutPhotoPin() {
+export function AboutPhotoPin({ photo, intro }: { photo: Profile["photo"]; intro: HomePage["intro"] }) {
   const sectionRef = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
 
@@ -79,8 +82,8 @@ export function AboutPhotoPin() {
         {/* Photograph */}
         <motion.div className="absolute inset-0" style={reduceMotion ? undefined : { scale: imageScale }}>
             <Image
-              src="/images/designer.png"
-              alt="Designer workspace"
+              src={photo.src}
+              alt={photo.alt}
               fill
               priority
               sizes="100vw"
@@ -115,7 +118,7 @@ export function AboutPhotoPin() {
             className="absolute left-6 md:left-12 top-[14vh] w-full max-w-[32rem] xl:max-w-[38rem] pointer-events-none"
             style={introStyle}
           >
-            <AboutIntro />
+            <AboutIntro intro={intro} />
           </motion.div>
 
           {/* Beat two, lower right */}
@@ -123,7 +126,7 @@ export function AboutPhotoPin() {
             className="absolute right-6 md:right-12 bottom-[12vh] w-full max-w-[26rem] xl:max-w-[30rem]"
             style={factsStyle}
           >
-            <AboutFacts active={reduceMotion ? true : factsIn} />
+            <AboutFacts intro={intro} active={reduceMotion ? true : factsIn} />
           </motion.div>
         </div>
       </motion.div>

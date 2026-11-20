@@ -5,8 +5,14 @@ const removedInsights = [
   "designing-human-ai-interactions",
 ]
 
+/** Images uploaded in the admin are served from this Cloudinary account only. */
+const cloudinaryCloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: cloudinaryCloud ? [new URL(`https://res.cloudinary.com/${cloudinaryCloud}/image/upload/**`)] : [],
+  },
   redirects() {
     return removedInsights.map((slug) => ({
       source: `/insights/${slug}`,

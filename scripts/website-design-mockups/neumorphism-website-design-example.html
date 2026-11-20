@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Neumorphism website design - Haven (fictional)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=block" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  :root { --bg: #e6eaf0; --dark: #c3c9d4; --light: #ffffff; --ink: #3c4456; --muted: #8890a1; --accent: #fb923c; }
+  body { --stage: #eef1f5; background: var(--stage); font-family: "Nunito", sans-serif; color: var(--ink); }
+  .browser { left: 70px; top: 70px; width: 1150px; height: 860px; }
+  .page { background: var(--bg); }
+
+  /* The two shadows that make the style: light from the top left, dark to the bottom right */
+  .raised { background: var(--bg); box-shadow: 9px 9px 18px var(--dark), -9px -9px 18px var(--light); }
+  .inset { background: var(--bg); box-shadow: inset 6px 6px 12px var(--dark), inset -6px -6px 12px var(--light); }
+
+  nav { display: flex; align-items: center; gap: 26px; padding: 30px 46px; }
+  .logo { padding: 12px 22px; border-radius: 16px; font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
+  .tabs { display: flex; gap: 6px; padding: 7px; border-radius: 18px; margin-left: auto; font-weight: 700; font-size: 14px; color: var(--muted); }
+  .tabs span { padding: 10px 18px; border-radius: 13px; }
+  .tabs span.on { color: var(--ink); }
+  .avatar { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; }
+
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; padding: 10px 46px; }
+  .dial-wrap { display: grid; place-items: center; height: 610px; border-radius: 34px; position: relative; }
+  .dial-wrap h3 { position: absolute; left: 30px; top: 26px; font-size: 18px; font-weight: 800; }
+  .dial-wrap h3 small { display: block; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .dial { position: relative; width: 340px; height: 340px; border-radius: 50%; display: grid; place-items: center; }
+  .track { position: absolute; inset: 26px; border-radius: 50%; }
+  .arc { position: absolute; inset: 26px; border-radius: 50%; background: conic-gradient(from 210deg, #fbbf24, var(--accent) 120deg, #f472b6 210deg, transparent 210deg); -webkit-mask: radial-gradient(circle, transparent 118px, #000 119px); mask: radial-gradient(circle, transparent 118px, #000 119px); }
+  .knob { position: absolute; width: 230px; height: 230px; border-radius: 50%; display: grid; place-items: center; text-align: center; }
+  .knob b { display: block; font-size: 64px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+  .knob small { font-size: 14px; font-weight: 700; color: var(--muted); }
+  .controls { position: absolute; bottom: 36px; display: flex; gap: 120px; }
+  .round { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; font-size: 28px; font-weight: 600; color: var(--ink); }
+
+  .side h3 { font-size: 18px; font-weight: 800; margin: 8px 0 18px; }
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .mode { padding: 18px 10px; border-radius: 20px; text-align: center; font-weight: 800; font-size: 15px; }
+  .mode i { display: block; width: 26px; height: 26px; margin: 0 auto 8px; border-radius: 50%; border: 3px solid currentColor; }
+  .mode.inset { color: var(--accent); }
+  .room { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding: 20px 22px; border-radius: 22px; font-weight: 800; font-size: 16px; }
+  .room small { display: block; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .toggle { position: relative; width: 66px; height: 34px; border-radius: 999px; }
+  .toggle i { position: absolute; top: 4px; left: 4px; width: 26px; height: 26px; border-radius: 50%; background: var(--bg); box-shadow: 3px 3px 6px var(--dark), -3px -3px 6px var(--light); }
+  .toggle.on i { left: 36px; background: var(--accent); box-shadow: 3px 3px 6px rgba(200,100,30,0.5), -2px -2px 5px rgba(255,255,255,0.7); }
+  .slider { margin-top: 18px; padding: 20px 22px; border-radius: 22px; font-weight: 800; }
+  .slider .row { display: flex; justify-content: space-between; font-size: 16px; }
+  .slider .row small { font-size: 14px; color: var(--muted); }
+  .rail { position: relative; height: 16px; margin-top: 16px; border-radius: 999px; }
+  .rail::before { content: ""; position: absolute; left: 3px; top: 3px; bottom: 3px; width: 68%; border-radius: 999px; background: linear-gradient(90deg, #fbbf24, var(--accent)); }
+  .rail i { position: absolute; left: calc(68% - 14px); top: -7px; width: 30px; height: 30px; border-radius: 50%; background: var(--bg); box-shadow: 4px 4px 8px var(--dark), -4px -4px 8px var(--light); }
+
+  /* Notes on the stage, outside the page */
+  .note { position: absolute; left: 1262px; width: 290px; font: 500 15px/1.45 "Inter"; color: #4b5162; }
+  .note b { display: block; margin-bottom: 6px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #20212a; }
+  .swatch { width: 120px; height: 66px; margin-bottom: 16px; border-radius: 18px; background: #e6eaf0; }
+  .swatch.up { box-shadow: 9px 9px 18px #c3c9d4, -9px -9px 18px #fff; }
+  .swatch.down { box-shadow: inset 6px 6px 12px #c3c9d4, inset -6px -6px 12px #fff; }
+  .line { position: absolute; height: 1.5px; background: repeating-linear-gradient(90deg, #8890a1 0 6px, transparent 6px 11px); }
+</style>
+</head>
+<body>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">haven.home/living-room</div></div>
+    <div class="page">
+      <nav>
+        <span class="logo raised">haven</span>
+        <span class="tabs inset"><span class="on raised">Overview</span><span>Rooms</span><span>Energy</span><span>Settings</span></span>
+        <span class="avatar raised">AM</span>
+      </nav>
+
+      <div class="main">
+        <div class="dial-wrap raised">
+          <h3>Living room<small>Heating &middot; Comfort mode</small></h3>
+          <div class="dial raised">
+            <div class="track inset"></div>
+            <div class="arc"></div>
+            <div class="knob raised"><span><b>21.5&deg;</b><small>Heating to 22&deg;</small></span></div>
+          </div>
+          <div class="controls"><span class="round raised">&minus;</span><span class="round raised">+</span></div>
+        </div>
+
+        <div class="side">
+          <h3>Mode</h3>
+          <div class="modes"><span class="mode inset"><i></i>Eco</span><span class="mode raised"><i></i>Comfort</span><span class="mode raised"><i></i>Away</span></div>
+          <div class="room raised"><span>Ceiling lights<small>3 bulbs &middot; Warm white</small></span><span class="toggle inset on"><i></i></span></div>
+          <div class="room raised"><span>Floor lamp<small>Off since 18:20</small></span><span class="toggle inset"><i></i></span></div>
+          <div class="slider raised"><div class="row"><span>Brightness</span><small>68%</small></div><div class="rail inset"><i></i></div></div>
+          <div class="room raised"><span>Air purifier<small>Quiet &middot; Good air</small></span><span class="toggle inset on"><i></i></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note" style="top:230px"><div class="swatch up"></div><b>Raised</b>A light shadow up and to the left, a dark one down and to the right.</div>
+  <div class="note" style="top:520px"><div class="swatch down"></div><b>Inset</b>The same two shadows, turned inwards. Same colour as the background throughout.</div>
+</body>
+</html>

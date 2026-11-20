@@ -12,7 +12,7 @@ export default function CaseStudyNotFound() {
       <main className="min-h-[70vh] flex items-center">
         <div className="max-w-[1280px] mx-auto px-6 md:px-12 py-32 text-center">
           <span className="text-[11px] font-mono tracking-tight" style={{ color: ACCENT }}>
-            404 // Case study
+            <span className="font-sans">404</span> // Case study
           </span>
           <h1 className="mt-5 text-4xl md:text-6xl font-semibold tracking-tight text-balance">
             This case study has moved on

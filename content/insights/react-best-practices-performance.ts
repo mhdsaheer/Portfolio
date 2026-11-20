@@ -1,6 +1,6 @@
-import { code, h2, h3, ol, p, quote, ul, type InsightSource } from "@/lib/insight-content"
+import { code, h2, h3, ol, p, quote, ul, type InsightFile } from "@/lib/insight-content"
 
-export const article: InsightSource = {
+export const article: InsightFile = {
   slug: "react-best-practices-performance",
   title: "React Best Practices for Performance and User Experience",
   description:
