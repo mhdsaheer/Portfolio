@@ -327,7 +327,7 @@ export function MessageBanner({
 /** Pinned to the foot of the window, so saving is always one click away. */
 export function SaveBar({ saving, onSave, note, label }: { saving: boolean; onSave: () => void; note: string; label: string }) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-neutral-200 bg-white/95 backdrop-blur">
+    <div className="safe-x safe-b fixed inset-x-0 bottom-0 z-30 border-t border-neutral-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
         <span className="text-sm text-neutral-500">{note}</span>
         <button type="button" className={BUTTON_PRIMARY} disabled={saving} onClick={onSave}>

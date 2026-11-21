@@ -52,6 +52,10 @@ export const viewport: Viewport = {
   themeColor: "#3a5f87",
   width: "device-width",
   initialScale: 1,
+  // Run the page to the screen's bottom edge, under the gesture bar, so the
+  // background reaches it too; without this, Chrome draws a flat "chin" there.
+  // globals.css keeps the words clear of the bar (--safe-bottom).
+  viewportFit: "cover",
 }
 
 export default function RootLayout({

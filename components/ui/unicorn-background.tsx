@@ -98,11 +98,10 @@ export function UnicornBackground() {
     <div
       id={ELEMENT_ID}
       data-us-project={PROJECT_ID}
+      // Placed and sized in globals.css: on phones the library never redraws on
+      // resize, so the box has to be as tall as the viewport ever gets
+      className="mesh-canvas"
       style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: -1,
-        pointerEvents: "none",
         opacity: isReady ? 1 : 0,
         transition: "opacity 600ms ease-out",
       }}

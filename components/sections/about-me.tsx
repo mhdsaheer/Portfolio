@@ -1,11 +1,13 @@
 import type React from "react"
 
+import Image from "next/image"
 import { Download } from "lucide-react"
 
 import { ACCENT } from "@/components/about/tokens"
 import { AccentText } from "@/components/ui/accent-text"
 import { AVAILABILITY, LOCATION, RESUME_FILENAME, RESUME_PATH } from "@/lib/contact"
 import type { HomePage } from "@/lib/page-content"
+import type { Profile } from "@/lib/settings-content"
 import { cn } from "@/lib/utils"
 
 /** Edited in the admin, under Pages → Home. */
@@ -130,12 +132,41 @@ function Rule({ active, delay, atBottom = false }: { active: boolean; delay: num
   )
 }
 
-/** Both beats stacked, for viewports too narrow to pin the photograph. */
-export function AboutMe({ intro }: { intro: Intro }) {
+// Only the last stretch goes see-through, and the scrim has darkened it by then,
+// so the page's bright background can't wash over the photograph
+const FADE_OUT = "linear-gradient(to bottom, #000 72%, transparent 100%)"
+
+/**
+ * Both beats stacked under the photograph, for viewports too narrow to pin it.
+ * `photo` is set in the admin, under Photo & resume.
+ */
+export function AboutMe({ photo, intro }: { photo: Profile["photo"]; intro: Intro }) {
   return (
     <section id="about-me" className="lg:hidden py-16 md:py-24">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-12">
-        <div className="max-w-[42rem]">
+      {/* Full-bleed like the pinned frame, centred like it too, and fading into
+          the page at its foot. The same `sizes` as the pinned image, so the
+          browser reuses the copy that one preloads rather than fetching another */}
+      <div
+        className="relative w-full aspect-[4/5] sm:aspect-[4/3] md:aspect-[16/10]"
+        style={{ maskImage: FADE_OUT, WebkitMaskImage: FADE_OUT }}
+      >
+        <Image src={photo.src} alt={photo.alt} fill sizes="100vw" className="object-cover object-center" />
+
+        {/* Darkens the foot of the frame, where the intro sits over it */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(10,18,28,0.95) 0%, rgba(10,18,28,0.75) 28%, rgba(10,18,28,0.3) 48%, rgba(10,18,28,0) 65%)",
+          }}
+        />
+      </div>
+
+      {/* Pulled up over the faded foot of the photograph. Relative, so it paints
+          above the frame rather than under it */}
+      <div className="relative max-w-[1280px] mx-auto px-6 md:px-12 -mt-20 md:-mt-28">
+        <div className="max-w-[42rem]" style={{ textShadow: "0 2px 18px rgba(8, 14, 22, 0.75)" }}>
           <AboutIntro intro={intro} />
           <div className="mt-8">
             <AboutFacts intro={intro} />

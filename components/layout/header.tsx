@@ -182,7 +182,7 @@ export function Header() {
 
   return (
     <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-      <header className="fixed top-0 left-0 right-0 z-50">
+      <header className="safe-x fixed top-0 left-0 right-0 z-50">
         <motion.div
           className="flex justify-center px-4 md:px-6"
           animate={{ y: hidden ? -110 : 0, opacity: hidden ? 0 : 1 }}
@@ -280,7 +280,7 @@ export function Header() {
         <Dialog.Content
           aria-describedby={undefined}
           onCloseAutoFocus={handleDrawerClosed}
-          className="fixed inset-0 z-50 bg-background outline-none"
+          className="safe-x safe-b fixed inset-0 z-50 bg-background outline-none"
         >
           <Dialog.Title className="sr-only">Menu</Dialog.Title>
           <div className="flex flex-col h-full p-6">

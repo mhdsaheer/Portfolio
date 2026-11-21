@@ -108,7 +108,7 @@ export function FileViewer({
             if (event.key === "ArrowRight") step(1)
             if (event.key === "ArrowLeft") step(-1)
           }}
-          className="fixed inset-0 z-[61] flex flex-col outline-none animation-duration-300 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95"
+          className="safe-x safe-b fixed inset-0 z-[61] flex flex-col outline-none animation-duration-300 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:zoom-in-95"
         >
           {file && picture && (
             <>

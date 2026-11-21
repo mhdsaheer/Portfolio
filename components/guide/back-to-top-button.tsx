@@ -53,7 +53,7 @@ export function BackToTopButton({ targetId }: { targetId: string }) {
       // Out of the tab order and hidden from assistive technology until it appears
       inert={!shown}
       className={cn(
-        "fixed bottom-5 right-5 z-40 grid size-12 place-items-center rounded-full border border-[#20212A]/10 bg-white text-[#20212A] shadow-[0_14px_34px_-14px_rgba(32,33,42,0.45)] transition-[opacity,transform,background-color,color] duration-300 hover:bg-[#20212A] hover:text-white motion-reduce:transition-none md:bottom-8 md:right-8",
+        "fixed bottom-[calc(1.25rem+var(--safe-bottom))] right-[calc(1.25rem+env(safe-area-inset-right,0px))] z-40 grid size-12 place-items-center rounded-full border border-[#20212A]/10 bg-white text-[#20212A] shadow-[0_14px_34px_-14px_rgba(32,33,42,0.45)] transition-[opacity,transform,background-color,color] duration-300 hover:bg-[#20212A] hover:text-white motion-reduce:transition-none md:bottom-[calc(2rem+var(--safe-bottom))] md:right-[calc(2rem+env(safe-area-inset-right,0px))]",
         FOCUS,
         shown ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0",
       )}

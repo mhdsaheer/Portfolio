@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
-import { AnimatePresence, motion, useMotionTemplate, useMotionValue } from "framer-motion"
+import { AnimatePresence, motion, useMotionValue } from "framer-motion"
 
 import { INTRO_DONE_EVENT } from "@/hooks/use-intro-done"
 
@@ -52,7 +52,6 @@ export function IntroLoader() {
   const [isOpen, setIsOpen] = useState(true)
   const [phase, setPhase] = useState<Phase>("loading")
   const progress = useMotionValue(0)
-  const barWidth = useMotionTemplate`${progress}%`
   const skipped = useRef(false)
 
   // Repeat visits in the same tab skip the curtain entirely, before first paint
@@ -87,7 +86,7 @@ export function IntroLoader() {
     }
   }, [isOpen])
 
-  // Drive the hairline from real loading progress, capped by time either way
+  // Hold the sliver until the fonts are in, capped by time either way
   useEffect(() => {
     if (!isOpen || skipped.current || phase !== "loading") return
 
@@ -171,18 +170,6 @@ export function IntroLoader() {
             <div className="intro-grain absolute inset-0" />
           </motion.div>
 
-          {/* Hairline, drawn the way the reference draws its rules */}
-          <motion.div
-            className="absolute inset-x-0 bottom-0 px-6 md:px-12 pb-8 md:pb-10"
-            animate={{ opacity: phase === "loading" ? 1 : 0 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-          >
-            <div className="max-w-[1280px] mx-auto">
-              <div className="h-px w-full bg-neutral-900/15">
-                <motion.div className="h-full bg-neutral-900/70" style={{ width: barWidth }} />
-              </div>
-            </div>
-          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

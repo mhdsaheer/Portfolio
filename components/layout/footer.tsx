@@ -16,10 +16,10 @@ import {
   MUTED,
 } from "@/components/about/tokens"
 import {
+  AVAILABILITY,
   CONTACT_EMAIL,
   CONTACT_PHONE,
   CONTACT_PHONE_DISPLAY,
-  RESPONSE_TIME,
   RESUME_FILENAME,
   RESUME_PATH,
   socials,
@@ -120,8 +120,8 @@ export async function Footer({ invite = true }: { invite?: boolean }) {
                 </a>
               </Particular>
 
-              <Particular label="Response">
-                <span style={{ color: INK }}>{RESPONSE_TIME}</span>
+              <Particular label="Availability">
+                <span style={{ color: INK }}>{AVAILABILITY}</span>
               </Particular>
             </dl>
           </div>

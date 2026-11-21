@@ -6,6 +6,7 @@ import { redirect } from "next/navigation"
 import { z } from "zod"
 
 import { requireAdmin } from "@/lib/admin/auth"
+import { recordLoginAttempt } from "@/lib/admin/login-limit"
 import { errorsOf, failed, type SaveResult } from "@/lib/admin/results"
 import { revalidateSite } from "@/lib/admin/revalidate"
 import { insightDocumentSchema } from "@/lib/insight-content"
@@ -127,6 +128,11 @@ export async function signIn(_previous: LoginState, formData: FormData): Promise
   if (!email || !password) return { error: "Enter your email and password." }
 
   const supabase = await createSessionClient()
+
+  // Counted before the password is checked, and refused outright past the limit
+  const attempt = await recordLoginAttempt(supabase, email)
+  if (!attempt.ok) return { error: attempt.error }
+
   const { data, error } = await supabase.auth.signInWithPassword({ email, password })
   if (error) return { error: "That email and password don't match." }
 
@@ -137,6 +143,7 @@ export async function signIn(_previous: LoginState, formData: FormData): Promise
     return { error: "This account doesn't have admin access." }
   }
 
+  await attempt.clear()
   redirect("/admin")
 }
 

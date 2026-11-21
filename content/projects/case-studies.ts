@@ -10,7 +10,7 @@ export const caseStudies: CaseStudySource[] = [
     slug: "tecz",
     index: 1,
     title: "TecZ Campaign & Identity",
-    category: "Web Design & Development",
+    category: "Web Design & Dev",
     discipline: "Design & Development",
     description: "A Malayalam-first campaign and event identity telling Gen Z to learn what AI can't replace",
     summary:
